@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Tech Blog{% endblock %}</title>
+
+    <!-- 改成浅色 Markdown 样式 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css" rel="stylesheet">
+    <link href="{% static 'blog/css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'blog:post_list' %}" class="nav-brand">Bai's Space</a>
+            <div class="nav-links">
+                <a href="{% url 'blog:post_list' %}">文章</a>
+                <a href="/admin/">后台</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Bai · Built with Django & Markdown</p>
+    </footer>
+</body>
+</html>

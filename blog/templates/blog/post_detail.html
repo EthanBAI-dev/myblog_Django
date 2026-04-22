@@ -1,0 +1,53 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<article class="article-card">
+    <header class="article-header">
+        <h1 class="article-title">{{ post.title }}</h1>
+        <div class="article-meta">
+            <span>{{ post.created_at|date:"Y-m-d H:i" }}</span>
+            <span>·</span>
+            <span>{{ post.views }} 次阅读</span>
+        </div>
+    </header>
+
+    <div class="markdown-body article-content">
+        {{ post.content|safe }}
+    </div>
+</article>
+
+<section class="comment-section">
+    <h2 class="section-title">评论</h2>
+
+    <form method="post" class="comment-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>{{ form.author_name.label }}</label>
+            {{ form.author_name }}
+        </div>
+
+        <div class="form-group">
+            <label>{{ form.body.label }}</label>
+            {{ form.body }}
+        </div>
+
+        <button type="submit" class="btn-submit">提交评论</button>
+    </form>
+
+    <div class="comment-list">
+        <h3 class="comment-list-title">全部评论</h3>
+
+        {% for comment in post.comments.all %}
+            <div class="comment-item">
+                <div class="comment-author">{{ comment.author_name }}</div>
+                <div class="comment-body">{{ comment.body }}</div>
+            </div>
+        {% empty %}
+            <p class="empty-comment">还没有评论，来发表第一条吧。</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

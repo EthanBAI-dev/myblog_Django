@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}文章列表 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>文章列表</h1>
+    <p>记录技术、思考与日常折腾。</p>
+</section>
+
+<div class="post-list">
+    {% for post in posts %}
+        <article class="post-card">
+            <div class="post-card-content">
+                <h2 class="post-title">
+                    <a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a>
+                </h2>
+                <div class="post-meta">
+                    <span>📅 {{ post.created_at|date:"Y-m-d" }}</span>
+                    <span>👀 {{ post.views }} 次阅读</span>
+                </div>
+                <p class="post-excerpt">{{ post.content|striptags|truncatechars:150 }}</p>
+                <a class="read-more" href="{% url 'blog:post_detail' post.pk %}">阅读全文 →</a>
+            </div>
+        </article>
+    {% empty %}
+        <div class="empty-state">
+            <h3>还没有文章</h3>
+            <p>暂无内容，快去后台发布第一篇吧！</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
