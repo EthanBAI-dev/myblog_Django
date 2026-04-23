@@ -4,30 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Tech Blog{% endblock %}</title>
+    <title>{% block title %}Bai's Space{% endblock %}</title>
 
-    <!-- 改成浅色 Markdown 样式 -->
-    <link href="https://cdn.bootcdn.net/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css" rel="stylesheet">
-    <link href="{% static 'blog/css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.bootcdn.net/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'blog/css/style.css' %}?v=20260422">
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tocLinks = document.querySelectorAll('.toc-body a[href^="#"]');
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const hash = this.getAttribute('href');
+                const target = document.querySelector(hash);
+
+                if (!target) return;
+
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    });
+    </script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="{% url 'blog:post_list' %}" class="nav-brand">Bai's Space</a>
-            <div class="nav-links">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a href="{% url 'blog:post_list' %}" class="brand">Bai's Space</a>
+
+            <nav class="nav-links">
                 <a href="{% url 'blog:post_list' %}">文章</a>
                 <a href="/admin/">后台</a>
-            </div>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <main class="container">
-        {% block content %}
-        {% endblock %}
+    <main class="site-main">
+        {% block content %}{% endblock %}
     </main>
 
-    <footer class="footer">
-        <p>© 2026 Bai · Built with Django & Markdown</p>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <p>Built with Django · Markdown · Notes by Bai</p>
+        </div>
     </footer>
 </body>
 </html>

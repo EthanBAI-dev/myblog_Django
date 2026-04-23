@@ -3,31 +3,42 @@
 {% block title %}文章列表 - {{ block.super }}{% endblock %}
 
 {% block content %}
-<section class="page-header">
-    <h1>文章列表</h1>
-    <p>记录技术、思考与日常折腾。</p>
+<section class="page-intro">
+    <p class="intro-kicker">TECH JOURNAL</p>
+    <h1 class="intro-title">写代码，写思考，也写一些真正有价值的记录。</h1>
+    <p class="intro-desc">
+        这里是关于技术、项目、方法论与持续学习的个人笔记。
+    </p>
 </section>
 
-<div class="post-list">
+<section class="post-list">
     {% for post in posts %}
         <article class="post-card">
-            <div class="post-card-content">
-                <h2 class="post-title">
-                    <a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a>
-                </h2>
-                <div class="post-meta">
-                    <span>📅 {{ post.created_at|date:"Y-m-d" }}</span>
-                    <span>👀 {{ post.views }} 次阅读</span>
-                </div>
-                <p class="post-excerpt">{{ post.content|striptags|truncatechars:150 }}</p>
-                <a class="read-more" href="{% url 'blog:post_detail' post.pk %}">阅读全文 →</a>
+            <div class="post-meta">
+                <span>{{ post.created_at|date:"Y-m-d" }}</span>
+                <span class="dot">·</span>
+                <span>{{ post.views }} 次阅读</span>
             </div>
+
+            <h2 class="post-title">
+                <a href="{% url 'blog:post_detail' post.pk %}">
+                    {{ post.title }}
+                </a>
+            </h2>
+
+            <p class="post-excerpt">
+                {{ post.content|striptags|truncatechars:150 }}
+            </p>
+
+            <a class="post-link" href="{% url 'blog:post_detail' post.pk %}">
+                阅读全文 <span>→</span>
+            </a>
         </article>
     {% empty %}
         <div class="empty-state">
             <h3>还没有文章</h3>
-            <p>暂无内容，快去后台发布第一篇吧！</p>
+            <p>目前这里还没有内容，可以去后台发布第一篇文章。</p>
         </div>
     {% endfor %}
-</div>
+</section>
 {% endblock %}
