@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}About - {{ block.super }}{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <p class="intro-kicker">ABOUT</p>
+    <h1 class="intro-title">{{ page.title }}</h1>
+    <p class="intro-desc">
+        一些经历、价值观、以及我在构建什么。
+    </p>
+</section>
+
+<section class="article-shell">
+    {% if page_toc %}
+    <div class="article-toc-top">
+        <div class="toc-card">
+            <div class="toc-title">目录</div>
+            <div class="toc-body">{{ page_toc|safe }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="article-card">
+        <div class="markdown-body">
+            {{ page_html|safe }}
+        </div>
+    </div>
+</section>
+{% endblock %}

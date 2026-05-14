@@ -9,6 +9,8 @@
             <div class="article-meta-row">
                 <span class="meta-item">{{ post.created_at|date:"Y-m-d H:i" }}</span>
                 <span class="meta-divider">·</span>
+                <span class="meta-item">预计阅读 {{ post.reading_time }} 分钟</span>
+                <span class="meta-divider">·</span>
                 <span class="meta-item">{{ post.views }} 次阅读</span>
             </div>
 
@@ -22,6 +24,12 @@
                 </div>
             {% endif %}
         </header>
+
+        {% if post.excerpt %}
+        <div class="article-excerpt">
+            {{ post.excerpt|linebreaksbr }}
+        </div>
+        {% endif %}
 
         {% if post_toc %}
         <div class="toc-card article-toc-top">
@@ -70,7 +78,13 @@
 
         {% for comment in post.comments.all %}
             <div class="comment-item">
-                <div class="comment-author">{{ comment.author_name }}</div>
+                <div class="comment-author">
+                    {% if comment.user %}
+                        {{ comment.user.username }}
+                    {% else %}
+                        {{ comment.author_name|default:"匿名游客" }}
+                    {% endif %}
+                </div>
                 <div class="comment-body-text">{{ comment.body }}</div>
             </div>
         {% empty %}

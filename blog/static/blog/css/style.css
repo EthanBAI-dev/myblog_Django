@@ -42,7 +42,9 @@ body {
     text-rendering: optimizeLegibility;
 }
 
-/* 顶部 */
+/* =========================
+   顶部 Header
+========================= */
 .site-header {
     position: sticky;
     top: 0;
@@ -53,7 +55,7 @@ body {
 }
 
 .site-header-inner {
-    max-width: 1120px;
+    max-width: 920px; /* 统一为列表宽度 */
     margin: 0 auto;
     padding: 18px 24px;
     display: flex;
@@ -85,13 +87,17 @@ body {
     color: var(--text-main);
 }
 
-/* 主体 */
+/* =========================
+   主体 Main
+========================= */
 .site-main {
     padding: 48px 24px 72px;
     min-height: calc(100vh - 140px);
 }
 
-/* 首页介绍 */
+/* =========================
+   首页介绍 Intro
+========================= */
 .page-intro {
     max-width: 920px;
     margin: 0 auto 42px;
@@ -125,7 +131,9 @@ body {
     line-height: 1.9;
 }
 
-/* 文章列表 */
+/* =========================
+   文章列表 List
+========================= */
 .post-list {
     max-width: 920px;
     margin: 0 auto;
@@ -138,8 +146,35 @@ body {
     background: var(--surface);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-xl);
-    padding: 26px 28px;
+    overflow: hidden; /* 防止封面图圆角溢出 */
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* 封面图片外层容器 */
+.post-cover-wrapper {
+    display: block;
+    width: 100%;
+    aspect-ratio: 21 / 9; /* 使用宽屏比例 */
+    overflow: hidden;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+/* 封面图片本体 */
+.post-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* 顺滑的缩放动画 */
+}
+
+/* 悬停放大图片 */
+.post-card:hover .post-cover {
+    transform: scale(1.05);
+}
+
+/* 将原本卡片的内边距转移到内容容器上 */
+.post-content-wrapper {
+    padding: 26px 28px;
 }
 
 .post-card:hover {
@@ -209,9 +244,18 @@ body {
     color: var(--text-secondary);
 }
 
-/* 文章布局：改为单列，目录放上方 */
+/* =========================
+   文章详情 Layout / TOC / Card
+========================= */
 .article-shell {
-    max-width: 760px;
+    max-width: 920px; /* 统一为列表宽度 */
+    margin: 0 auto 28px;
+    display: block;
+}
+
+/* 单页页面专用的宽版心 */
+.page-shell {
+    max-width: 920px;
     margin: 0 auto 28px;
     display: block;
 }
@@ -222,6 +266,18 @@ body {
 
 .article-header {
     margin-bottom: 22px;
+}
+
+/* 详情页摘要展示区 */
+.article-excerpt {
+    background: #f8fafc;
+    border-left: 4px solid var(--primary);
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.8;
 }
 
 .article-meta-row {
@@ -331,7 +387,9 @@ body {
     box-shadow: var(--shadow-card);
 }
 
-/* Markdown 正文 */
+/* =========================
+   Markdown 正文
+========================= */
 .article-body {
     background: transparent !important;
 }
@@ -452,9 +510,11 @@ body {
     border-radius: 14px;
 }
 
-/* 评论 */
+/* =========================
+   评论
+========================= */
 .comments-layout {
-    max-width: 760px;
+    max-width: 920px; /* 统一为列表宽度 */
     margin: 0 auto;
     display: grid;
     gap: 18px;
@@ -566,13 +626,15 @@ body {
     color: var(--text-secondary);
 }
 
-/* 页脚 */
+/* =========================
+   页脚 Footer
+========================= */
 .site-footer {
     padding: 0 24px 48px;
 }
 
 .site-footer-inner {
-    max-width: 1120px;
+    max-width: 920px; /* 统一为列表宽度 */
     margin: 0 auto;
     border-top: 1px solid var(--line-soft);
     padding-top: 20px;
@@ -585,8 +647,105 @@ body {
     font-size: 0.9rem;
 }
 
+/* =========================
+   Pagination - 文章列表翻页（统一风格）
+========================= */
+.pagination {
+    max-width: 920px;
+    margin: 28px auto 0;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination ul {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.pagination li {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 链接按钮（与卡片边框风格一致） */
+.pagination a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-soft);
+    background: var(--surface);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pagination a:hover {
+    transform: translateY(-1px);
+    border-color: #dbe4f0;
+    background: var(--surface);
+    color: var(--text-main);
+    box-shadow: var(--shadow-card);
+}
+
+/* 当前页 */
+.pagination .active {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(21, 94, 239, 0.25);
+    background: rgba(21, 94, 239, 0.12);
+    color: var(--primary);
+    font-size: 0.92rem;
+    font-weight: 750;
+    box-shadow: none;
+}
+
+/* 禁用态（上一页/下一页不可用） */
+.pagination .disabled {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-soft);
+    background: var(--surface-soft);
+    color: var(--text-muted);
+    opacity: 0.9;
+    user-select: none;
+}
+
+/* 上一页/下一页（可选） */
+.pagination .prev a,
+.pagination .next a {
+    gap: 8px;
+}
+
+/* =========================
+   Responsive 响应式（统一整理，无重复）
+========================= */
 @media (max-width: 980px) {
-    .article-shell
+    /* ✅ 修复：原来少了逗号，导致不生效 */
+    .article-shell,
+    .page-shell,
     .comments-layout {
         max-width: 100%;
     }
@@ -619,5 +778,19 @@ body {
 
     .markdown-body {
         font-size: 1rem;
+    }
+
+    .pagination {
+        margin-top: 22px;
+        padding: 0 10px;
+    }
+
+    .pagination a,
+    .pagination .active,
+    .pagination .disabled {
+        height: 38px;
+        min-width: 38px;
+        padding: 0 12px;
+        font-size: 0.9rem;
     }
 }
