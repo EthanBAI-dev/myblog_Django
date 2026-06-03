@@ -3,9 +3,10 @@ from django.db.models import F
 from django.views.generic import ListView
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
-from .models import Post
+from .models import Post, Category
 from .models import SitePage
 import markdown
+
 
 class PostListView(ListView):
     model = Post
@@ -14,10 +15,18 @@ class PostListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        qs = Post.objects.all().order_by("-created_at")
-        if hasattr(Post, "status"):
-            qs = qs.filter(status="published")
+        category_slug = self.kwargs.get('category_slug')
+        qs = Post.objects.all().order_by("-created_at").filter(status="published")
+        if category_slug:
+            qs = qs.filter(category__slug=category_slug)
         return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category_slug = self.kwargs.get('category_slug')
+        if category_slug:
+            context['current_category'] = get_object_or_404(Category, slug=category_slug)
+        return context
 
 
 def post_detail(request, slug):
@@ -77,7 +86,6 @@ def post_detail(request, slug):
         'post_toc': post_toc,
         'form': form,
     })
-
 
 
 def about(request):

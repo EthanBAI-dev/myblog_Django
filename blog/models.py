@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from mdeditor.fields import MDTextField
 from django.contrib.contenttypes.fields import GenericRelation
-from django.conf import settings
+from django.contrib.auth.models import User
 from comments.models import Comment
 
 class Category(models.Model):
@@ -72,11 +72,11 @@ class Post(models.Model):
     cover = models.ImageField(upload_to='post_covers/', blank=True, null=True, verbose_name='文章封面')
     
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        User,
         on_delete=models.CASCADE,
         related_name='posts',
         verbose_name='作者',
-        null=True, # 允许为空以防旧数据报错，真实业务建议设为必填或提供默认值
+        null=True,
     )
     
     content = MDTextField('正文')

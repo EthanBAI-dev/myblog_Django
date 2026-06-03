@@ -4,11 +4,12 @@ from .views import PostListView
 
 app_name = 'blog'
 urlpatterns = [
-    # 这里的空字符串代表 http://127.0.0.1:8000/
-    # 首页：不需要参数
-
-    # 详情页（如果你以后要做）：才需要 <int:pk>
-    path('post/<str:slug>/', views.post_detail, name='post_detail'),
+    # 首页
     path("", PostListView.as_view(), name="post_list"),
+    # 分类筛选列表
+    path("category/<str:category_slug>/", PostListView.as_view(), name="category_list"),
+    # 文章详情
+    path('post/<str:slug>/', views.post_detail, name='post_detail'),
+    # About 页
     path('about/', views.about, name='about'),
 ]

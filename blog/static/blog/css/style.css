@@ -794,3 +794,19 @@ body {
         font-size: 0.9rem;
     }
 }
+.post-category-badge {
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    background: rgba(21, 94, 239, 0.06);
+    border: 1px solid rgba(21, 94, 239, 0.15);
+    border-radius: 6px;
+    padding: 1px 8px;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.post-category-badge:hover {
+    background: rgba(21, 94, 239, 0.12);
+    border-color: rgba(21, 94, 239, 0.3);
+}

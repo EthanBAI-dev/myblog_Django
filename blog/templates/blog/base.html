@@ -1,4 +1,5 @@
 {% load static %}
+{% load category %}
 <!DOCTYPE html>
 <html lang="zh-hans">
 <head>
@@ -8,7 +9,7 @@
 
   <!-- GitHub Markdown 样式（用于 markdown-body，可保留） -->
   <link rel="stylesheet"
-        href="https://cdn.bootcdn.net/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
 
   <link rel="stylesheet" href="{% static 'blog/css/style.css' %}?v=20260426_3">
 
@@ -45,7 +46,18 @@
       <nav class="nav-links">
         <a href="{% url 'blog:about' %}">About</a>
         <a href="{% url 'blog:post_list' %}">文章</a>
+        {% get_category_list as categories %}
+        {% for c in categories %}
+          <a href="{% url 'blog:category_list' c.slug %}">{{ c.name }}</a>
+        {% endfor %}
         <a href="/admin/">后台</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'users:user_profile' %}">个人中心</a>
+          <a href="{% url 'users:logout' %}">退出</a>
+        {% else %}
+          <a href="{% url 'users:login' %}">登录</a>
+          <a href="{% url 'users:register' %}">注册</a>
+        {% endif %}
       </nav>
     </div>
   </header>

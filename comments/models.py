@@ -1,17 +1,17 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 class Comment(models.Model):
-    # 1. 通用外键：让评论可以挂载到任何模型上（文章 Post、页面 SitePage 甚至图片）
+    # 1. 通用外键：让评论可以挂载到任何模型上
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
     # 2. 评论者信息
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        User,
         on_delete=models.CASCADE,
         related_name='comments',
         verbose_name='注册用户',

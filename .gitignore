@@ -27,4 +27,7 @@ env/
 .DS_Store
 Thumbs.db
 
+# 参考项目（不提交）
+django-blog-master/
+
 
