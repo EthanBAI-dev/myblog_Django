@@ -48,6 +48,35 @@
     </article>
 </section>
 
+<!-- 上一页 / 下一页 -->
+<nav class="post-nav">
+    <div class="post-nav-row">
+        {% if prev_post %}
+        <a href="{% url 'blog:post_detail' prev_post.slug %}" class="post-nav-item post-nav-prev">
+            <span class="post-nav-label">← 上一篇</span>
+            <span class="post-nav-title">{{ prev_post.title }}</span>
+        </a>
+        {% else %}
+        <span class="post-nav-item post-nav-prev disabled">
+            <span class="post-nav-label">← 上一篇</span>
+            <span class="post-nav-title">已经是最前一篇了</span>
+        </span>
+        {% endif %}
+
+        {% if next_post %}
+        <a href="{% url 'blog:post_detail' next_post.slug %}" class="post-nav-item post-nav-next">
+            <span class="post-nav-label">下一篇 →</span>
+            <span class="post-nav-title">{{ next_post.title }}</span>
+        </a>
+        {% else %}
+        <span class="post-nav-item post-nav-next disabled">
+            <span class="post-nav-label">下一篇 →</span>
+            <span class="post-nav-title">已经是最后一篇了</span>
+        </span>
+        {% endif %}
+    </div>
+</nav>
+
 <section class="comments-layout">
     <div class="comments-panel">
         <h2 class="panel-title">评论</h2>

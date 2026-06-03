@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import F
+from django.db.models import F, Q
 from django.views.generic import ListView
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
@@ -64,6 +64,16 @@ def post_detail(request, slug):
     post_html = md.convert(post.content)
     post_toc = md.toc
 
+    # 上一页 / 下一页（按发布时间排序的已发布文章）
+    published_posts = Post.objects.filter(status='published').order_by('-created_at')
+    post_list = list(published_posts.values_list('slug', flat=True))
+    try:
+        current_index = post_list.index(post.slug)
+    except ValueError:
+        current_index = -1
+    prev_post = published_posts[current_index + 1] if current_index < len(post_list) - 1 else None
+    next_post = published_posts[current_index - 1] if current_index > 0 else None
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -85,6 +95,8 @@ def post_detail(request, slug):
         'post_html': post_html,
         'post_toc': post_toc,
         'form': form,
+        'prev_post': prev_post,
+        'next_post': next_post,
     })
 
 
@@ -120,3 +132,26 @@ def about(request):
         'page_html': page_html,
         'page_toc': page_toc,
     })
+
+
+class SearchListView(ListView):
+    """搜索视图"""
+    model = Post
+    template_name = 'blog/search.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        q = self.request.GET.get('q', '').strip()
+        if q:
+            return Post.objects.filter(
+                status='published'
+            ).filter(
+                Q(title__icontains=q) | Q(content__icontains=q)
+            ).order_by('-created_at')
+        return Post.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '').strip()
+        return context

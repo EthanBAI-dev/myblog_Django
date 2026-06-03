@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import PostListView
+from .views import PostListView, SearchListView
 
 app_name = 'blog'
 urlpatterns = [
@@ -12,4 +12,6 @@ urlpatterns = [
     path('post/<str:slug>/', views.post_detail, name='post_detail'),
     # About 页
     path('about/', views.about, name='about'),
+    # 搜索
+    path('search/', SearchListView.as_view(), name='search'),
 ]

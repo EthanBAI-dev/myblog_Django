@@ -1,0 +1,92 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}搜索：{{ query }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <p class="intro-kicker">SEARCH</p>
+    <h1 class="intro-title">搜索结果</h1>
+    <p class="intro-desc">
+        {% if query %}
+        关于「<strong>{{ query }}</strong>」的搜索结果，共 {{ paginator.count }} 篇
+        {% else %}
+        请输入搜索关键词
+        {% endif %}
+    </p>
+</section>
+
+<section class="post-list">
+    {% for post in posts %}
+        <article class="post-card">
+            {% if post.cover %}
+            <a href="{% url 'blog:post_detail' post.slug %}" class="post-cover-wrapper">
+                <img src="{{ post.cover.url }}" alt="{{ post.title }}" class="post-cover">
+            </a>
+            {% endif %}
+
+            <div class="post-content-wrapper">
+                <div class="post-meta">
+                    {% if post.category %}
+                    <a href="{% url 'blog:category_list' post.category.slug %}" class="post-category-badge">{{ post.category.name }}</a>
+                    <span class="dot">·</span>
+                    {% endif %}
+                    <span>{{ post.created_at|date:"Y-m-d" }}</span>
+                    <span class="dot">·</span>
+                    <span>预计阅读 {{ post.reading_time }} 分钟</span>
+                </div>
+
+                <h2 class="post-title">
+                    <a href="{% url 'blog:post_detail' post.slug %}">
+                        {{ post.title }}
+                    </a>
+                </h2>
+
+                <p class="post-excerpt">
+                    {% if post.excerpt %}
+                        {{ post.excerpt|linebreaksbr }}
+                    {% endif %}
+                </p>
+
+                <a class="post-link" href="{% url 'blog:post_detail' post.slug %}">
+                    阅读全文 <span>→</span>
+                </a>
+            </div>
+        </article>
+    {% empty %}
+        <div class="empty-state">
+            <h3>未找到相关文章</h3>
+            <p>尝试更换关键词，或浏览全部文章。</p>
+        </div>
+    {% endfor %}
+</section>
+
+{% if is_paginated %}
+<nav class="pagination" aria-label="Pagination">
+    <ul>
+        {% if page_obj.has_previous %}
+            <li class="prev">
+                <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">← 上一页</a>
+            </li>
+        {% else %}
+            <li class="prev disabled" aria-disabled="true">← 上一页</li>
+        {% endif %}
+
+        {% for num in paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="active" aria-current="page">{{ num }}</li>
+            {% else %}
+                <li><a href="?q={{ query }}&page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="next">
+                <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">下一页 →</a>
+            </li>
+        {% else %}
+            <li class="next disabled" aria-disabled="true">下一页 →</li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

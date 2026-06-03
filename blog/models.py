@@ -105,6 +105,7 @@ class Post(models.Model):
         default='draft'
     )
     views = models.PositiveIntegerField('浏览量', default=0)
+    is_recommended = models.BooleanField('推荐', default=False, help_text='勾选后该文章将出现在侧边栏推荐区')
 
     # 添加通用关系，方便在模板中通过 post.comments.all 获取评论
     comments = GenericRelation(Comment)

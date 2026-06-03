@@ -1,0 +1,68 @@
+<aside class="sidebar-widgets">
+
+    <!-- 搜索框 -->
+    <div class="widget">
+        <h4 class="widget-title">搜索</h4>
+        <form action="{% url 'blog:search' %}" method="get" class="search-form">
+            <input type="text" name="q" placeholder="输入关键词搜索..." class="search-input" required>
+            <button type="submit" class="search-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+
+    <!-- 最新文章 -->
+    {% if sidebar_recent_posts %}
+    <div class="widget">
+        <h4 class="widget-title">最新文章</h4>
+        <ul class="widget-list">
+            {% for p in sidebar_recent_posts %}
+            <li>
+                <a href="{% url 'blog:post_detail' p.slug %}">
+                    <span class="widget-link-text">{{ p.title }}</span>
+                    <span class="widget-link-date">{{ p.created_at|date:"m-d" }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- 热门文章 -->
+    {% if sidebar_hot_posts %}
+    <div class="widget">
+        <h4 class="widget-title">热门文章</h4>
+        <ul class="widget-list">
+            {% for p in sidebar_hot_posts %}
+            <li>
+                <a href="{% url 'blog:post_detail' p.slug %}" class="hot-item">
+                    <span class="widget-link-text">{{ p.title }}</span>
+                    <span class="widget-link-extra">{{ p.views }} 阅读</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- 文章归档 -->
+    {% if sidebar_archives %}
+    <div class="widget">
+        <h4 class="widget-title">文章归档</h4>
+        <ul class="widget-list">
+            {% for archive in sidebar_archives %}
+            <li>
+                <a href="{% url 'blog:post_list' %}?year={{ archive.month.year }}&month={{ archive.month.month }}">
+                    <span class="widget-link-text">{{ archive.month|date:"Y 年 m 月" }}</span>
+                    <span class="widget-link-extra">{{ archive.count }} 篇</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+</aside>

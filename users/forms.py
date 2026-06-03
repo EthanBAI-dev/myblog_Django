@@ -93,7 +93,7 @@ class ModifyPwdForm(forms.Form):
 class UserForm(forms.ModelForm):
     """用户基本信息表单（邮箱为只读）"""
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'class': 'input', 'disabled': 'disabled'
+        'class': 'input', 'readonly': 'readonly'
     }))
 
     class Meta:

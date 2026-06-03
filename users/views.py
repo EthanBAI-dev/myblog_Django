@@ -139,7 +139,7 @@ def forget_pwd_url(request, active_code):
 def user_profile(request):
     """用户个人中心"""
     user = User.objects.get(username=request.user)
-    return render(request, 'users/user_profile.html', {'user': user})
+    return render(request, 'users/profile_detail.html', {'user': user})
 
 
 def logout_view(request):
@@ -179,4 +179,8 @@ def editor_users(request):
             form = UserForm(instance=user)
             user_profile_form = UserProfileForm()
 
-    return render(request, 'users/editor_users.html', locals())
+    return render(request, 'users/editor_users.html', {
+        'form': form,
+        'user_profile_form': user_profile_form,
+        'user': user,
+    })

@@ -7,31 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Bai's Space{% endblock %}</title>
 
-  <!-- GitHub Markdown 样式（用于 markdown-body，可保留） -->
+  <!-- GitHub Markdown 样式 -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
 
-  <link rel="stylesheet" href="{% static 'blog/css/style.css' %}?v=20260426_3">
+  <link rel="stylesheet" href="{% static 'blog/css/style.css' %}?v=20260603_1">
 
-  <!-- 子模板可按需追加 CSS -->
   {% block extra_css %}{% endblock %}
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const tocLinks = document.querySelectorAll('.toc-body a[href^="#"]');
-
       tocLinks.forEach(link => {
         link.addEventListener('click', function (e) {
           e.preventDefault();
-
           const hash = this.getAttribute('href');
           const target = document.querySelector(hash);
           if (!target) return;
-
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       });
     });
@@ -50,7 +43,6 @@
         {% for c in categories %}
           <a href="{% url 'blog:category_list' c.slug %}">{{ c.name }}</a>
         {% endfor %}
-        <a href="/admin/">后台</a>
         {% if user.is_authenticated %}
           <a href="{% url 'users:user_profile' %}">个人中心</a>
           <a href="{% url 'users:logout' %}">退出</a>
@@ -63,7 +55,17 @@
   </header>
 
   <main class="site-main">
-    {% block content %}{% endblock %}
+    <div class="site-grid">
+      <div class="site-content">
+        {% block content %}{% endblock %}
+      </div>
+
+      <div class="site-sidebar">
+        {% block sidebar %}
+        {% include 'blog/sidebar.html' %}
+        {% endblock %}
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
