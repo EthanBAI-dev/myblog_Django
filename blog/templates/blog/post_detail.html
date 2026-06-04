@@ -2,6 +2,20 @@
 
 {% block title %}{{ post.title }} - {{ block.super }}{% endblock %}
 
+{% block extra_css %}
+  <!-- Tocbot CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+{% endblock %}
+
+{# 文章详情页的侧边栏：在顶部插入文章目录 Widget #}
+{% block sidebar %}
+  <div class="widget widget-toc">
+    <h4 class="widget-title">文章目录</h4>
+    <div id="toc" class="toc"></div>
+  </div>
+  {{ block.super }}
+{% endblock %}
+
 {% block content %}
 <section class="article-shell">
     <article class="article-main">
@@ -31,18 +45,9 @@
         </div>
         {% endif %}
 
-        {% if post_toc %}
-        <div class="toc-card article-toc-top">
-            <div class="toc-title">目录</div>
-            <div class="toc-body">
-                {{ post_toc|safe }}
-            </div>
-        </div>
-        {% endif %}
-
         <section class="article-card">
-            <div class="markdown-body article-body">
-                {{ post_html|safe }}
+            <div class="markdown-body article-body content-body">
+                {{ post.content|safe }}
             </div>
         </section>
     </article>
@@ -121,4 +126,30 @@
         {% endfor %}
     </div>
 </section>
+
+<!-- Tocbot JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const content = document.querySelector('.content-body');
+    if (!content) return;
+
+    // 为所有标题自动生成 id（CKEditor5 默认不生成 id）
+    const headings = content.querySelectorAll('h1, h2, h3, h4');
+    headings.forEach(function (heading, index) {
+      heading.id = 'heading-' + index;
+    });
+
+    // 初始化 Tocbot 生成动态目录
+    tocbot.init({
+      tocSelector: '#toc',
+      contentSelector: '.content-body',
+      headingSelector: 'h1, h2, h3, h4',
+      scrollSmooth: true,
+      hasInnerContainers: true,
+      headingsOffset: 80,
+      scrollSmoothOffset: -60,
+    });
+  });
+</script>
 {% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}简历 - {{ block.super }}{% endblock %}
+
+{% block grid_class %}no-sidebar{% endblock %}
+{% block sidebar_area %}{% endblock sidebar_area %}
+
+{% block content %}
+<section class="page-intro">
+    <p class="intro-kicker">RESUME</p>
+    <h1 class="intro-title">个人简历</h1>
+    <p class="intro-desc">深度学习工程师 · AI 技术爱好者</p>
+</section>
+
+<section class="post-list">
+
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(21,94,239,0.06); color: var(--primary);">基本信息</span>
+            </div>
+            <div class="resume-info-grid">
+                <div class="resume-info-item">
+                    <span class="resume-info-label">姓名</span>
+                    <span class="resume-info-value">Bai</span>
+                </div>
+                <div class="resume-info-item">
+                    <span class="resume-info-label">邮箱</span>
+                    <span class="resume-info-value">contact@example.com</span>
+                </div>
+                <div class="resume-info-item">
+                    <span class="resume-info-label">GitHub</span>
+                    <span class="resume-info-value">github.com/EthanBAI-dev</span>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(16,185,129,0.08); color: #059669;">教育经历</span>
+            </div>
+            <div class="resume-timeline">
+                <div class="resume-timeline-item">
+                    <span class="resume-year">2023 — 至今</span>
+                    <h3 class="resume-item-title">深度学习专项课程</h3>
+                    <p class="resume-item-desc">完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心技术。</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(245,158,11,0.08); color: #d97706;">技能</span>
+            </div>
+            <div class="resume-tags">
+                <span class="resume-tag">Python</span>
+                <span class="resume-tag">Django</span>
+                <span class="resume-tag">PyTorch</span>
+                <span class="resume-tag">TensorFlow</span>
+                <span class="resume-tag">NumPy</span>
+                <span class="resume-tag">Pandas</span>
+                <span class="resume-tag">Scikit-learn</span>
+                <span class="resume-tag">SQL</span>
+                <span class="resume-tag">Git</span>
+            </div>
+        </div>
+    </article>
+
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(139,92,246,0.08); color: #7c3aed;">自我评价</span>
+            </div>
+            <p class="post-excerpt">
+                热爱深度学习与人工智能技术，具备扎实的数学基础和编程能力。善于将复杂的 AI 概念转化为清晰易懂的文档和笔记。注重代码质量和工程实践，持续学习前沿技术。
+            </p>
+        </div>
+    </article>
+
+</section>
+{% endblock %}

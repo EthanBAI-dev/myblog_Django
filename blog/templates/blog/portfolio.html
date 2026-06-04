@@ -1,0 +1,71 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}我的作品 - {{ block.super }}{% endblock %}
+
+{% block grid_class %}no-sidebar{% endblock %}
+{% block sidebar_area %}{% endblock sidebar_area %}
+
+{% block content %}
+<section class="page-intro">
+    <p class="intro-kicker">PORTFOLIO</p>
+    <h1 class="intro-title">我的作品</h1>
+    <p class="intro-desc">深度学习与人工智能相关的项目、笔记和探索。</p>
+</section>
+
+<section class="post-list">
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(21,94,239,0.06); color: var(--primary);">项目</span>
+                <span class="dot">·</span>
+                <span>2024 — 至今</span>
+            </div>
+            <h2 class="post-title">
+                <span>深度学习专项课程笔记</span>
+            </h2>
+            <p class="post-excerpt">
+                Andrew Ng 深度学习五门课程（神经网络与深度学习、改善深度神经网络、结构化机器学习项目、卷积神经网络、序列模型）的完整中文学习笔记，涵盖所有关键概念、数学推导和代码实现要点。
+            </p>
+        </div>
+    </article>
+
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(16,185,129,0.08); color: #059669;">技能</span>
+            </div>
+            <h2 class="post-title">
+                <span>技术栈</span>
+            </h2>
+            <div class="resume-tags">
+                <span class="resume-tag">Python</span>
+                <span class="resume-tag">Django</span>
+                <span class="resume-tag">PyTorch</span>
+                <span class="resume-tag">TensorFlow</span>
+                <span class="resume-tag">NumPy</span>
+                <span class="resume-tag">Pandas</span>
+                <span class="resume-tag">Scikit-learn</span>
+                <span class="resume-tag">SQL</span>
+                <span class="resume-tag">Git</span>
+                <span class="resume-tag">Tailwind CSS</span>
+                <span class="resume-tag">JavaScript</span>
+                <span class="resume-tag">Markdown</span>
+            </div>
+        </div>
+    </article>
+
+    <article class="post-card resume-card">
+        <div class="post-content-wrapper">
+            <div class="post-meta">
+                <span class="post-category-badge" style="background: rgba(245,158,11,0.08); color: #d97706;">关于</span>
+            </div>
+            <h2 class="post-title">
+                <span>关于我</span>
+            </h2>
+            <p class="post-excerpt">
+                热爱深度学习与人工智能技术，专注于将复杂的 AI 概念转化为清晰易懂的中文笔记。这个博客记录了我的学习历程和项目实践。欢迎通过博客文章下的评论区交流讨论。
+            </p>
+        </div>
+    </article>
+</section>
+{% endblock %}

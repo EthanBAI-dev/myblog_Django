@@ -3,9 +3,15 @@ from django.db.models import F, Q
 from django.views.generic import ListView
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
-from .models import Post, Category
-from .models import SitePage
-import markdown
+from .models import Post, Category, SitePage, HomePage
+
+
+def home(request):
+    """首页 - 个人名片"""
+    homepage = HomePage.objects.first()
+    return render(request, 'blog/home.html', {
+        'homepage': homepage,
+    })
 
 
 class PostListView(ListView):
@@ -39,31 +45,6 @@ def post_detail(request, slug):
     Post.objects.filter(pk=post.pk).update(views=F('views') + 1)
     post.refresh_from_db()
 
-    # 生成 Markdown 和目录 TOC
-    md = markdown.Markdown(
-        extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.fenced_code',
-            'markdown.extensions.codehilite',
-            'markdown.extensions.tables',
-            'markdown.extensions.toc',
-            'markdown.extensions.sane_lists',
-        ],
-        extension_configs={
-            'markdown.extensions.codehilite': {
-                'guess_lang': False,
-                'linenums': False,
-                'css_class': 'codehilite',
-            },
-            'markdown.extensions.toc': {
-                'permalink': False,
-            }
-        }
-    )
-
-    post_html = md.convert(post.content)
-    post_toc = md.toc
-
     # 上一页 / 下一页（按发布时间排序的已发布文章）
     published_posts = Post.objects.filter(status='published').order_by('-created_at')
     post_list = list(published_posts.values_list('slug', flat=True))
@@ -92,8 +73,6 @@ def post_detail(request, slug):
 
     return render(request, 'blog/post_detail.html', {
         'post': post,
-        'post_html': post_html,
-        'post_toc': post_toc,
         'form': form,
         'prev_post': prev_post,
         'next_post': next_post,
@@ -102,35 +81,8 @@ def post_detail(request, slug):
 
 def about(request):
     page = get_object_or_404(SitePage, slug='about')
-
-    md = markdown.Markdown(
-        extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.fenced_code',
-            'markdown.extensions.codehilite',
-            'markdown.extensions.tables',
-            'markdown.extensions.toc',
-            'markdown.extensions.sane_lists',
-        ],
-        extension_configs={
-            'markdown.extensions.codehilite': {
-                'guess_lang': False,
-                'linenums': False,
-                'css_class': 'codehilite',
-            },
-            'markdown.extensions.toc': {
-                'permalink': False,
-            }
-        }
-    )
-
-    page_html = md.convert(page.content or "")
-    page_toc = md.toc
-
     return render(request, 'blog/about.html', {
         'page': page,
-        'page_html': page_html,
-        'page_toc': page_toc,
     })
 
 
@@ -155,3 +107,14 @@ class SearchListView(ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '').strip()
         return context
+
+
+def resume(request):
+    """简历页面"""
+    return render(request, 'blog/resume.html')
+
+
+def portfolio(request):
+    """我的作品页面"""
+    return render(request, 'blog/portfolio.html')
+

@@ -1,30 +1,147 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}About - {{ block.super }}{% endblock %}
+{% block title %}关于 - {{ block.super }}{% endblock %}
+
+{% block grid_class %}no-sidebar{% endblock %}
+{% block sidebar_area %}{% endblock sidebar_area %}
 
 {% block content %}
-<section class="page-intro">
-    <p class="intro-kicker">ABOUT</p>
-    <h1 class="intro-title">{{ page.title }}</h1>
-    <p class="intro-desc">
-        一些经历、价值观、以及我在构建什么。
+<!-- 故事头部 -->
+<section class="about-hero">
+    <p class="about-kicker">MY STORY</p>
+    <h1 class="about-hero-title">每一段经历，都是代码的一部分。</h1>
+    <p class="about-hero-desc">
+        从最初的好奇到如今的专注，这是一段关于成长、坚持与热爱的旅程。
     </p>
 </section>
 
-<section class="article-shell">
-    {% if page_toc %}
-    <div class="article-toc-top">
-        <div class="toc-card">
-            <div class="toc-title">目录</div>
-            <div class="toc-body">{{ page_toc|safe }}</div>
-        </div>
-    </div>
-    {% endif %}
+<!-- 成长轨迹 -->
+<section class="about-timeline-section">
+    <h2 class="about-section-title">
+        <span class="about-section-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+        </span>
+        成长轨迹
+    </h2>
 
-    <div class="article-card">
-        <div class="markdown-body">
-            {{ page_html|safe }}
+    <div class="about-timeline">
+        <div class="about-milestone">
+            <div class="milestone-dot"></div>
+            <div class="milestone-content">
+                <span class="milestone-year">2025 — 至今</span>
+                <h3 class="milestone-title">深度学习专项学习</h3>
+                <p class="milestone-desc">
+                    系统性地学习 Andrew Ng 深度学习五门课程，涵盖神经网络基础、超参数调优、结构化机器学习、CNN、RNN 与注意力机制等核心领域。完成所有课程的笔记整理与代码实践，构建个人 AI 知识体系。
+                </p>
+            </div>
+        </div>
+
+        <div class="about-milestone">
+            <div class="milestone-dot"></div>
+            <div class="milestone-content">
+                <span class="milestone-year">2024 — 2025</span>
+                <h3 class="milestone-title">Web 开发与全栈探索</h3>
+                <p class="milestone-desc">
+                    深入学习 Django 框架，从后端 API 设计到前端模板渲染，掌握了完整的 Web 开发流程。搭建个人博客系统，将学习过程中的思考与笔记沉淀为结构化的知识输出。
+                </p>
+            </div>
+        </div>
+
+        <div class="about-milestone">
+            <div class="milestone-dot"></div>
+            <div class="milestone-content">
+                <span class="milestone-year">2023 — 2024</span>
+                <h3 class="milestone-title">Python 与数据科学入门</h3>
+                <p class="milestone-desc">
+                    从 Python 基础语法开始，逐步深入到 NumPy、Pandas、Matplotlib 等数据科学生态工具。建立扎实的编程基础，为后续的 AI 学习奠定了坚实的技术根基。
+                </p>
+            </div>
+        </div>
+
+        <div class="about-milestone">
+            <div class="milestone-dot"></div>
+            <div class="milestone-content">
+                <span class="milestone-year">更早之前</span>
+                <h3 class="milestone-title">对技术的原始好奇</h3>
+                <p class="milestone-desc">
+                    对计算机科学的兴趣始于对"机器如何思考"这一问题的好奇。从第一行 Hello World 到如今能够训练神经网络模型，每一步都是对未知世界的探索。
+                </p>
+            </div>
         </div>
     </div>
 </section>
+
+<!-- 深度感悟 -->
+<section class="about-reflection">
+    <h2 class="about-section-title">
+        <span class="about-section-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+        </span>
+        关于坚持
+    </h2>
+
+    <div class="reflection-card">
+        <blockquote class="reflection-quote">
+            "学习 AI 不是一场短跑，而是一场没有终点的马拉松。重要的是每天都比昨天多理解一点点。"
+        </blockquote>
+        <div class="reflection-body">
+            <p>
+                坚持做深度学习笔记整理这件事，已经成为了我日常生活的一部分。起初只是为了记录课程中的关键概念，但随着笔记越积越多，我发现这个过程本身比学习课程更有价值。写笔记不是简单的摘抄，而是强迫自己用最清晰的语言重新组织知识，在反复的推敲和修改中，很多曾经模糊的概念突然变得清晰起来。
+            </p>
+            <p>
+                在这个过程中，我深刻体会到：真正的学习不是"听过"或"看过"，而是能够用自己的语言重新表达，并且能够将不同领域的知识连接起来。深度学习的美妙之处在于，它不是一个孤立的学科——它连接着数学、统计学、计算机科学和认知科学，每一次学习都像是在拼图中加入新的一块。
+            </p>
+            <p>
+                最让我感到满足的时刻，不是完成某门课程，也不是跑通了某个模型，而是在某个深夜写笔记时，忽然发现自己在几个月前记下的疑问，如今已经有了自己的答案。这种"过去和现在的自己对话"的感觉，是自学路上最珍贵的体验。
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- 兴趣爱好 -->
+<section class="about-interests">
+    <h2 class="about-section-title">
+        <span class="about-section-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+        </span>
+        不止代码
+    </h2>
+
+    <div class="interests-grid">
+        <div class="interest-card">
+            <h3 class="interest-title">阅读技术论文</h3>
+            <p class="interest-desc">喜欢在 ArXiv 上浏览最新的 AI 论文，尤其关注 CV 和 NLP 领域的前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。</p>
+        </div>
+        <div class="interest-card">
+            <h3 class="interest-title">开源社区</h3>
+            <p class="interest-desc">关注 GitHub 上优秀的开源项目，学习优秀工程师的代码风格和架构设计。希望有一天自己的项目也能被别人 Star。</p>
+        </div>
+        <div class="interest-card">
+            <h3 class="interest-title">写作与表达</h3>
+            <p class="interest-desc">相信清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。</p>
+        </div>
+        <div class="interest-card">
+            <h3 class="interest-title">持续学习</h3>
+            <p class="interest-desc">技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只埋头写代码，更要理解人与技术的关系。</p>
+        </div>
+    </div>
+</section>
+
+<!-- 补充内容（通过后台富文本编辑器管理） -->
+{% if page.content %}
+<section class="about-markdown-section">
+    <hr class="about-divider">
+    <div class="article-card">
+        <div class="markdown-body">
+            {{ page.content|safe }}
+        </div>
+    </div>
+</section>
+{% endif %}
 {% endblock %}

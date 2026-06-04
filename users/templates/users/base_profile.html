@@ -74,6 +74,7 @@
                 </ul>
             </div>
 
+            {% block admin_sidebar %}
             {% if user.is_staff %}
             <!-- 内容管理 -->
             <div class="bg-white rounded-lg shadow-sm border p-4 mt-4">
@@ -125,6 +126,7 @@
                 </ul>
             </div>
             {% endif %}
+            {% endblock admin_sidebar %}
         </div>
 
         <!-- 右侧内容 -->

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'comments',
-    'mdeditor',
+    'django_ckeditor_5',
 ]
 
 # 自定义认证后端：支持邮箱登录
@@ -144,7 +144,7 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
 
-# mdeditor 相关配置
+# mdeditor 相关配置（已弃用，保留以兼容旧引用）
 MDEDITOR_CONFIGS = {
     'default': {
         'width': '100%',
@@ -160,6 +160,50 @@ MDEDITOR_CONFIGS = {
         ],
     }
 }
+
+# CKEditor5 配置（替代 mdeditor）
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'link', 'blockQuote', 'insertTable', '|',
+            'bulletedList', 'numberedList', 'outdent', 'indent', '|',
+            'imageUpload', 'mediaEmbed', '|',
+            'undo', 'redo', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+            'alignment', '|',
+            'code', 'codeBlock', '|',
+            'horizontalLine', 'specialCharacters', '|',
+            'removeFormat',
+        ],
+        'language': 'zh-cn',
+        'height': '400px',
+        'image': {
+            'toolbar': [
+                'imageTextAlternative',
+                'imageStyle:full',
+                'imageStyle:side',
+                'imageStyle:alignLeft',
+                'imageStyle:alignCenter',
+                'imageStyle:alignRight',
+            ],
+        },
+        'table': {
+            'contentToolbar': [
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells',
+                'tableProperties',
+                'tableCellProperties',
+            ],
+        },
+    },
+}
+
+# CKEditor5 上传配置
+CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff']
+CKEDITOR_5_MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 
 # 默认主键字段类型

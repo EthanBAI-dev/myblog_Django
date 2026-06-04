@@ -1,68 +1,124 @@
+{% load static %}
 <aside class="sidebar-widgets">
 
-    <!-- 搜索框 -->
-    <div class="widget">
-        <h4 class="widget-title">搜索</h4>
-        <form action="{% url 'blog:search' %}" method="get" class="search-form">
-            <input type="text" name="q" placeholder="输入关键词搜索..." class="search-input" required>
-            <button type="submit" class="search-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
-                </svg>
-            </button>
-        </form>
+    <!-- 个人信息模块 -->
+    <div class="widget widget-profile">
+        <img class="profile-avatar"
+             src="{% if blog_owner and blog_owner.image %}{{ MEDIA_URL }}{{ blog_owner.image }}{% else %}{% static 'users/images/default_avatar.png' %}{% endif %}"
+             alt="博主头像">
+        <div class="profile-info">
+            <h3 class="profile-name">
+                {% if blog_owner and blog_owner.nike_name %}
+                    {{ blog_owner.nike_name }}
+                {% elif blog_owner %}
+                    {{ blog_owner.owner.username }}
+                {% else %}
+                    博客主人
+                {% endif %}
+            </h3>
+            <p class="profile-bio">
+                {% if blog_owner and blog_owner.desc %}
+                    {{ blog_owner.desc|truncatechars:60 }}
+                {% elif blog_owner and blog_owner.gexing %}
+                    {{ blog_owner.gexing|truncatechars:60 }}
+                {% else %}
+                    分享深度学习与 AI 相关的学习笔记和技术思考。
+                {% endif %}
+            </p>
+        </div>
     </div>
 
     <!-- 最新文章 -->
     {% if sidebar_recent_posts %}
-    <div class="widget">
+    <div class="widget widget-expandable">
         <h4 class="widget-title">最新文章</h4>
-        <ul class="widget-list">
+        <ul class="widget-list" data-visible="3">
             {% for p in sidebar_recent_posts %}
-            <li>
+            <li{% if forloop.counter > 3 %} class="hidden-item"{% endif %}>
                 <a href="{% url 'blog:post_detail' p.slug %}">
                     <span class="widget-link-text">{{ p.title }}</span>
                     <span class="widget-link-date">{{ p.created_at|date:"m-d" }}</span>
                 </a>
             </li>
             {% endfor %}
+            {% if sidebar_recent_posts|length > 3 %}
+            <li class="more-toggle">
+                <button class="btn-more" onclick="toggleList(this)">查看更多 <span class="more-count">({{ sidebar_recent_posts|length|add:"-3" }})</span></button>
+            </li>
+            {% endif %}
         </ul>
     </div>
     {% endif %}
 
     <!-- 热门文章 -->
     {% if sidebar_hot_posts %}
-    <div class="widget">
+    <div class="widget widget-expandable">
         <h4 class="widget-title">热门文章</h4>
-        <ul class="widget-list">
+        <ul class="widget-list" data-visible="3">
             {% for p in sidebar_hot_posts %}
-            <li>
-                <a href="{% url 'blog:post_detail' p.slug %}" class="hot-item">
+            <li{% if forloop.counter > 3 %} class="hidden-item"{% endif %}>
+                <a href="{% url 'blog:post_detail' p.slug %}">
                     <span class="widget-link-text">{{ p.title }}</span>
                     <span class="widget-link-extra">{{ p.views }} 阅读</span>
                 </a>
             </li>
             {% endfor %}
+            {% if sidebar_hot_posts|length > 3 %}
+            <li class="more-toggle">
+                <button class="btn-more" onclick="toggleList(this)">查看更多 <span class="more-count">({{ sidebar_hot_posts|length|add:"-3" }})</span></button>
+            </li>
+            {% endif %}
         </ul>
     </div>
     {% endif %}
 
     <!-- 文章归档 -->
     {% if sidebar_archives %}
-    <div class="widget">
+    <div class="widget widget-expandable">
         <h4 class="widget-title">文章归档</h4>
-        <ul class="widget-list">
+        <ul class="widget-list" data-visible="3">
             {% for archive in sidebar_archives %}
-            <li>
+            <li{% if forloop.counter > 3 %} class="hidden-item"{% endif %}>
                 <a href="{% url 'blog:post_list' %}?year={{ archive.month.year }}&month={{ archive.month.month }}">
                     <span class="widget-link-text">{{ archive.month|date:"Y 年 m 月" }}</span>
                     <span class="widget-link-extra">{{ archive.count }} 篇</span>
                 </a>
             </li>
             {% endfor %}
+            {% if sidebar_archives|length > 3 %}
+            <li class="more-toggle">
+                <button class="btn-more" onclick="toggleList(this)">查看更多 <span class="more-count">({{ sidebar_archives|length|add:"-3" }})</span></button>
+            </li>
+            {% endif %}
         </ul>
     </div>
     {% endif %}
 
 </aside>
+
+<script>
+    function toggleList(btn) {
+        var list = btn.closest('ul');
+        var items = list.querySelectorAll('.hidden-item');
+        var count = list.querySelectorAll('.hidden-item').length;
+        var remaining = items.length;
+
+        if (list.classList.contains('expanded')) {
+            // 收起
+            list.classList.remove('expanded');
+            items.forEach(function (el) { el.classList.add('collapsing'); });
+            btn.innerHTML = '查看更多 <span class="more-count">(' + remaining + ')</span>';
+            setTimeout(function () {
+                items.forEach(function (el) { el.classList.remove('collapsing'); });
+            }, 300);
+        } else {
+            // 展开
+            list.classList.add('expanded');
+            items.forEach(function (el) { el.classList.add('expanding'); });
+            btn.innerHTML = '收起';
+            setTimeout(function () {
+                items.forEach(function (el) { el.classList.remove('expanding'); });
+            }, 300);
+        }
+    }
+</script>
