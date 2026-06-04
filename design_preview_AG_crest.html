@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Void Crest — Ethan BAI's blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e1a;
+  --surface: rgba(18,24,44,0.5);
+  --surface-light: rgba(24,32,56,0.68);
+  --text: #dce0ec;
+  --text-secondary: #909ab6;
+  --text-muted: #545e78;
+  --line: rgba(66,82,112,0.14);
+  --silver: #c4ccda;
+  --silver-dim: rgba(196,204,218,0.1);
+  --silver-edge: rgba(196,204,218,0.22);
+  --crest: #8090b0;
+  --crest-bright: #a0aec8;
+  --trace: #a89878;
+  --trace-soft: rgba(168,152,120,0.08);
+  --star: #a8b0c4;
+  --star-bright: #c8cedc;
+  --shadow: 0 1px 16px rgba(0,0,0,0.4);
+  --shadow-deep: 0 4px 30px rgba(0,0,0,0.6);
+  --radius: 1px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 40% 22%, rgba(128,144,176,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 82%, rgba(168,152,120,0.02) 0%, transparent 50%);
+  color: var(--text);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.04rem;
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Stars ─── */
+.void-stars { position:fixed; inset:0; pointer-events:none; z-index:0; }
+.vstar {
+  position:absolute; border-radius:50%;
+  background:var(--star);
+  animation:voidPulse linear infinite;
+}
+.vstar.bright { background:var(--star-bright); }
+.vstar.warm { background:var(--trace); }
+@keyframes voidPulse {
+  0%,100% { opacity:0.25; }
+  50% { opacity:0.6; }
+}
+
+/* ─── Silver crest line ─── */
+.crest-line {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events:none; z-index:0;
+  background:
+    linear-gradient(180deg, transparent 40%, rgba(196,204,218,0.025) 50%, transparent 60%);
+  background-size:100% 120px;
+  animation:crestRise 12s ease-in-out infinite;
+}
+@keyframes crestRise {
+  0%,100% { background-position:0 40%; }
+  50% { background-position:0 55%; }
+}
+
+/* ─── Hero ─── */
+.hero {
+  position:relative; z-index:1; min-height:600px;
+  display:flex; align-items:center; justify-content:center;
+  padding:50px 28px 110px; overflow:hidden;
+}
+.hero-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.hero-inner { text-align:center; max-width:680px; position:relative; z-index:1; }
+.hero-crest {
+  display:inline-flex; align-items:center; gap:22px; margin-bottom:30px;
+  opacity:0; animation:fadeUp 0.5s 0.1s ease-out forwards;
+}
+.crest-dot {
+  width:2px; height:2px; border-radius:1px;
+  background:var(--silver);
+}
+.crest-bar {
+  width:32px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--silver), var(--silver-dim), transparent);
+}
+.hero-name {
+  font-family:'Karla',sans-serif;
+  font-size:clamp(3rem,7vw,5rem); font-weight:300; line-height:1.02;
+  letter-spacing:-0.03em; color:var(--text);
+  margin-bottom:20px;
+  opacity:0; animation:fadeUp 0.5s 0.24s ease-out forwards;
+}
+.hero-name .crest {
+  font-weight:200; color:var(--crest);
+  border-top:1px solid var(--silver-dim);
+  padding-top:4px; display:inline-block;
+}
+.hero-name .warm { font-weight:200; color:var(--trace); }
+.hero-slogan {
+  font-size:1.04rem; color:var(--text-secondary); font-weight:400;
+  font-style:italic; max-width:540px; margin:0 auto 4px;
+  opacity:0; animation:fadeUp 0.5s 0.4s ease-out forwards;
+}
+.hero-sub {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.64rem; color:var(--text-muted); letter-spacing:0.12em;
+  margin-bottom:44px;
+  opacity:0; animation:fadeUp 0.5s 0.52s ease-out forwards;
+}
+.hero-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:12px 30px; font-size:0.74rem; font-weight:500;
+  text-decoration:none; transition:all 0.35s ease;
+  font-family:'Karla',sans-serif;
+  letter-spacing:0.08em; text-transform:uppercase;
+}
+.btn-crest {
+  background:var(--crest); color:var(--bg);
+  border:1px solid var(--silver-edge);
+  opacity:0.76;
+}
+.btn-crest:hover { opacity:1; border-color:var(--silver); }
+.btn-void {
+  border:1px solid var(--silver-edge); color:var(--text-secondary);
+  background:transparent;
+}
+.btn-void:hover { border-color:var(--silver); color:var(--silver); }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── Header ─── */
+.site-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(12,14,26,0.8); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--silver-edge);
+}
+.header-inner {
+  max-width:1080px; margin:0 auto; padding:14px 28px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
+}
+.brand {
+  font-family:'Karla',sans-serif;
+  font-size:0.88rem; font-weight:400; color:var(--text); text-decoration:none;
+  letter-spacing:0.05em; display:flex; align-items:center; gap:10px;
+}
+.brand-crest {
+  width:10px; height:1px; background:var(--silver);
+}
+.nav { display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+.nav a {
+  color:var(--text-secondary); text-decoration:none;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.66rem; padding:6px 14px; font-weight:400;
+  letter-spacing:0.08em; transition:all 0.28s;
+}
+.nav a:hover { color:var(--silver); }
+.nav a.active { color:var(--silver); }
+
+/* ─── Layout ─── */
+.wrapper { position:relative; z-index:1; max-width:960px; margin:0 auto; padding:0 28px; }
+
+/* ─── Card Grid ─── */
+.card-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:14px;
+  margin:-20px 0 48px;
+}
+@media(max-width:768px){ .card-grid{grid-template-columns:1fr;} }
+.card {
+  background:var(--surface); border:1px solid var(--silver-edge);
+  padding:32px 28px; box-shadow:var(--shadow);
+  transition:all 0.38s ease;
+  position:relative;
+}
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--silver), transparent);
+  opacity:0; transition:opacity 0.45s;
+}
+.card:hover::before { opacity:0.5; }
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-deep);
+  background:var(--surface-light);
+  border-color:var(--silver);
+}
+.card-hex {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.54rem; letter-spacing:0.14em; color:var(--text-muted);
+  margin-bottom:14px; text-transform:uppercase;
+}
+.card-title {
+  font-family:'Karla',sans-serif;
+  font-size:1.06rem; font-weight:500; margin-bottom:10px;
+  letter-spacing:-0.01em; color:var(--crest-bright);
+}
+.card-desc { font-size:0.82rem; color:var(--text-secondary); line-height:1.72; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.skill-tag {
+  padding:4px 10px; font-size:0.64rem; font-weight:400;
+  font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;
+  color:var(--text-muted); border:1px solid var(--silver-dim);
+  transition:all 0.3s;
+}
+.skill-tag:hover {
+  color:var(--silver); border-color:var(--silver);
+}
+
+/* ─── Posts ─── */
+.section-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:20px; flex-wrap:wrap; gap:8px;
+}
+.section-title {
+  font-family:'Karla',sans-serif;
+  font-size:1.06rem; font-weight:500; letter-spacing:-0.01em;
+  color:var(--crest-bright);
+  display:flex; align-items:center; gap:8px;
+}
+.section-title::before {
+  content:''; width:8px; height:1px; background:var(--silver);
+}
+.section-more {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--text-muted); text-decoration:none;
+  transition:color 0.28s;
+}
+.section-more:hover { color:var(--silver); }
+.post-list { margin-bottom:48px; }
+.post-item {
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  padding:18px 0; border-bottom:1px solid var(--silver-dim);
+  text-decoration:none; color:inherit;
+  transition:all 0.32s;
+}
+.post-item:hover { padding-left:10px; }
+.post-date {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.64rem; color:var(--text-muted); min-width:86px;
+}
+.post-dash {
+  width:10px; height:1px; background:var(--silver); flex-shrink:0;
+  opacity:0.2; transition:all 0.32s;
+}
+.post-item:hover .post-dash { opacity:0.7; width:18px; }
+.post-title { flex:1; font-weight:400; min-width:160px; }
+.post-tag {
+  font-family:'JetBrains Mono',monospace; font-size:0.54rem;
+  letter-spacing:0.1em; color:var(--trace);
+  text-transform:uppercase;
+}
+.post-arrow { color:var(--text-muted); transition:all 0.28s; font-size:0.8rem; }
+.post-item:hover .post-arrow { color:var(--silver); }
+
+/* ─── Testimonials ─── */
+.testimonials { padding-bottom:48px; }
+.testimonial-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+}
+@media(max-width:768px){ .testimonial-grid{grid-template-columns:1fr;} }
+.testimonial-card {
+  background:var(--surface); border:1px solid var(--silver-edge);
+  padding:26px 22px 20px; box-shadow:var(--shadow);
+  transition:all 0.38s;
+}
+.testimonial-card::before {
+  content:''; position:absolute; top:0; left:14px; right:14px; height:1px;
+  background:var(--silver); opacity:0; transition:opacity 0.45s;
+}
+.testimonial-card:hover {
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-deep);
+  border-color:var(--silver);
+}
+.testimonial-card:hover::before { opacity:0.4; }
+.t-crest {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.48rem; letter-spacing:0.14em; color:var(--text-muted);
+  text-transform:uppercase; margin-bottom:14px;
+}
+.t-quote {
+  font-size:0.78rem; color:var(--text-secondary); line-height:1.72;
+  margin-bottom:14px;
+}
+.t-author { display:flex; align-items:center; gap:8px; }
+.t-avatar {
+  width:26px; height:26px; border-radius:1px;
+  border:1px solid var(--silver);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Karla',sans-serif;
+  font-weight:500; font-size:0.54rem; color:var(--silver);
+}
+.t-name { font-size:0.72rem; font-weight:500; font-family:'Karla',sans-serif; }
+.t-role {
+  font-size:0.58rem; color:var(--text-muted);
+  font-family:'JetBrains Mono',monospace; letter-spacing:0.04em;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  border-top:1px solid var(--silver-edge); padding:48px 0;
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.6rem; color:var(--text-muted); letter-spacing:0.12em;
+  text-transform:uppercase; position:relative; z-index:1;
+}
+
+@media (max-width:768px) {
+  .wrapper { padding:0 16px; }
+  .hero { min-height:440px; }
+  .hero-name { font-size:2.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="void-stars" id="voidStars"></div>
+<div class="crest-line"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-crest"></span>
+      Ethan BAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">Home</a>
+      <a href="#">Crest</a>
+      <a href="#">Research</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <canvas class="hero-canvas" id="waveAG"></canvas>
+  <div class="hero-inner">
+    <div class="hero-crest">
+      <span class="crest-dot"></span>
+      <span class="crest-bar"></span>
+      <span class="crest-dot"></span>
+    </div>
+    <h1 class="hero-name"><span class="crest">Ethan</span> <span class="warm">BAI</span></h1>
+    <p class="hero-slogan">探索深度学习的边界，用代码构建智能的未来。</p>
+    <p class="hero-sub">Deep Learning Engineer · AI Explorer · Void Crest Rising</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-crest">READ LOG</a>
+      <a href="#" class="btn btn-void">ABOUT</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<section class="card-grid">
+  <div class="card">
+    <div class="card-hex">Crest 01 · Identity</div>
+    <h2 class="card-title">关于</h2>
+    <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码，相信积累的力量。</p>
+  </div>
+  <div class="card">
+    <div class="card-hex">Crest 02 · Present</div>
+    <h2 class="card-title">当下</h2>
+    <p class="card-desc">系统学习深度学习课程（Andrew Ng 专项），整理笔记并构建个人知识体系，同时维护这个博客记录思考与收获。</p>
+  </div>
+  <div class="card">
+    <div class="card-hex">Crest 03 · Toolkit</div>
+    <h2 class="card-title">技能</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">Python</span><span class="skill-tag">Django</span>
+      <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span>
+      <span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span>
+      <span class="skill-tag">Scikit-learn</span><span class="skill-tag">Git</span>
+      <span class="skill-tag">HTML/CSS</span><span class="skill-tag">SQL</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hex">Crest 04 · Passion</div>
+    <h2 class="card-title">热爱 & 坚持</h2>
+    <p class="card-desc">长期坚持深度学习的系统化学习与笔记整理。热爱阅读论文，参与开源社区，探索 AI 在不同领域的应用。</p>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2 class="section-title">Crest Log</h2>
+  <a href="#" class="section-more">All Crests</a>
+</div>
+<div class="post-list">
+  <a href="#" class="post-item">
+    <span class="post-date">2024-06</span>
+    <span class="post-dash"></span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W1 神经网络与深度学习笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-dash"></span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W2 神经网络编程基础</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-dash"></span>
+    <span class="post-tag">CODE</span>
+    <span class="post-title">L1W3 浅层神经网络笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-04</span>
+    <span class="post-dash"></span>
+    <span class="post-tag">BLOG</span>
+    <span class="post-title">用 Django 搭建个人博客的完整指南</span>
+    <span class="post-arrow">→</span>
+  </a>
+</div>
+
+<div class="section-header">
+  <h2 class="section-title">Peak Echo</h2>
+</div>
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-crest">Peak · Alpha</div>
+      <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西。</p>
+      <div class="t-author">
+        <div class="t-avatar">L</div>
+        <div><div class="t-name">Leo Chen</div><div class="t-role">ML Engineer</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-crest">Peak · Beta</div>
+      <p class="t-quote">他是我见过的最自律的学习者之一。每一步都很扎实。</p>
+      <div class="t-author">
+        <div class="t-avatar">M</div>
+        <div><div class="t-name">Mia Wang</div><div class="t-role">CS Graduate</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-crest">Peak · Gamma</div>
+      <p class="t-quote">代码干净，注释详细。希望他持续输出高质量内容。</p>
+      <div class="t-author">
+        <div class="t-avatar">Z</div>
+        <div><div class="t-name">Zhang Wei</div><div class="t-role">Data Scientist</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  STYLE AG — VOID CREST · SILVER CREST · ETHAN BAI
+</footer>
+
+<script>
+(function(){
+const vs=document.getElementById('voidStars');
+for(let i=0;i+1e3<2e3;i++){
+  const s=document.createElement('span');s.className='vstar';
+  const r=Math.random();
+  if(r>0.86)s.classList.add('warm');else if(r>0.46)s.classList.add('bright');
+  s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+  const sz=Math.random()*1.8+0.3;s.style.width=sz+'px';s.style.height=sz+'px';
+  s.style.animationDuration=(Math.random()*2.5+1.8)+'s';s.style.animationDelay=Math.random()*4+'s';
+  vs.appendChild(s);
+}
+})();
+(function(){
+const c=document.getElementById('waveAG'),x=c.getContext('2d');
+let w,h,st=Date.now(),hoverSpeed=1;
+function rs(){const hh=c.parentElement;w=c.width=hh.offsetWidth;h=c.height=hh.offsetHeight;}
+rs();window.addEventListener('resize',rs);
+document.addEventListener('mousemove',()=>{hoverSpeed=2.2;});
+document.addEventListener('mouseleave',()=>{hoverSpeed=1;});
+const ls=[
+  {a:0.08,f:0.0024,s:0.090,p:0.0,cl:'rgba(128,144,176,0.11)',w:1.4},
+  {a:0.15,f:0.0036,s:0.112,p:2.4,cl:'rgba(128,144,176,0.09)',w:2.0},
+  {a:0.22,f:0.0048,s:0.134,p:1.0,cl:'rgba(196,204,218,0.07)',w:2.6},
+  {a:0.11,f:0.0030,s:0.100,p:3.4,cl:'rgba(168,152,120,0.06)',w:1.6},
+];
+function dr(){
+  const e=(Date.now()-st)/1000;
+  x.clearRect(0,0,w,h);
+  ls.forEach(l=>{
+    x.beginPath();const bY=h*(0.38+l.a*0.8);
+    for(let i=0;i<=w;i+=3){
+      const ph=i*l.f+l.p+e*l.s*hoverSpeed;
+      const mod=Math.sin(i*0.0020+e*0.5)*0.24;
+      const y2=bY+Math.sin(ph*Math.PI*2)*h*l.a*(1+mod);
+      if(i===0)x.moveTo(i,y2);else x.lineTo(i,y2);
+    }
+    x.strokeStyle=l.cl;x.lineWidth=l.w;x.lineCap='round';x.stroke();
+  });
+  requestAnimationFrame(dr);
+}
+dr();
+})();
+</script>
+</body>
+</html>

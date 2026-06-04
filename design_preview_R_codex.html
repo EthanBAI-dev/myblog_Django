@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Illuminated Codex — Ethan BAI's blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=MedievalSharp&family=Metal+Mania&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Alex+Brush&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1210;
+  --surface: #241c18;
+  --surface-light: #2e2420;
+  --text: #d4c4a8;
+  --text-secondary: #a08868;
+  --text-muted: #645040;
+  --line: #3a2e24;
+  --line-gold: #5a4838;
+  --gold: #d4a84b;
+  --gold-bright: #f0d478;
+  --gold-glow: rgba(212,168,75,0.12);
+  --gold-intense: rgba(240,212,120,0.18);
+  --vermilion: #c4342a;
+  --vermilion-glow: rgba(196,52,42,0.1);
+  --ultramarine: #2848a0;
+  --ultramarine-glow: rgba(40,72,160,0.08);
+  --crimson: #8b1a2b;
+  --parchment: #e8dcc0;
+  --shadow: 0 4px 28px rgba(0,0,0,0.4);
+  --shadow-deep: 0 12px 48px rgba(0,0,0,0.6);
+  --radius: 2px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(212,168,75,0.06) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L40 80 M0 40 L80 40' stroke='rgba(212,168,75,0.02)' stroke-width='0.3' fill='none'/%3E%3C/svg%3E");
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.82;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position:relative; z-index:1; min-height:560px;
+  display:flex; align-items:center; justify-content:center;
+  padding:50px 28px 100px;
+  overflow:hidden;
+}
+/* Illuminated border */
+.hero-border {
+  position:absolute; inset:30px; pointer-events:none; z-index:0;
+  border:1.5px solid rgba(212,168,75,0.2);
+}
+.hero-border::before, .hero-border::after {
+  content:'❧'; position:absolute; color:var(--gold); font-size:1.4rem; opacity:0.4;
+}
+.hero-border::before { top:-12px; left:50%; transform:translateX(-50%); }
+.hero-border::after { bottom:-12px; left:50%; transform:translateX(-50%); }
+.hero-inner { text-align:center; max-width:680px; position:relative; z-index:1; }
+.hero-versicle {
+  display:inline-flex; align-items:center; gap:14px;
+  margin-bottom:28px;
+  opacity:0; animation:fadeUp 0.8s 0.1s ease-out forwards;
+}
+.vers-line { width:30px; height:1px; background:var(--gold); opacity:0.5; }
+.vers-dot { width:6px; height:6px; background:var(--vermilion); }
+.hero-name {
+  font-family:'Cinzel Decorative','MedievalSharp',Georgia,serif;
+  font-size:clamp(2.6rem,6.5vw,4.8rem); font-weight:700; line-height:1.08;
+  letter-spacing:0.08em; color:var(--gold-bright);
+  margin-bottom:22px;
+  text-shadow:0 0 40px rgba(240,212,120,0.2);
+  opacity:0; animation:fadeUp 0.8s 0.25s ease-out forwards;
+}
+.hero-name .initial {
+  font-family:'UnifrakturMaguntia','Cinzel Decorative',serif;
+  font-size:1.4em; color:var(--vermilion);
+  display:inline-block;
+  text-shadow:0 0 20px rgba(196,52,42,0.3);
+}
+.hero-latin {
+  font-family:'Cinzel',Georgia,serif;
+  font-size:0.78rem; color:var(--text-muted); letter-spacing:0.16em;
+  text-transform:uppercase; margin-bottom:20px;
+  opacity:0; animation:fadeUp 0.8s 0.35s ease-out forwards;
+}
+.hero-slogan {
+  font-size:1.04rem; color:var(--text-secondary); font-style:italic;
+  max-width:540px; margin:0 auto 6px;
+  opacity:0; animation:fadeUp 0.8s 0.45s ease-out forwards;
+}
+.hero-sub {
+  font-family:'Cinzel',Georgia,serif;
+  font-size:0.68rem; color:var(--text-muted); letter-spacing:0.12em;
+  text-transform:uppercase; margin-bottom:44px;
+  opacity:0; animation:fadeUp 0.8s 0.55s ease-out forwards;
+}
+.hero-actions { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 36px; font-size:0.8rem; font-weight:600;
+  text-decoration:none; transition:all 0.5s ease;
+  font-family:'Cinzel',Georgia,serif;
+  letter-spacing:0.1em; text-transform:uppercase;
+  position:relative;
+}
+.btn-gold {
+  background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color:var(--bg); border:1px solid var(--gold);
+  box-shadow:0 6px 24px var(--gold-glow);
+}
+.btn-gold:hover {
+  transform:translateY(-3px);
+  box-shadow:0 12px 36px var(--gold-intense);
+}
+.btn-scroll {
+  border:2px solid var(--vermilion); color:var(--vermilion); background:transparent;
+}
+.btn-scroll:hover {
+  background:var(--vermilion); color:var(--text);
+  border-color:var(--vermilion);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(26px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── Header ─── */
+.site-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(26,18,16,0.9); backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--gold);
+}
+.header-inner {
+  max-width:1100px; margin:0 auto; padding:16px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:10px;
+}
+.brand {
+  font-family:'Cinzel Decorative',Georgia,serif;
+  font-size:0.96rem; color:var(--gold-bright); text-decoration:none;
+  letter-spacing:0.08em; font-weight:700;
+  display:flex; align-items:center; gap:8px;
+}
+.brand-fleur {
+  color:var(--vermilion); font-size:1rem;
+}
+.nav { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+.nav a {
+  color:var(--text-secondary); text-decoration:none;
+  font-family:'Cinzel',Georgia,serif;
+  font-size:0.7rem; padding:6px 14px; letter-spacing:0.1em;
+  text-transform:uppercase; font-weight:600;
+  transition:all 0.4s;
+  position:relative;
+}
+.nav a::after {
+  content:''; position:absolute; bottom:0; left:14px; right:14px;
+  height:1px; background:var(--gold);
+  transform:scaleX(0); transition:transform 0.5s ease;
+  transform-origin:center;
+}
+.nav a:hover::after { transform:scaleX(1); }
+.nav a:hover { color:var(--gold-bright); }
+.nav a.active { color:var(--gold-bright); }
+.nav a.active::after { transform:scaleX(1); }
+
+/* ─── Layout ─── */
+.wrapper { position:relative; z-index:1; max-width:980px; margin:0 auto; padding:0 30px; }
+
+/* ─── Card Grid ─── */
+.card-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+  margin:-20px 0 56px;
+}
+@media(max-width:768px){ .card-grid{grid-template-columns:1fr;} }
+.card {
+  background:linear-gradient(180deg, var(--surface), var(--surface-light));
+  border:1px solid var(--line); border-radius:var(--radius);
+  padding:36px 30px; box-shadow:var(--shadow);
+  transition:all 0.5s ease;
+  position:relative;
+}
+/* Illuminated initial */
+.card::first-letter { font-size:2em; }
+.card::before {
+  content:''; position:absolute; top:12px; left:12px; right:12px; bottom:12px;
+  border:1px solid rgba(212,168,75,0.15);
+  pointer-events:none;
+  opacity:0; transition:opacity 0.5s;
+}
+.card:hover::before { opacity:1; }
+.card:hover {
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-deep);
+}
+.card-folio {
+  font-family:'Cinzel',Georgia,serif;
+  font-size:0.6rem; letter-spacing:0.16em; color:var(--vermilion);
+  text-transform:uppercase; margin-bottom:14px;
+  font-weight:700;
+}
+.card-title {
+  font-family:'Cinzel Decorative',Georgia,serif;
+  font-size:1.2rem; font-weight:700; margin-bottom:12px;
+  color:var(--gold);
+  letter-spacing:0.04em;
+}
+.card-desc { font-size:0.86rem; color:var(--text-secondary); line-height:1.76; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.skill-tag {
+  padding:7px 16px; font-size:0.74rem; letter-spacing:0.06em;
+  font-family:'Cinzel',Georgia,serif; font-weight:600;
+  background:var(--ultramarine-glow); color:var(--text-secondary);
+  border:1px solid var(--line-gold);
+  transition:all 0.5s;
+}
+.skill-tag:hover {
+  background:var(--gold); color:var(--bg); border-color:var(--gold);
+  box-shadow:0 0 16px var(--gold-glow);
+  transform:translateY(-2px);
+}
+
+/* ─── Posts ─── */
+.section-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:22px; flex-wrap:wrap; gap:8px;
+}
+.section-title {
+  font-family:'Cinzel Decorative',Georgia,serif;
+  font-size:1.2rem; font-weight:700; color:var(--gold);
+  letter-spacing:0.08em;
+  display:flex; align-items:center; gap:14px;
+}
+.section-title::before {
+  content:'❧'; color:var(--vermilion); font-size:0.9rem; font-family:serif;
+}
+.section-more {
+  font-family:'Cinzel',Georgia,serif; font-weight:600;
+  font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--gold); text-decoration:none;
+  padding:5px 16px; border:1px solid var(--gold);
+  transition:all 0.4s;
+}
+.section-more:hover { background:var(--gold); color:var(--bg); }
+.post-list { margin-bottom:56px; }
+.post-item {
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  padding:20px 16px; border-bottom:1px solid var(--line);
+  text-decoration:none; color:inherit;
+  transition:all 0.5s;
+}
+.post-item:hover { padding-left:14px; background:rgba(212,168,75,0.03); }
+.post-date {
+  font-family:'Cinzel',Georgia,serif;
+  font-size:0.68rem; color:var(--text-muted); letter-spacing:0.08em;
+  min-width:88px;
+}
+.post-fleur {
+  color:var(--vermilion); font-size:0.5rem; flex-shrink:0;
+}
+.post-title { flex:1; font-style:italic; min-width:160px; }
+.post-tag {
+  font-family:'Cinzel',Georgia,serif; font-weight:700;
+  font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--ultramarine); padding:3px 12px;
+  border:1px solid rgba(40,72,160,0.3);
+}
+.post-arrow {
+  font-family:'Cinzel',Georgia,serif; color:var(--text-muted);
+  transition:all 0.4s;
+}
+.post-item:hover .post-arrow { color:var(--gold-bright); transform:translateX(4px); }
+
+/* ─── Testimonials ─── */
+.testimonials { padding-bottom:56px; }
+.testimonial-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+}
+@media(max-width:768px){ .testimonial-grid{grid-template-columns:1fr;} }
+.testimonial-card {
+  background:linear-gradient(180deg, var(--surface), var(--surface-light));
+  border:1px solid var(--line); border-radius:var(--radius);
+  padding:30px 24px 24px; box-shadow:var(--shadow);
+  transition:all 0.5s;
+  position:relative;
+}
+.testimonial-card::before {
+  content:''; position:absolute; top:10px; left:14px; right:14px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity:0; transition:opacity 0.5s;
+}
+.testimonial-card:hover::before { opacity:0.5; }
+.testimonial-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-deep); }
+.t-sigil {
+  font-family:'Cinzel',Georgia,serif; font-weight:700;
+  font-size:0.56rem; letter-spacing:0.16em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:14px;
+}
+.t-quote {
+  font-size:0.82rem; color:var(--text-secondary); line-height:1.76;
+  margin-bottom:18px; font-style:italic;
+}
+.t-author { display:flex; align-items:center; gap:10px; }
+.t-avatar {
+  width:34px; height:34px;
+  clip-path:polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  background:linear-gradient(135deg, var(--gold), #b89030);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cinzel Decorative',Georgia,serif;
+  font-weight:700; font-size:0.62rem; color:var(--bg);
+}
+.t-name { font-size:0.82rem; font-weight:600; }
+.t-role {
+  font-size:0.66rem; color:var(--text-muted);
+  font-family:'Cinzel',Georgia,serif; letter-spacing:0.06em;
+  text-transform:uppercase;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  border-top:2px solid var(--gold); padding:52px 0;
+  text-align:center;
+  font-family:'Cinzel',Georgia,serif;
+  font-size:0.64rem; color:var(--text-muted); letter-spacing:0.14em;
+  text-transform:uppercase; position:relative; z-index:1;
+}
+.site-footer::before {
+  content:'❧'; display:block; font-size:0.8rem; color:var(--gold);
+  margin-bottom:14px; opacity:0.5;
+}
+
+@media (max-width:768px) {
+  .wrapper { padding:0 18px; }
+  .hero { min-height:440px; }
+  .hero-name { font-size:2.2rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-fleur">❦</span>
+      Ethan BAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">Home</a>
+      <a href="#">Codex</a>
+      <a href="#">Bestiary</a>
+      <a href="#">Scriptor</a>
+      <a href="#">Annals</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-border"></div>
+  <div class="hero-inner">
+    <div class="hero-versicle">
+      <span class="vers-line"></span>
+      <span class="vers-dot"></span>
+      <span class="vers-line"></span>
+    </div>
+    <h1 class="hero-name"><span class="initial">E</span>than <span class="initial">B</span>AI</h1>
+    <p class="hero-latin">Lux in Tenebris · Codex Illuminatus</p>
+    <p class="hero-slogan">探索深度学习的边界，用代码构建智能的未来。</p>
+    <p class="hero-sub">Deep Learning Engineer · AI Explorer · Custos Codicis</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-gold">Read the Codex</a>
+      <a href="#" class="btn btn-scroll">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<section class="card-grid">
+  <div class="card">
+    <div class="card-folio">Folio I · Identitas</div>
+    <h2 class="card-title">关于</h2>
+    <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码，相信积累的力量。</p>
+  </div>
+  <div class="card">
+    <div class="card-folio">Folio II · Praesens</div>
+    <h2 class="card-title">当下</h2>
+    <p class="card-desc">系统学习深度学习课程（Andrew Ng 专项），整理笔记并构建个人知识体系，同时维护这个博客记录思考与收获。</p>
+  </div>
+  <div class="card">
+    <div class="card-folio">Folio III · Ars Technica</div>
+    <h2 class="card-title">技能</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">Python</span><span class="skill-tag">Django</span>
+      <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span>
+      <span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span>
+      <span class="skill-tag">Scikit-learn</span><span class="skill-tag">Git</span>
+      <span class="skill-tag">HTML/CSS</span><span class="skill-tag">SQL</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-folio">Folio IV · Passio</div>
+    <h2 class="card-title">热爱 & 坚持</h2>
+    <p class="card-desc">长期坚持深度学习的系统化学习与笔记整理。热爱阅读论文，参与开源社区，探索 AI 在不同领域的应用。</p>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2 class="section-title">最近条目</h2>
+  <a href="#" class="section-more">ARCHIVUM</a>
+</div>
+<div class="post-list">
+  <a href="#" class="post-item">
+    <span class="post-date">2024-06</span>
+    <span class="post-fleur">❧</span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W1 神经网络与深度学习笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-fleur">❧</span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W2 神经网络编程基础</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-fleur">❧</span>
+    <span class="post-tag">CODE</span>
+    <span class="post-title">L1W3 浅层神经网络笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-04</span>
+    <span class="post-fleur">❧</span>
+    <span class="post-tag">BLOG</span>
+    <span class="post-title">用 Django 搭建个人博客的完整指南</span>
+    <span class="post-arrow">→</span>
+  </a>
+</div>
+
+<div class="section-header">
+  <h2 class="section-title">同行评价</h2>
+</div>
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-sigil">† Testimonium †</div>
+      <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西，尤其是对复杂概念的拆解能力。</p>
+      <div class="t-author">
+        <div class="t-avatar">L</div>
+        <div><div class="t-name">Leo Chen</div><div class="t-role">ML Engineer</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-sigil">† Testimonium †</div>
+      <p class="t-quote">他是我见过的最自律的学习者之一。从零开始搭建博客、整理课程笔记，每一步都很扎实。</p>
+      <div class="t-author">
+        <div class="t-avatar">M</div>
+        <div><div class="t-name">Mia Wang</div><div class="t-role">CS Graduate</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-sigil">† Testimonium †</div>
+      <p class="t-quote">代码风格干净，注释详细，很适合作为学习参考。希望他能持续输出更多高质量内容！</p>
+      <div class="t-author">
+        <div class="t-avatar">Z</div>
+        <div><div class="t-name">Zhang Wei</div><div class="t-role">Data Scientist</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  STYLE R — ILLUMINATED CODEX · MEDIEVAL SCRIPTORIUM · ETHAN BAI
+</footer>
+
+</body>
+</html>

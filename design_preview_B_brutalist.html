@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brutalist Garden — Ethan BAI's blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0ece6;
+  --surface: #faf7f2;
+  --surface-hover: #f3efe8;
+  --text: #1a1a1a;
+  --text-secondary: #6b635a;
+  --text-muted: #9b948b;
+  --line: #ccc6bc;
+  --line-strong: #222;
+  --forest: #2d6a4f;
+  --forest-soft: rgba(45,106,79,0.06);
+  --forest-md: rgba(45,106,79,0.12);
+  --terracotta: #b7673c;
+  --terracotta-soft: rgba(183,103,60,0.06);
+  --shadow: 4px 4px 0 rgba(0,0,0,0.08);
+  --shadow-lg: 6px 6px 0 rgba(0,0,0,0.12);
+  --radius: 0px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position:relative; min-height:560px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  background:linear-gradient(180deg, #e8e2d8 0%, #f0ece6 50%, #e6e0d6 100%);
+  border-bottom:3px solid var(--line-strong);
+}
+.hero-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+.hero-grid {
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+.hero-content {
+  position:relative; z-index:2; padding:60px 32px 80px; text-align:center;
+}
+.hero-tag {
+  font-family:'Space Mono',monospace;
+  font-size:0.7rem; letter-spacing:0.24em; color:var(--forest);
+  margin-bottom:12px; text-transform:uppercase;
+  opacity:0; animation:fadeUp 0.7s 0.1s ease-out forwards;
+}
+.hero-name {
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(3rem,7.5vw,5.4rem); font-weight:800; line-height:0.92;
+  letter-spacing:-0.06em; color:var(--text);
+  margin-bottom:20px;
+  opacity:0; animation:fadeUp 0.7s 0.25s ease-out forwards;
+}
+.hero-name .dot {
+  display:inline-block; width:14px; height:14px;
+  background:var(--terracotta); margin:0 8px; vertical-align:middle;
+  position:relative; top:-10px;
+}
+.hero-slogan {
+  font-size:1.06rem; color:var(--text-secondary); font-weight:500;
+  max-width:540px; margin:0 auto 6px;
+  opacity:0; animation:fadeUp 0.7s 0.4s ease-out forwards;
+}
+.hero-sub {
+  font-size:0.82rem; color:var(--text-muted);
+  margin-bottom:38px;
+  opacity:0; animation:fadeUp 0.7s 0.5s ease-out forwards;
+}
+.hero-actions { display:flex; gap:0; justify-content:center; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 34px; font-size:0.84rem;
+  font-weight:700; text-decoration:none;
+  transition:all 0.25s;
+  letter-spacing:0.06em; text-transform:uppercase;
+  font-family:'Space Mono',monospace;
+}
+.btn-primary {
+  background:var(--text); color:var(--bg);
+  border:3px solid var(--text);
+}
+.btn-primary:hover {
+  background:var(--forest); border-color:var(--forest); color:#fff;
+  transform:translate(-2px,-2px);
+  box-shadow:4px 4px 0 rgba(0,0,0,0.15);
+}
+.btn-outline {
+  border:3px solid var(--text); color:var(--text); background:transparent;
+  margin-left:-3px;
+}
+.btn-outline:hover {
+  background:var(--text); color:var(--bg);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── Header ─── */
+.site-header {
+  background:rgba(240,236,230,0.95); backdrop-filter:blur(10px);
+  position:sticky; top:0; z-index:100;
+  border-bottom:3px solid var(--line-strong);
+}
+.header-inner {
+  max-width:1060px; margin:0 auto; padding:15px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand {
+  font-weight:800; font-size:1.08rem; color:var(--text); text-decoration:none;
+  letter-spacing:-0.02em; display:flex; align-items:center; gap:12px;
+}
+.brand-stamp {
+  font-family:'Space Mono',monospace;
+  font-size:0.66rem; letter-spacing:0.12em; color:var(--forest);
+  border:2px solid var(--forest); padding:3px 8px;
+  font-weight:700;
+}
+.nav { display:flex; align-items:center; gap:0; }
+.nav a {
+  color:var(--text-secondary); text-decoration:none;
+  font-size:0.8rem; padding:6px 16px; font-weight:600;
+  letter-spacing:0.06em; text-transform:uppercase;
+  transition:all 0.2s;
+  border:2px solid transparent;
+  font-family:'Space Mono',monospace;
+}
+.nav a:hover { border-color:var(--text); color:var(--text); background:transparent; }
+.nav a.active { border-color:var(--text); color:var(--text); }
+
+/* ─── Layout ─── */
+.wrapper { max-width:980px; margin:0 auto; padding:0 30px; }
+
+/* ─── Card Grid ─── */
+.card-grid {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:0; margin:-30px 0 60px;
+  position:relative; z-index:3;
+  border:3px solid var(--line-strong);
+}
+.card {
+  background:var(--surface); padding:34px 30px;
+  border:2px solid var(--line);
+  transition:all 0.35s;
+  position:relative;
+}
+.card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:0;
+  background:var(--forest);
+  transition:height 0.35s ease;
+}
+.card:hover::after { height:4px; }
+.card:hover {
+  background:var(--surface-hover);
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 rgba(0,0,0,0.1);
+  z-index:2;
+}
+.card-stamp {
+  font-family:'Space Mono',monospace;
+  font-size:0.64rem; letter-spacing:0.15em; color:var(--forest);
+  margin-bottom:10px; text-transform:uppercase;
+  border-bottom:2px solid var(--terracotta);
+  display:inline-block; padding-bottom:4px;
+}
+.card-title {
+  font-size:1.26rem; font-weight:800; margin-bottom:10px;
+  letter-spacing:-0.02em;
+}
+.card-desc { font-size:0.86rem; color:var(--text-secondary); line-height:1.72; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:0; }
+.skill-tag {
+  padding:6px 12px; font-size:0.76rem; font-weight:600;
+  border:2px solid var(--line-strong); color:var(--text-secondary);
+  margin-right:-2px; margin-bottom:-2px;
+  transition:all 0.25s;
+  font-family:'Space Mono',monospace; letter-spacing:0.02em;
+  background:var(--surface);
+}
+.skill-tag:hover {
+  background:var(--text); color:var(--bg); border-color:var(--text);
+  z-index:1;
+}
+
+/* ─── Posts ─── */
+.section-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:22px;
+}
+.section-title {
+  font-size:1.3rem; font-weight:800;
+  display:flex; align-items:center; gap:14px;
+  letter-spacing:-0.02em;
+}
+.section-title::before {
+  content:''; width:30px; height:4px; background:var(--forest);
+}
+.section-more {
+  font-family:'Space Mono',monospace;
+  font-size:0.72rem; letter-spacing:0.1em; font-weight:700;
+  color:var(--text-secondary); text-decoration:none;
+  padding-bottom:3px; border-bottom:3px solid var(--text);
+  text-transform:uppercase;
+  transition:all 0.2s;
+}
+.section-more:hover { color:var(--forest); border-color:var(--forest); }
+.post-list { margin-bottom:60px; }
+.post-item {
+  display:flex; align-items:center; gap:20px;
+  padding:16px 0; border-bottom:2px solid var(--line);
+  text-decoration:none; color:inherit;
+  transition:all 0.3s;
+  border-left:3px solid transparent;
+  padding-left:12px;
+}
+.post-item:hover {
+  border-left-color:var(--forest);
+  padding-left:20px;
+}
+.post-date {
+  font-family:'Space Mono',monospace;
+  font-size:0.76rem; color:var(--text-muted); min-width:84px;
+  letter-spacing:0.04em;
+}
+.post-title { flex:1; font-weight:600; }
+.post-tag {
+  font-family:'Space Mono',monospace; font-size:0.66rem;
+  color:var(--terracotta); letter-spacing:0.08em;
+  border:2px solid var(--terracotta); padding:2px 8px;
+  text-transform:uppercase;
+}
+.post-arrow { color:var(--text-muted); transition:all 0.3s; font-weight:700; }
+.post-item:hover .post-arrow { color:var(--forest); transform:translateX(4px); }
+
+/* ─── Testimonials ─── */
+.testimonials { margin-bottom:64px; }
+.testimonial-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:0; border:3px solid var(--line-strong);
+}
+.testimonial-card {
+  background:var(--surface); padding:28px 24px 22px;
+  border:2px solid var(--line);
+  transition:all 0.3s;
+  position:relative;
+}
+.testimonial-card:hover {
+  background:var(--surface-hover);
+  transform:translate(-2px,-2px);
+  box-shadow:4px 4px 0 rgba(0,0,0,0.1);
+}
+.t-stamp {
+  font-family:'Space Mono',monospace;
+  font-size:0.64rem; color:var(--forest); letter-spacing:0.14em;
+  margin-bottom:14px; text-transform:uppercase;
+}
+.t-quote {
+  font-size:0.84rem; color:var(--text-secondary); line-height:1.72;
+  margin-bottom:18px;
+}
+.t-author { display:flex; align-items:center; gap:10px; }
+.t-avatar {
+  width:36px; height:36px;
+  border:2px solid var(--text);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:0.76rem; color:var(--text);
+  font-family:'Space Mono',monospace;
+}
+.t-name { font-size:0.86rem; font-weight:700; }
+.t-role {
+  font-size:0.72rem; color:var(--text-muted);
+  font-family:'Space Mono',monospace; letter-spacing:0.04em;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  border-top:3px solid var(--line-strong); padding:44px 0;
+  text-align:center; color:var(--text-muted); font-size:0.74rem;
+  font-family:'Space Mono',monospace; letter-spacing:0.08em;
+}
+
+/* ─── Responsive ─── */
+@media (max-width:768px) {
+  .wrapper { padding:0 16px; }
+  .hero { min-height:440px; }
+  .card-grid { grid-template-columns:1fr; margin-top:20px; }
+  .testimonial-grid { grid-template-columns:1fr; }
+  .header-inner { flex-direction:column; gap:10px; }
+  .nav { flex-wrap:wrap; justify-content:center; }
+  .hero-name { font-size:2.4rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-stamp">BLOG</span>
+      Ethan BAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">首页</a>
+      <a href="#">博客</a>
+      <a href="#">项目</a>
+      <a href="#">关于</a>
+      <a href="#">简历</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <canvas class="hero-canvas" id="waveB"></canvas>
+  <div class="hero-content">
+    <p class="hero-tag">GARDEN — 01</p>
+    <h1 class="hero-name">Ethan<span class="dot"></span>BAI</h1>
+    <p class="hero-slogan">探索深度学习的边界，用代码构建智能的未来。</p>
+    <p class="hero-sub">深度学习工程师 & AI 技术探索者 · 持续学习中</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">阅读博客</a>
+      <a href="#" class="btn btn-outline">了解更多</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<section class="card-grid">
+  <div class="card">
+    <div class="card-stamp">01 — Identity</div>
+    <h2 class="card-title">关于</h2>
+    <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码，相信积累的力量。</p>
+  </div>
+  <div class="card">
+    <div class="card-stamp">02 — Present</div>
+    <h2 class="card-title">当下</h2>
+    <p class="card-desc">系统学习深度学习课程（Andrew Ng 专项），整理笔记并构建个人知识体系，同时维护这个博客记录思考与收获。</p>
+  </div>
+  <div class="card">
+    <div class="card-stamp">03 — Toolkit</div>
+    <h2 class="card-title">技能</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">Python</span><span class="skill-tag">Django</span>
+      <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span>
+      <span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span>
+      <span class="skill-tag">Scikit-learn</span><span class="skill-tag">Git</span>
+      <span class="skill-tag">HTML/CSS</span><span class="skill-tag">SQL</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stamp">04 — Passion</div>
+    <h2 class="card-title">热爱 & 坚持</h2>
+    <p class="card-desc">长期坚持深度学习的系统化学习与笔记整理。热爱阅读论文，参与开源社区，探索 AI 在不同领域的应用。</p>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2 class="section-title">最新文章</h2>
+  <a href="#" class="section-more">ALL POSTS →</a>
+</div>
+<div class="post-list">
+  <a href="#" class="post-item">
+    <span class="post-date">2024-06</span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W1 神经网络与深度学习笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W2 神经网络编程基础</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-tag">CODE</span>
+    <span class="post-title">L1W3 浅层神经网络笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-04</span>
+    <span class="post-tag">BLOG</span>
+    <span class="post-title">用 Django 搭建个人博客的完整指南</span>
+    <span class="post-arrow">→</span>
+  </a>
+</div>
+
+<div class="section-header">
+  <h2 class="section-title">朋友这样说</h2>
+</div>
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-stamp">★★★★★</div>
+      <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西，尤其是对复杂概念的拆解能力。</p>
+      <div class="t-author">
+        <div class="t-avatar">LC</div>
+        <div><div class="t-name">Leo Chen</div><div class="t-role">ML ENGINEER</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-stamp">★★★★★</div>
+      <p class="t-quote">他是我见过的最自律的学习者之一。从零开始搭建博客、整理课程笔记，每一步都很扎实。</p>
+      <div class="t-author">
+        <div class="t-avatar">MW</div>
+        <div><div class="t-name">Mia Wang</div><div class="t-role">CS GRADUATE</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-stamp">★★★★★</div>
+      <p class="t-quote">代码风格干净，注释详细，很适合作为学习参考。希望他能持续输出更多高质量内容！</p>
+      <div class="t-author">
+        <div class="t-avatar">ZW</div>
+        <div><div class="t-name">Zhang Wei</div><div class="t-role">DATA SCIENTIST</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  STYLE B — BRUTALIST GARDEN · BOLD BORDERS · ETHAN BAI
+</footer>
+
+<script>
+(function(){
+const c=document.getElementById('waveB'),x=c.getContext('2d');
+let w,h,st=Date.now();
+function rs(){const hh=c.parentElement;w=c.width=hh.offsetWidth;h=c.height=hh.offsetHeight;}
+rs();window.addEventListener('resize',rs);
+const ls=[
+  {a:0.12,f:0.0012,s:0.04,p:0,y:0.44,cl:'rgba(45,106,79,0.18)',w:2},
+  {a:0.18,f:0.0020,s:0.035,p:1.8,y:0.48,cl:'rgba(45,106,79,0.12)',w:2.5},
+  {a:0.26,f:0.0008,s:0.028,p:2.6,y:0.47,cl:'rgba(183,103,60,0.14)',w:3},
+  {a:0.22,f:0.0016,s:0.042,p:0.9,y:0.50,cl:'rgba(45,106,79,0.08)',w:1.8},
+  {a:0.16,f:0.0024,s:0.05,p:3.2,y:0.52,cl:'rgba(183,103,60,0.10)',w:2.2},
+];
+function dr(){
+  const e=(Date.now()-st)/1000,dc=0.4+2.6*Math.exp(-e/3.5);
+  x.clearRect(0,0,w,h);
+  ls.forEach(l=>{
+    x.beginPath();
+    const bY=h*l.y;
+    for(let i=0;i<=w;i+=3){
+      const ph=i*l.f+l.p+e*l.s*dc;
+      const y2=bY+Math.tan(ph*Math.PI)*h*l.a*0.35;
+      if(i===0)x.moveTo(i,y2);else x.lineTo(i,y2);
+    }
+    x.strokeStyle=l.cl;x.lineWidth=l.w;x.lineCap='square';x.stroke();
+  });
+  requestAnimationFrame(dr);
+}
+dr();
+})();
+</script>
+</body>
+</html>

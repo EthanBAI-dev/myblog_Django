@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terracotta Adobe — Ethan BAI's blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200;0,7..72,300;0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Almendra+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5ede0;
+  --surface: #fdf8f2;
+  --surface-warm: #f8efe2;
+  --text: #3b2e24;
+  --text-secondary: #6b5a4e;
+  --text-muted: #9b8a7a;
+  --line: #e0d0bc;
+  --line-strong: #c4a884;
+  --terracotta: #c4704a;
+  --terracotta-deep: #a0523a;
+  --terracotta-soft: rgba(196,112,74,0.08);
+  --sage: #7d8c6e;
+  --sage-soft: rgba(125,140,110,0.08);
+  --adobe: #d4a574;
+  --adobe-soft: rgba(212,165,116,0.10);
+  --sky: #8baecc;
+  --shadow-warm: 0 4px 24px rgba(59,46,36,0.06);
+  --shadow-deep: 0 12px 40px rgba(59,46,36,0.10);
+  --radius: 6px;
+  --radius-xl: 16px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Literata', Georgia, 'Times New Roman', serif;
+  line-height: 1.82;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Adobe texture ─── */
+.adobe-texture {
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  opacity:0.35;
+  background-image:
+    radial-gradient(ellipse at 15% 25%, rgba(196,112,74,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 75%, rgba(125,140,110,0.05) 0%, transparent 50%);
+}
+.adobe-grain {
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position:relative; z-index:1; min-height:540px;
+  display:flex; align-items:center; justify-content:center;
+  padding:50px 28px 100px;
+  overflow:hidden;
+}
+.hero-sun {
+  position:absolute; top:8%; right:15%; width:180px; height:180px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(196,112,74,0.12) 0%, rgba(212,165,116,0.06) 40%, transparent 70%);
+  pointer-events:none; z-index:0;
+  animation:sunPulse 8s ease-in-out infinite;
+}
+@keyframes sunPulse {
+  0%,100% { transform:scale(1); opacity:0.6; }
+  50% { transform:scale(1.08); opacity:0.8; }
+}
+.hero-inner { text-align:center; max-width:680px; position:relative; z-index:1; }
+.hero-mark {
+  display:inline-flex; align-items:center; gap:10px;
+  margin-bottom:28px;
+  opacity:0; animation:fadeUp 0.7s 0.1s ease-out forwards;
+}
+.hero-mark-line {
+  width:30px; height:2px; background:var(--terracotta);
+}
+.hero-mark-diamond {
+  width:10px; height:10px; background:var(--terracotta);
+  transform:rotate(45deg);
+}
+.hero-name {
+  font-family:'Almendra Display', 'Literata', Georgia, serif;
+  font-size:clamp(3.2rem,7.5vw,5.6rem); font-weight:400; line-height:1.04;
+  letter-spacing:0.02em; color:var(--terracotta-deep);
+  margin-bottom:20px;
+  opacity:0; animation:fadeUp 0.7s 0.25s ease-out forwards;
+}
+.hero-name span { color:var(--text); font-style:italic; }
+.hero-divider {
+  width:50px; height:2px; background:var(--terracotta);
+  margin:0 auto 22px;
+  opacity:0; animation:fadeUp 0.7s 0.35s ease-out forwards;
+}
+.hero-slogan {
+  font-family:'Literata', Georgia, serif; font-size:1.08rem;
+  font-style:italic; color:var(--text-secondary); font-weight:400;
+  max-width:540px; margin:0 auto 8px;
+  opacity:0; animation:fadeUp 0.7s 0.45s ease-out forwards;
+}
+.hero-sub {
+  font-family:'Courier Prime',monospace;
+  font-size:0.74rem; color:var(--text-muted); letter-spacing:0.06em;
+  margin-bottom:40px;
+  opacity:0; animation:fadeUp 0.7s 0.55s ease-out forwards;
+}
+.hero-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 32px; font-size:0.86rem; font-weight:500;
+  text-decoration:none; transition:all 0.35s ease;
+  font-family:'Courier Prime',monospace; letter-spacing:0.06em;
+}
+.btn-adobe {
+  background:var(--terracotta); color:var(--surface);
+  border:2px solid var(--terracotta);
+  box-shadow:0 6px 24px rgba(196,112,74,0.22);
+}
+.btn-adobe:hover {
+  background:var(--terracotta-deep); border-color:var(--terracotta-deep);
+  transform:translateY(-3px);
+  box-shadow:0 12px 36px rgba(196,112,74,0.32);
+}
+.btn-sage {
+  border:2px solid var(--sage); color:var(--sage); background:transparent;
+}
+.btn-sage:hover {
+  background:var(--sage); color:var(--surface);
+  border-color:var(--sage);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── Header ─── */
+.site-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(245,237,224,0.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line-strong);
+}
+.header-inner {
+  max-width:1080px; margin:0 auto; padding:16px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:10px;
+}
+.brand {
+  font-family:'Almendra Display','Literata',Georgia,serif;
+  font-size:1.3rem; color:var(--terracotta-deep); text-decoration:none;
+  letter-spacing:0.04em; display:flex; align-items:center; gap:8px;
+}
+.brand-emble {
+  display:inline-flex; width:24px; height:24px; background:var(--terracotta);
+  transform:rotate(45deg); opacity:0.8;
+}
+.nav { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+.nav a {
+  color:var(--text-secondary); text-decoration:none;
+  font-family:'Courier Prime',monospace;
+  font-size:0.78rem; padding:6px 14px; letter-spacing:0.06em;
+  transition:all 0.3s;
+  position:relative;
+}
+.nav a::after {
+  content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  width:0; height:1px; background:var(--terracotta);
+  transition:width 0.3s ease;
+}
+.nav a:hover::after { width:60%; }
+.nav a:hover { color:var(--terracotta-deep); }
+.nav a.active { color:var(--terracotta-deep); }
+.nav a.active::after { width:60%; background:var(--terracotta); }
+
+/* ─── Layout ─── */
+.wrapper { position:relative; z-index:1; max-width:1000px; margin:0 auto; padding:0 30px; }
+
+/* ─── Card Grid ─── */
+.card-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:24px;
+  margin:-20px 0 56px;
+}
+@media(max-width:768px){ .card-grid{grid-template-columns:1fr;} }
+.card {
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-xl); padding:34px 28px;
+  box-shadow:var(--shadow-warm);
+  transition:all 0.4s ease;
+  position:relative; overflow:hidden;
+}
+.card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--terracotta), var(--adobe), var(--sage));
+  transform:scaleX(0); transform-origin:center;
+  transition:transform 0.5s ease;
+}
+.card:hover::after { transform:scaleX(1); }
+.card:hover {
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-deep);
+}
+.card-symbol {
+  font-family:'Almendra Display',Georgia,serif;
+  font-size:2rem; color:var(--terracotta); opacity:0.4;
+  margin-bottom:12px; line-height:1;
+  transition:all 0.4s;
+}
+.card:hover .card-symbol { opacity:0.8; transform:scale(1.1); }
+.card-label {
+  font-family:'Courier Prime',monospace;
+  font-size:0.64rem; letter-spacing:0.12em; color:var(--sage);
+  margin-bottom:8px; text-transform:uppercase;
+}
+.card-title {
+  font-family:'Literata',Georgia,serif;
+  font-size:1.24rem; font-weight:600; font-style:italic;
+  margin-bottom:10px; color:var(--terracotta-deep);
+}
+.card-desc { font-size:0.86rem; color:var(--text-secondary); line-height:1.76; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.skill-tag {
+  padding:6px 14px; border-radius:3px; font-size:0.78rem;
+  background:var(--adobe-soft); color:var(--terracotta-deep);
+  border:1px solid var(--line-strong);
+  font-family:'Courier Prime',monospace; letter-spacing:0.02em;
+  transition:all 0.3s;
+}
+.skill-tag:nth-child(even) { background:var(--sage-soft); color:var(--sage); }
+.skill-tag:hover {
+  background:var(--terracotta); color:var(--surface); border-color:var(--terracotta);
+  transform:translateY(-2px);
+}
+
+/* ─── Posts ─── */
+.section-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:20px; flex-wrap:wrap; gap:8px;
+}
+.section-title {
+  font-family:'Almendra Display','Literata',Georgia,serif;
+  font-size:1.5rem; font-weight:400; letter-spacing:0.04em;
+  color:var(--terracotta-deep);
+  display:flex; align-items:center; gap:14px;
+}
+.section-title::before {
+  content:'◆'; font-size:0.6rem; color:var(--terracotta);
+}
+.section-more {
+  font-family:'Courier Prime',monospace;
+  font-size:0.72rem; letter-spacing:0.08em;
+  color:var(--sage); text-decoration:none;
+  padding-bottom:2px; border-bottom:1px solid var(--sage);
+  transition:opacity 0.3s;
+}
+.section-more:hover { opacity:0.5; }
+.post-list { margin-bottom:56px; display:flex; flex-direction:column; }
+.post-item {
+  display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  padding:18px 0; border-bottom:1px solid var(--line);
+  text-decoration:none; color:inherit;
+  transition:all 0.35s;
+}
+.post-item:hover { padding-left:8px; }
+.post-date {
+  font-family:'Courier Prime',monospace;
+  font-size:0.74rem; color:var(--text-muted); min-width:84px;
+}
+.post-dot {
+  width:6px; height:6px; background:var(--terracotta); border-radius:50%;
+  flex-shrink:0;
+}
+.post-title { flex:1; font-weight:500; font-style:italic; min-width:160px; }
+.post-tag {
+  font-family:'Courier Prime',monospace; font-size:0.64rem;
+  padding:3px 10px; border:1px solid var(--line-strong);
+  color:var(--terracotta);
+}
+.post-arrow {
+  font-family:'Courier Prime',monospace; color:var(--text-muted);
+  transition:all 0.3s; font-size:0.9rem;
+}
+.post-item:hover .post-arrow { color:var(--terracotta); transform:translateX(4px); }
+
+/* ─── Testimonials ─── */
+.testimonials { padding-bottom:56px; }
+.testimonial-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+@media(max-width:768px){ .testimonial-grid{grid-template-columns:1fr;} }
+.testimonial-card {
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-xl); padding:28px 24px 22px;
+  box-shadow:var(--shadow-warm);
+  transition:all 0.35s;
+  border-top:3px solid var(--adobe);
+}
+.testimonial-card:hover {
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-deep);
+  border-top-color:var(--terracotta);
+}
+.t-icon {
+  font-family:'Almendra Display',Georgia,serif;
+  font-size:2rem; color:var(--terracotta); opacity:0.4;
+  line-height:1; margin-bottom:12px;
+}
+.t-quote {
+  font-size:0.84rem; color:var(--text-secondary); line-height:1.74;
+  margin-bottom:18px; font-style:italic;
+}
+.t-author { display:flex; align-items:center; gap:10px; }
+.t-avatar {
+  width:34px; height:34px; background:var(--terracotta);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Almendra Display',Georgia,serif;
+  font-size:0.8rem; color:var(--surface);
+  transform:rotate(45deg);
+}
+.t-avatar span { transform:rotate(-45deg); }
+.t-name { font-size:0.84rem; font-weight:600; font-style:italic; }
+.t-role {
+  font-size:0.7rem; color:var(--text-muted);
+  font-family:'Courier Prime',monospace;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  border-top:1px solid var(--line-strong); padding:48px 0;
+  text-align:center;
+  font-family:'Courier Prime',monospace;
+  font-size:0.7rem; color:var(--text-muted); letter-spacing:0.08em;
+  position:relative; z-index:1;
+}
+.site-footer::before {
+  content:'◆'; display:block; font-size:0.5rem; color:var(--terracotta);
+  margin-bottom:16px; opacity:0.5;
+}
+
+@media (max-width:768px) {
+  .wrapper { padding:0 18px; }
+  .hero { min-height:420px; }
+  .hero-name { font-size:2.4rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="adobe-texture"></div>
+<div class="adobe-grain"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-emble"></span>
+      Ethan BAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">Home</a>
+      <a href="#">Blog</a>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-sun"></div>
+  <div class="hero-inner">
+    <div class="hero-mark">
+      <span class="hero-mark-line"></span>
+      <span class="hero-mark-diamond"></span>
+      <span class="hero-mark-line"></span>
+    </div>
+    <h1 class="hero-name"><span>Ethan</span> BAI</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-slogan">探索深度学习的边界，用代码构建智能的未来。</p>
+    <p class="hero-sub">Deep Learning Engineer · AI Explorer · Continuous Growth</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-adobe">阅读博客</a>
+      <a href="#" class="btn btn-sage">了解更多</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<section class="card-grid">
+  <div class="card">
+    <div class="card-symbol">§</div>
+    <div class="card-label">01 · Identity</div>
+    <h2 class="card-title">关于</h2>
+    <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码，相信积累的力量。</p>
+  </div>
+  <div class="card">
+    <div class="card-symbol">¶</div>
+    <div class="card-label">02 · Present</div>
+    <h2 class="card-title">当下</h2>
+    <p class="card-desc">系统学习深度学习课程（Andrew Ng 专项），整理笔记并构建个人知识体系，同时维护这个博客记录思考与收获。</p>
+  </div>
+  <div class="card">
+    <div class="card-symbol">†</div>
+    <div class="card-label">03 · Toolkit</div>
+    <h2 class="card-title">技能</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">Python</span><span class="skill-tag">Django</span>
+      <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span>
+      <span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span>
+      <span class="skill-tag">Scikit-learn</span><span class="skill-tag">Git</span>
+      <span class="skill-tag">HTML/CSS</span><span class="skill-tag">SQL</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-symbol">‡</div>
+    <div class="card-label">04 · Passion</div>
+    <h2 class="card-title">热爱 & 坚持</h2>
+    <p class="card-desc">长期坚持深度学习的系统化学习与笔记整理。热爱阅读论文，参与开源社区，探索 AI 在不同领域的应用。</p>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2 class="section-title">最新文章</h2>
+  <a href="#" class="section-more">All Posts</a>
+</div>
+<div class="post-list">
+  <a href="#" class="post-item">
+    <span class="post-date">2024-06</span>
+    <span class="post-dot"></span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W1 神经网络与深度学习笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-dot"></span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W2 神经网络编程基础</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-dot"></span>
+    <span class="post-tag">CODE</span>
+    <span class="post-title">L1W3 浅层神经网络笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-04</span>
+    <span class="post-dot"></span>
+    <span class="post-tag">BLOG</span>
+    <span class="post-title">用 Django 搭建个人博客的完整指南</span>
+    <span class="post-arrow">→</span>
+  </a>
+</div>
+
+<div class="section-header">
+  <h2 class="section-title">朋友这样说</h2>
+</div>
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-icon">"</div>
+      <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西，尤其是对复杂概念的拆解能力。</p>
+      <div class="t-author">
+        <div class="t-avatar"><span>L</span></div>
+        <div><div class="t-name">Leo Chen</div><div class="t-role">ML Engineer</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-icon">"</div>
+      <p class="t-quote">他是我见过的最自律的学习者之一。从零开始搭建博客、整理课程笔记，每一步都很扎实。</p>
+      <div class="t-author">
+        <div class="t-avatar"><span>M</span></div>
+        <div><div class="t-name">Mia Wang</div><div class="t-role">CS Graduate</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-icon">"</div>
+      <p class="t-quote">代码风格干净，注释详细，很适合作为学习参考。希望他能持续输出更多高质量内容！</p>
+      <div class="t-author">
+        <div class="t-avatar"><span>Z</span></div>
+        <div><div class="t-name">Zhang Wei</div><div class="t-role">Data Scientist</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  STYLE J — TERRACOTTA ADOBE · DESERT WARMTH · ETHAN BAI
+</footer>
+
+</body>
+</html>

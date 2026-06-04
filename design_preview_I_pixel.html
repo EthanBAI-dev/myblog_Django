@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel Forge — Ethan BAI's blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1c2c;
+  --bg-dark: #0f0f1a;
+  --surface: #252740;
+  --surface-light: #2e3054;
+  --text: #ddeeff;
+  --text-secondary: #8899bb;
+  --text-muted: #556688;
+  --line: #3a3d5c;
+  --line-bright: #5566aa;
+  --pixel-yellow: #fcdb5a;
+  --pixel-yellow-dim: rgba(252,219,90,0.08);
+  --pixel-cyan: #5afcdb;
+  --pixel-cyan-dim: rgba(90,252,219,0.08);
+  --pixel-pink: #fc5a8d;
+  --pixel-pink-dim: rgba(252,90,141,0.08);
+  --pixel-purple: #8b5afc;
+  --pixel-purple-dim: rgba(139,90,252,0.08);
+  --radius: 0px;
+  --pixel: 4px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  background-image:
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 16px 16px;
+  color: var(--text);
+  font-family: 'VT323', 'Courier New', monospace;
+  font-size:1.15rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+  overflow-x: hidden;
+}
+
+/* ─── Scanline ─── */
+.scanline {
+  position:fixed; inset:0; pointer-events:none; z-index:999;
+  background:repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 6px);
+}
+
+/* ─── Hero ─── */
+.hero {
+  position:relative; z-index:1; min-height:500px;
+  display:flex; align-items:center; justify-content:center;
+  padding:50px 28px 90px;
+  overflow:hidden;
+}
+.hero-rain {
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+}
+.hero-rain span {
+  position:absolute; color:var(--pixel-cyan); font-size:1rem;
+  animation:rainFall linear infinite;
+  opacity:0.15;
+}
+@keyframes rainFall {
+  0% { transform:translateY(-100%); opacity:0; }
+  10% { opacity:0.2; }
+  90% { opacity:0.2; }
+  100% { transform:translateY(110vh); opacity:0; }
+}
+.hero-inner { text-align:center; max-width:680px; position:relative; z-index:1; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 18px; border:3px solid var(--pixel-yellow);
+  font-family:'Press Start 2P', monospace;
+  font-size:0.56rem; letter-spacing:0.06em; color:var(--pixel-yellow);
+  margin-bottom:24px;
+  image-rendering:pixelated;
+  box-shadow:6px 6px 0 rgba(0,0,0,0.4);
+  opacity:0; animation:fadeUp 0.7s 0.1s ease-out forwards;
+}
+.hero-badge .blink {
+  display:inline-block; width:8px; height:8px; background:var(--pixel-pink);
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity:0; } }
+.hero-name {
+  font-family:'Press Start 2P', monospace;
+  font-size:clamp(1.4rem,4vw,2.6rem); font-weight:400; line-height:1.5;
+  letter-spacing:0.08em; margin-bottom:22px;
+  text-shadow:4px 4px 0 rgba(0,0,0,0.5);
+  image-rendering:pixelated;
+  opacity:0; animation:fadeUp 0.7s 0.25s ease-out forwards;
+}
+.hero-name .c1 { color:var(--pixel-yellow); }
+.hero-name .c2 { color:var(--pixel-cyan); }
+.hero-name .c3 { color:var(--pixel-pink); }
+.hero-slogan {
+  font-family:'VT323',monospace; font-size:1.15rem;
+  color:var(--text-secondary); max-width:520px; margin:0 auto 6px;
+  opacity:0; animation:fadeUp 0.7s 0.4s ease-out forwards;
+}
+.hero-sub {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.72rem; color:var(--text-muted); letter-spacing:0.06em;
+  margin-bottom:36px;
+  opacity:0; animation:fadeUp 0.7s 0.5s ease-out forwards;
+}
+.hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 24px; font-size:0.62rem; font-weight:400;
+  text-decoration:none; text-transform:uppercase;
+  transition:all 0.15s step-end;
+  font-family:'Press Start 2P', monospace;
+  image-rendering:pixelated;
+  position:relative;
+}
+.btn-pixel {
+  background:var(--pixel-yellow); color:var(--bg-dark);
+  border:3px solid var(--pixel-yellow);
+  box-shadow:4px 4px 0 rgba(0,0,0,0.5);
+}
+.btn-pixel:hover {
+  transform:translate(-2px,-2px);
+  box-shadow:6px 6px 0 rgba(0,0,0,0.5);
+}
+.btn-ghost {
+  border:3px solid var(--pixel-cyan); color:var(--pixel-cyan);
+  background:transparent;
+  box-shadow:4px 4px 0 rgba(90,252,219,0.15);
+}
+.btn-ghost:hover {
+  background:var(--pixel-cyan); color:var(--bg-dark);
+  box-shadow:6px 6px 0 rgba(90,252,219,0.3);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(12px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── Header ─── */
+.site-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(26,28,44,0.92);
+  border-bottom:3px solid var(--line-bright);
+}
+.header-inner {
+  max-width:1100px; margin:0 auto; padding:12px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:8px;
+}
+.brand {
+  font-family:'Press Start 2P',monospace; font-size:0.66rem;
+  color:var(--pixel-cyan); text-decoration:none;
+  letter-spacing:0.06em; display:flex; align-items:center; gap:8px;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.5);
+}
+.brand-icon {
+  display:inline-flex; width:22px; height:22px;
+  background:var(--pixel-yellow);
+  clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.nav { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+.nav a {
+  color:var(--text-secondary); text-decoration:none;
+  font-family:'Press Start 2P',monospace;
+  font-size:0.52rem; padding:6px 12px; letter-spacing:0.04em;
+  border:2px solid transparent;
+  transition:all 0.1s step-end;
+}
+.nav a:hover { color:var(--pixel-yellow); border-color:var(--pixel-yellow); }
+.nav a.active { color:var(--pixel-yellow); border-color:var(--pixel-yellow); background:var(--pixel-yellow-dim); }
+
+/* ─── Layout ─── */
+.wrapper { position:relative; z-index:1; max-width:1024px; margin:0 auto; padding:0 28px; }
+
+/* ─── Card Grid ─── */
+.card-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:0;
+  margin:-20px 0 48px;
+  border:3px solid var(--line-bright);
+}
+@media(max-width:768px){ .card-grid{grid-template-columns:1fr;} }
+.card {
+  background:var(--surface); padding:30px 24px;
+  border:2px solid var(--line);
+  transition:all 0.15s step-end;
+  position:relative;
+}
+.card:hover {
+  background:var(--surface-light);
+  transform:translate(-2px,-2px);
+  box-shadow:6px 6px 0 rgba(0,0,0,0.5);
+  z-index:2;
+}
+.card-label {
+  font-family:'Press Start 2P',monospace;
+  font-size:0.48rem; letter-spacing:0.08em;
+  color:var(--pixel-purple); margin-bottom:14px;
+}
+.card-title {
+  font-family:'Press Start 2P',monospace;
+  font-size:0.72rem; font-weight:400; margin-bottom:12px;
+  color:var(--pixel-cyan);
+}
+.card-desc {
+  font-family:'VT323',monospace; font-size:1.05rem;
+  color:var(--text-secondary); line-height:1.6;
+}
+.skill-tags { display:flex; flex-wrap:wrap; gap:0; }
+.skill-tag {
+  padding:6px 12px; font-family:'Press Start 2P',monospace;
+  font-size:0.48rem; letter-spacing:0.04em;
+  background:var(--surface-light); color:var(--text-secondary);
+  border:2px solid var(--line);
+  margin-right:-2px; margin-bottom:-2px;
+  transition:all 0.1s step-end;
+}
+.skill-tag:nth-child(odd):hover { background:var(--pixel-cyan); color:var(--bg-dark); border-color:var(--pixel-cyan); z-index:1; }
+.skill-tag:nth-child(even):hover { background:var(--pixel-pink); color:var(--bg-dark); border-color:var(--pixel-pink); z-index:1; }
+
+/* ─── Posts ─── */
+.section-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:22px; border-bottom:3px solid var(--line-bright);
+  padding-bottom:10px;
+}
+.section-title {
+  font-family:'Press Start 2P',monospace;
+  font-size:0.68rem; font-weight:400; color:var(--pixel-yellow);
+}
+.section-more {
+  font-family:'Press Start 2P',monospace;
+  font-size:0.48rem; color:var(--text-muted); text-decoration:none;
+  transition:color 0.1s step-end;
+}
+.section-more:hover { color:var(--pixel-cyan); }
+.post-list { margin-bottom:48px; }
+.post-item {
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  padding:16px 18px; text-decoration:none; color:inherit;
+  border:2px solid var(--line); margin-bottom:-2px;
+  transition:all 0.15s step-end;
+}
+.post-item:hover {
+  background:var(--surface-light);
+  border-color:var(--pixel-cyan);
+  z-index:1;
+}
+.post-date {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.72rem; color:var(--text-muted); min-width:84px;
+}
+.post-title {
+  flex:1; min-width:160px;
+  font-family:'VT323',monospace; font-size:1.1rem;
+}
+.post-tag {
+  font-family:'Press Start 2P',monospace; font-size:0.44rem;
+  padding:4px 8px; border:2px solid var(--pixel-purple);
+  color:var(--pixel-purple);
+}
+.post-arrow {
+  font-family:'Press Start 2P',monospace; font-size:0.6rem;
+  color:var(--text-muted); transition:color 0.1s step-end;
+}
+.post-item:hover .post-arrow { color:var(--pixel-cyan); }
+
+/* ─── Testimonials ─── */
+.testimonials { padding-bottom:48px; }
+.testimonial-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:0; border:3px solid var(--line-bright);
+}
+@media(max-width:768px){ .testimonial-grid{grid-template-columns:1fr;} }
+.testimonial-card {
+  background:var(--surface); padding:26px 20px 20px;
+  border:2px solid var(--line);
+  transition:all 0.15s step-end;
+}
+.testimonial-card:hover {
+  background:var(--surface-light);
+  transform:translate(-1px,-1px);
+  box-shadow:4px 4px 0 rgba(0,0,0,0.5);
+}
+.t-stars {
+  font-family:'Press Start 2P',monospace;
+  font-size:0.56rem; color:var(--pixel-yellow); margin-bottom:14px;
+}
+.t-quote {
+  font-family:'VT323',monospace; font-size:1.02rem;
+  color:var(--text-secondary); line-height:1.6;
+  margin-bottom:18px;
+}
+.t-author { display:flex; align-items:center; gap:8px; }
+.t-avatar {
+  width:32px; height:32px; background:var(--pixel-purple);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Press Start 2P',monospace;
+  font-size:0.48rem; color:var(--bg-dark);
+  clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+.t-name {
+  font-family:'Press Start 2P',monospace;
+  font-size:0.52rem; color:var(--text);
+}
+.t-role {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.6rem; color:var(--text-muted);
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  border-top:3px solid var(--line-bright); padding:48px 0;
+  text-align:center; font-family:'Press Start 2P',monospace;
+  font-size:0.52rem; color:var(--text-muted); letter-spacing:0.06em;
+  position:relative; z-index:1;
+}
+
+@media (max-width:768px) {
+  .wrapper { padding:0 14px; }
+  .hero { min-height:380px; }
+  .hero-name { font-size:1.1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="scanline"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-icon"></span>
+      ETHAN_BAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">HOME</a>
+      <a href="#">BLOG</a>
+      <a href="#">PROJECTS</a>
+      <a href="#">ABOUT</a>
+      <a href="#">RESUME</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-rain" id="heroRain"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="blink"></span>
+      PLAYER 1 READY
+    </div>
+    <h1 class="hero-name">
+      <span class="c1">ETHAN</span><br>
+      <span class="c2">BAI</span>
+    </h1>
+    <p class="hero-slogan">探索深度学习的边界，用代码构建智能的未来。</p>
+    <p class="hero-sub">DEEP_LEARNING::ENGINEER // AI::EXPLORER // LEVEL_UP::DAILY</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-pixel">▶ READ_BLOG</a>
+      <a href="#" class="btn btn-ghost">[ ABOUT_ME ]</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<section class="card-grid">
+  <div class="card">
+    <div class="card-label">[01_IDENTITY]</div>
+    <h2 class="card-title">关于</h2>
+    <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码，相信积累的力量。</p>
+  </div>
+  <div class="card">
+    <div class="card-label">[02_PRESENT]</div>
+    <h2 class="card-title">当下</h2>
+    <p class="card-desc">系统学习深度学习课程（Andrew Ng 专项），整理笔记并构建个人知识体系，同时维护这个博客记录思考与收获。</p>
+  </div>
+  <div class="card">
+    <div class="card-label">[03_TOOLKIT]</div>
+    <h2 class="card-title">技能</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">PYTHON</span><span class="skill-tag">DJANGO</span>
+      <span class="skill-tag">PYTORCH</span><span class="skill-tag">TENSORFLOW</span>
+      <span class="skill-tag">NUMPY</span><span class="skill-tag">PANDAS</span>
+      <span class="skill-tag">SKLEARN</span><span class="skill-tag">GIT</span>
+      <span class="skill-tag">HTML/CSS</span><span class="skill-tag">SQL</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label">[04_PASSION]</div>
+    <h2 class="card-title">热爱 & 坚持</h2>
+    <p class="card-desc">长期坚持深度学习的系统化学习与笔记整理。热爱阅读论文，参与开源社区，探索 AI 在不同领域的应用。</p>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2 class="section-title">>> LATEST_POSTS</h2>
+  <a href="#" class="section-more">[ALL]</a>
+</div>
+<div class="post-list">
+  <a href="#" class="post-item">
+    <span class="post-date">2024-06</span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W1 神经网络与深度学习笔记</span>
+    <span class="post-arrow">>></span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-tag">DL</span>
+    <span class="post-title">L1W2 神经网络编程基础</span>
+    <span class="post-arrow">>></span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-tag">CODE</span>
+    <span class="post-title">L1W3 浅层神经网络笔记</span>
+    <span class="post-arrow">>></span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-04</span>
+    <span class="post-tag">BLOG</span>
+    <span class="post-title">用 Django 搭建个人博客的完整指南</span>
+    <span class="post-arrow">>></span>
+  </a>
+</div>
+
+<div class="section-header">
+  <h2 class="section-title">>> FEEDBACK</h2>
+</div>
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西，尤其是对复杂概念的拆解能力。</p>
+      <div class="t-author">
+        <div class="t-avatar">L</div>
+        <div><div class="t-name">LEO_CHEN</div><div class="t-role">ML_ENGINEER</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">他是我见过的最自律的学习者之一。从零开始搭建博客、整理课程笔记，每一步都很扎实。</p>
+      <div class="t-author">
+        <div class="t-avatar">M</div>
+        <div><div class="t-name">MIA_WANG</div><div class="t-role">CS_GRADUATE</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">代码风格干净，注释详细，很适合作为学习参考。希望他能持续输出更多高质量内容！</p>
+      <div class="t-author">
+        <div class="t-avatar">Z</div>
+        <div><div class="t-name">ZHANG_WEI</div><div class="t-role">DATA_SCIENTIST</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  [STYLE_I] PIXEL_FORGE :: 8-BIT_RETRO :: ETHAN_BAI :: 1984
+</footer>
+
+<script>
+(function(){
+const rain=document.getElementById('heroRain');
+const chars='01アイウエオカキクケコ';
+for(let i=0;i<40;i++){
+  const s=document.createElement('span');
+  s.textContent=chars[Math.floor(Math.random()*chars.length)];
+  s.style.left=Math.random()*100+'%';
+  s.style.animationDuration=(Math.random()*3+2)+'s';
+  s.style.animationDelay=Math.random()*4+'s';
+  s.style.fontSize=(Math.random()*0.8+0.8)+'rem';
+  rain.appendChild(s);
+}
+})();
+</script>
+</body>
+</html>

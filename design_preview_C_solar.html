@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Flare — Ethan BAI's blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fefaf3;
+  --surface: #fffdf8;
+  --surface-hover: #fff9ef;
+  --text: #1e1b18;
+  --text-secondary: #7a7268;
+  --text-muted: #aba49b;
+  --line: #f0e6d8;
+  --line-strong: #e0d2bc;
+  --flare: #e07b39;
+  --flare-soft: rgba(224,123,57,0.07);
+  --flare-md: rgba(224,123,57,0.15);
+  --flare-bright: rgba(224,123,57,0.25);
+  --sky: #3b82f6;
+  --sky-soft: rgba(59,130,246,0.06);
+  --sky-md: rgba(59,130,246,0.12);
+  --shadow-sm: 0 2px 16px rgba(30,27,24,0.04);
+  --shadow-md: 0 8px 32px rgba(30,27,24,0.07);
+  --shadow-lg: 0 18px 56px rgba(30,27,24,0.10);
+  --radius-sm: 12px;
+  --radius: 16px;
+  --radius-xl: 24px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Satoshi', -apple-system, sans-serif;
+  line-height: 1.76;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Hero ─── */
+.hero {
+  position:relative; min-height:580px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  background:linear-gradient(180deg, #fff5e8 0%, #fefaf3 40%, #fdf6ec 100%);
+}
+.hero-canvas { position:absolute; bottom:0; left:0; width:100%; height:50%; pointer-events:none; z-index:1; }
+.hero-glow {
+  position:absolute; top:15%; left:50%; transform:translateX(-50%);
+  width:500px; height:500px; border-radius:50%;
+  background:radial-gradient(circle, rgba(224,123,57,0.07) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+.hero-content {
+  position:relative; z-index:2; padding:60px 32px 90px; text-align:center;
+}
+.hero-greeting {
+  font-family:'Fira Code',monospace;
+  font-size:0.72rem; letter-spacing:0.16em; color:var(--flare);
+  margin-bottom:12px; text-transform:uppercase;
+  opacity:0; animation:fadeUp 0.7s 0.1s ease-out forwards;
+}
+.hero-name {
+  font-family:'Satoshi',sans-serif;
+  font-size:clamp(3.2rem,7.5vw,5.6rem); font-weight:900; line-height:0.96;
+  letter-spacing:-0.05em; color:var(--text);
+  margin-bottom:20px;
+  opacity:0; animation:fadeUp 0.7s 0.25s ease-out forwards;
+}
+.hero-name .accent-bg {
+  background:linear-gradient(135deg, var(--flare), #f5932e);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-slogan {
+  font-size:1.08rem; color:var(--text-secondary); font-weight:400;
+  max-width:540px; margin:0 auto 6px;
+  opacity:0; animation:fadeUp 0.7s 0.4s ease-out forwards;
+}
+.hero-sub {
+  font-size:0.84rem; color:var(--text-muted);
+  margin-bottom:38px;
+  opacity:0; animation:fadeUp 0.7s 0.5s ease-out forwards;
+}
+.hero-actions { display:flex; gap:14px; justify-content:center; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 30px; border-radius:50px; font-size:0.88rem;
+  font-weight:600; text-decoration:none;
+  transition:all 0.35s cubic-bezier(0.25,0.8,0.25,1.2);
+}
+.btn-primary {
+  background:var(--flare); color:#fff;
+  box-shadow:0 8px 28px rgba(224,123,57,0.30);
+}
+.btn-primary:hover {
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(224,123,57,0.45);
+}
+.btn-outline {
+  border:1.5px solid var(--line-strong); color:var(--text-secondary); background:transparent;
+}
+.btn-outline:hover {
+  border-color:var(--flare); color:var(--flare); background:var(--flare-soft);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ─── Header ─── */
+.site-header {
+  background:rgba(254,250,243,0.88); backdrop-filter:blur(16px);
+  position:sticky; top:0; z-index:100;
+  border-bottom:1px solid var(--line);
+  box-shadow:0 1px 8px rgba(0,0,0,0.02);
+}
+.header-inner {
+  max-width:1060px; margin:0 auto; padding:15px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand {
+  font-weight:800; font-size:1.06rem; color:var(--text); text-decoration:none;
+  letter-spacing:-0.01em; display:flex; align-items:center; gap:10px;
+}
+.brand-badge {
+  padding:4px 12px; border-radius:20px;
+  background:var(--flare); color:#fff;
+  font-family:'Fira Code',monospace;
+  font-size:0.64rem; letter-spacing:0.08em; font-weight:600;
+}
+.nav { display:flex; align-items:center; gap:4px; }
+.nav a {
+  color:var(--text-secondary); text-decoration:none;
+  font-size:0.84rem; padding:7px 16px; border-radius:24px;
+  font-weight:500; transition:all 0.25s;
+}
+.nav a:hover { background:var(--flare-soft); color:var(--flare); }
+.nav a.active { background:var(--flare-soft); color:var(--flare); font-weight:600; }
+
+/* ─── Layout ─── */
+.wrapper { max-width:980px; margin:0 auto; padding:0 30px; }
+
+/* ─── Card Grid ─── */
+.card-grid {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:22px; margin:-30px 0 60px; position:relative; z-index:3;
+}
+.card {
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-xl); padding:34px 30px;
+  box-shadow:var(--shadow-sm);
+  transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1.2);
+  position:relative; overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg, var(--flare), var(--sky));
+  border-radius:4px 4px 0 0;
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.5s cubic-bezier(0.25,0.8,0.25,1);
+}
+.card:hover::before { transform:scaleX(1); }
+.card:hover {
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-lg);
+  border-color:transparent;
+}
+.card-icon {
+  width:46px; height:46px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:16px; font-size:1.14rem;
+  background:var(--flare-soft); color:var(--flare);
+  transition:all 0.35s;
+}
+.card:hover .card-icon {
+  background:var(--flare-md); transform:scale(1.08);
+}
+.card-label {
+  font-family:'Fira Code',monospace;
+  font-size:0.64rem; letter-spacing:0.14em; color:var(--flare);
+  margin-bottom:8px; text-transform:uppercase;
+}
+.card-title { font-size:1.25rem; font-weight:800; margin-bottom:10px; letter-spacing:-0.01em; }
+.card-desc { font-size:0.88rem; color:var(--text-secondary); line-height:1.76; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.skill-tag {
+  padding:7px 16px; border-radius:24px; font-size:0.8rem; font-weight:500;
+  background:var(--flare-soft); color:var(--flare);
+  transition:all 0.3s;
+}
+.skill-tag:hover {
+  background:var(--flare); color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(224,123,57,0.28);
+}
+
+/* ─── Posts ─── */
+.section-header {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-bottom:22px;
+}
+.section-title {
+  font-size:1.34rem; font-weight:800;
+  display:flex; align-items:center; gap:12px;
+  letter-spacing:-0.01em;
+}
+.section-title::before {
+  content:''; width:8px; height:8px; border-radius:50%;
+  background:var(--flare); flex-shrink:0;
+}
+.section-more {
+  font-size:0.84rem; font-weight:600; color:var(--flare);
+  text-decoration:none; transition:opacity 0.25s;
+  padding-bottom:3px; border-bottom:2px solid var(--flare);
+}
+.section-more:hover { opacity:0.6; }
+.post-list { margin-bottom:60px; }
+.post-item {
+  display:flex; align-items:center; gap:20px;
+  padding:18px 24px; border-radius:var(--radius);
+  text-decoration:none; color:inherit;
+  transition:all 0.35s;
+  margin-bottom:4px;
+}
+.post-item:hover {
+  background:var(--surface); box-shadow:var(--shadow-md);
+  transform:translateX(6px);
+}
+.post-date {
+  font-family:'Fira Code',monospace;
+  font-size:0.78rem; color:var(--text-muted); min-width:84px;
+  letter-spacing:0.04em;
+}
+.post-title { flex:1; font-weight:500; }
+.post-badge {
+  font-family:'Fira Code',monospace; font-size:0.66rem; font-weight:500;
+  padding:3px 10px; border-radius:16px;
+  background:var(--sky-soft); color:var(--sky);
+  letter-spacing:0.06em;
+}
+.post-arrow {
+  width:30px; height:30px; border-radius:50%;
+  background:var(--flare-soft); color:var(--flare);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.86rem; transition:all 0.3s;
+}
+.post-item:hover .post-arrow {
+  background:var(--flare); color:#fff; transform:translateX(3px);
+}
+
+/* ─── Testimonials ─── */
+.testimonials { margin-bottom:64px; }
+.testimonial-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+}
+.testimonial-card {
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius-xl); padding:30px 26px 24px;
+  box-shadow:var(--shadow-sm);
+  transition:all 0.35s cubic-bezier(0.25,0.8,0.25,1.2);
+  position:relative;
+}
+.testimonial-card:hover {
+  transform:translateY(-4px); box-shadow:var(--shadow-lg);
+}
+.testimonial-card::before {
+  content:'\201C'; font-size:3rem; color:var(--flare-soft);
+  position:absolute; top:12px; left:20px; pointer-events:none;
+  font-family:Georgia,serif; line-height:1;
+}
+.t-stars {
+  font-family:'Fira Code',monospace;
+  font-size:0.68rem; color:var(--flare); letter-spacing:0.12em;
+  margin-bottom:12px;
+}
+.t-quote {
+  font-size:0.86rem; color:var(--text-secondary); line-height:1.75;
+  margin-bottom:20px; position:relative; z-index:1;
+}
+.t-author { display:flex; align-items:center; gap:10px; }
+.t-avatar {
+  width:38px; height:38px; border-radius:50%;
+  background:linear-gradient(135deg, var(--flare), var(--sky));
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:0.78rem; color:#fff;
+}
+.t-name { font-size:0.86rem; font-weight:600; }
+.t-role {
+  font-size:0.74rem; color:var(--text-muted);
+  font-family:'Fira Code',monospace; letter-spacing:0.04em;
+}
+
+/* ─── Footer ─── */
+.site-footer {
+  border-top:1px solid var(--line); padding:42px 0;
+  text-align:center; color:var(--text-muted); font-size:0.76rem;
+  font-family:'Fira Code',monospace; letter-spacing:0.06em;
+}
+
+/* ─── Responsive ─── */
+@media (max-width:768px) {
+  .wrapper { padding:0 18px; }
+  .hero { min-height:460px; }
+  .hero-canvas { height:38%; }
+  .card-grid { grid-template-columns:1fr; margin-top:20px; }
+  .testimonial-grid { grid-template-columns:1fr; }
+  .header-inner { flex-direction:column; gap:8px; }
+  .nav { flex-wrap:wrap; justify-content:center; }
+  .hero-name { font-size:2.6rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <span class="brand-badge">BLOG</span>
+      Ethan BAI
+    </a>
+    <nav class="nav">
+      <a href="#" class="active">首页</a>
+      <a href="#">博客</a>
+      <a href="#">项目</a>
+      <a href="#">关于</a>
+      <a href="#">简历</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <canvas class="hero-canvas" id="waveC"></canvas>
+  <div class="hero-content">
+    <p class="hero-greeting">Hello, I'm</p>
+    <h1 class="hero-name">Ethan <span class="accent-bg">BAI</span></h1>
+    <p class="hero-slogan">探索深度学习的边界，用代码构建智能的未来。</p>
+    <p class="hero-sub">深度学习工程师 & AI 技术探索者 · 持续学习中</p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-primary">
+        阅读博客
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn btn-outline">了解更多</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrapper">
+
+<section class="card-grid">
+  <div class="card">
+    <div class="card-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+    </div>
+    <div class="card-label">01 — Identity</div>
+    <h2 class="card-title">关于</h2>
+    <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码，相信积累的力量。</p>
+  </div>
+  <div class="card">
+    <div class="card-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    </div>
+    <div class="card-label">02 — Present</div>
+    <h2 class="card-title">当下</h2>
+    <p class="card-desc">系统学习深度学习课程（Andrew Ng 专项），整理笔记并构建个人知识体系，同时维护这个博客记录思考与收获。</p>
+  </div>
+  <div class="card">
+    <div class="card-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+    </div>
+    <div class="card-label">03 — Toolkit</div>
+    <h2 class="card-title">技能</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">Python</span><span class="skill-tag">Django</span>
+      <span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span>
+      <span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span>
+      <span class="skill-tag">Scikit-learn</span><span class="skill-tag">Git</span>
+      <span class="skill-tag">HTML/CSS</span><span class="skill-tag">SQL</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+    </div>
+    <div class="card-label">04 — Passion</div>
+    <h2 class="card-title">热爱 & 坚持</h2>
+    <p class="card-desc">长期坚持深度学习的系统化学习与笔记整理。热爱阅读论文，参与开源社区，探索 AI 在不同领域的应用。</p>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2 class="section-title">最新文章</h2>
+  <a href="#" class="section-more">查看全部</a>
+</div>
+<div class="post-list">
+  <a href="#" class="post-item">
+    <span class="post-date">2024-06</span>
+    <span class="post-badge">深度学习</span>
+    <span class="post-title">L1W1 神经网络与深度学习笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-badge">深度学习</span>
+    <span class="post-title">L1W2 神经网络编程基础</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-05</span>
+    <span class="post-badge">编程</span>
+    <span class="post-title">L1W3 浅层神经网络笔记</span>
+    <span class="post-arrow">→</span>
+  </a>
+  <a href="#" class="post-item">
+    <span class="post-date">2024-04</span>
+    <span class="post-badge">博客</span>
+    <span class="post-title">用 Django 搭建个人博客的完整指南</span>
+    <span class="post-arrow">→</span>
+  </a>
+</div>
+
+<div class="section-header">
+  <h2 class="section-title">朋友这样说</h2>
+</div>
+<section class="testimonials">
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西，尤其是对复杂概念的拆解能力。</p>
+      <div class="t-author">
+        <div class="t-avatar">L</div>
+        <div><div class="t-name">Leo Chen</div><div class="t-role">ML ENGINEER</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">他是我见过的最自律的学习者之一。从零开始搭建博客、整理课程笔记，每一步都很扎实。</p>
+      <div class="t-author">
+        <div class="t-avatar">M</div>
+        <div><div class="t-name">Mia Wang</div><div class="t-role">CS GRADUATE</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">代码风格干净，注释详细，很适合作为学习参考。希望他能持续输出更多高质量内容！</p>
+      <div class="t-author">
+        <div class="t-avatar">Z</div>
+        <div><div class="t-name">Zhang Wei</div><div class="t-role">DATA SCIENTIST</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="site-footer">
+  STYLE C — SOLAR FLARE · WARM GRADIENTS · ETHAN BAI
+</footer>
+
+<script>
+(function(){
+const c=document.getElementById('waveC'),x=c.getContext('2d');
+let w,h2,st=Date.now();
+function rs(){
+  const hh=document.querySelector('.hero'),ch=hh.offsetHeight*0.50;
+  w=c.width=hh.offsetWidth;h2=c.height=ch;
+  c.style.height=ch+'px';
+}
+rs();window.addEventListener('resize',rs);
+const ls=[
+  {a:0.36,f:0.0008,s:0.020,p:0,fill:'rgba(224,123,57,0.18)'},
+  {a:0.30,f:0.0012,s:0.026,p:2.0,fill:'rgba(224,123,57,0.13)'},
+  {a:0.26,f:0.0016,s:0.032,p:3.5,fill:'rgba(243,156,89,0.11)'},
+  {a:0.22,f:0.0020,s:0.038,p:1.2,fill:'rgba(248,180,130,0.09)'},
+  {a:0.18,f:0.0028,s:0.045,p:2.8,fill:'rgba(59,130,246,0.06)'},
+  {a:0.14,f:0.0036,s:0.052,p:0.5,fill:'rgba(59,130,246,0.04)'},
+];
+function dr(){
+  const e=(Date.now()-st)/1000,dc=0.45+2.55*Math.exp(-e/3.5);
+  x.clearRect(0,0,w,h2);
+  ls.forEach(l=>{
+    const ps=[];
+    for(let i=0;i<=w;i+=3){
+      const ph=i*l.f+l.p+e*l.s*dc;
+      const mod=Math.sin(i*0.0012+e*0.45)*0.2;
+      const y=Math.sin(ph*Math.PI*2)*h2*l.a*(1+mod);
+      ps.push({x:i,y});
+    }
+    x.beginPath();x.moveTo(0,h2);
+    ps.forEach(p=>x.lineTo(p.x,p.y+h2*0.5));
+    x.lineTo(w,h2);x.closePath();
+    x.fillStyle=l.fill;x.fill();
+    x.beginPath();
+    ps.forEach((p,i)=>{
+      if(i===0)x.moveTo(p.x,p.y+h2*0.5);
+      else x.lineTo(p.x,p.y+h2*0.5);
+    });
+    x.strokeStyle=l.fill.replace('0.1','0.3').replace('0.0','0.1');
+    x.lineWidth=1.4;x.lineCap='round';x.stroke();
+  });
+  requestAnimationFrame(dr);
+}
+dr();
+})();
+</script>
+</body>
+</html>
