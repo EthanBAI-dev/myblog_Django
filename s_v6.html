@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiet Cosmos — Ethan BAI</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #05070b;
+      --bg-2: #090d14;
+      --bg-3: #0d1320;
+
+      --panel: rgba(11, 15, 22, 0.76);
+      --panel-2: rgba(15, 20, 30, 0.90);
+      --panel-3: rgba(20, 26, 38, 0.96);
+
+      --text: #f4f7fb;
+      --text-soft: #d4dbe6;
+      --text-secondary: #aab5c5;
+      --text-muted: #738096;
+
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.14);
+
+      --shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+      --shadow-deep: 0 24px 56px rgba(0, 0, 0, 0.34);
+
+      --radius: 16px;
+      --radius-xl: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.85;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(255,255,255,0.02), transparent 22%),
+        radial-gradient(circle at 20% -10%, rgba(168,199,255,0.05), transparent 22%),
+        radial-gradient(circle at 82% -10%, rgba(200,193,255,0.06), transparent 24%),
+        linear-gradient(180deg, #0d1320 0%, #090d14 28%, #05070b 100%);
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #scene-root {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #scene-root canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 50% 44%,
+          rgba(255,255,255,0.00) 0%,
+          rgba(255,255,255,0.00) 30%,
+          rgba(7,10,16,0.06) 55%,
+          rgba(3,5,9,0.14) 82%,
+          rgba(2,3,6,0.28) 100%
+        );
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.6) 0.35px, transparent 0.5px),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.45) 0.35px, transparent 0.5px),
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.5) 0.35px, transparent 0.5px);
+      background-size: 160px 160px, 190px 190px, 210px 210px;
+      mix-blend-mode: soft-light;
+    }
+
+    .debug-badge {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 99;
+      max-width: 360px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #dbe8ff;
+      background: rgba(8, 12, 18, 0.88);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      display: none;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.24);
+    }
+
+    .debug-badge.show {
+      display: block;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(6, 8, 12, 0.55);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow:
+        0 0 12px rgba(255,255,255,0.42),
+        0 0 20px rgba(168,199,255,0.18);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 999px;
+      transition: all 0.28s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .nav a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.045);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 10;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 92px 28px 124px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 800px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.85s 0.08s ease-out forwards;
+    }
+
+    .hero-kicker::before,
+    .hero-kicker::after {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    }
+
+    .hero-title {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      margin-bottom: 18px;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.18s ease-out forwards;
+      text-shadow: 0 0 18px rgba(255,255,255,0.06);
+    }
+
+    .hero-title .soft {
+      color: #e6edf7;
+      text-shadow:
+        0 0 12px rgba(255,255,255,0.08),
+        0 0 24px rgba(168,199,255,0.08);
+    }
+
+    .hero-rule {
+      width: 52px;
+      height: 1px;
+      margin: 0 auto 24px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.28s ease-out forwards;
+    }
+
+    .hero-desc {
+      max-width: 680px;
+      margin: 0 auto 12px;
+      font-size: 1.06rem;
+      color: var(--text-soft);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.40s ease-out forwards;
+    }
+
+    .hero-sub {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.73rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 42px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.52s ease-out forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.64s ease-out forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: all 0.28s ease;
+    }
+
+    .btn-solid {
+      color: #0b1019;
+      background: linear-gradient(135deg, #f7fbff 0%, #dfe9f7 45%, #cbd8ef 100%);
+      box-shadow:
+        0 12px 28px rgba(255,255,255,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .btn-solid:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 18px 36px rgba(255,255,255,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .btn-ghost {
+      color: var(--text-secondary);
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.04);
+      transform: translateY(-2px);
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: -24px 0 62px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: 30px 26px;
+      background:
+        linear-gradient(180deg, rgba(16,20,28,0.88) 0%, rgba(10,14,20,0.96) 100%);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow:
+        0 16px 32px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.33s ease, box-shadow 0.33s ease, border-color 0.33s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow:
+        0 24px 52px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .card-index {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      color: #7f8da3;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 1.10rem;
+      font-weight: 700;
+      color: #f5f8fc;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 0.94rem;
+      color: #bac5d4;
+      line-height: 1.88;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: #e3ebf6;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      transition: all 0.26s ease;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: #ffffff;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow:
+        0 0 10px rgba(255,255,255,0.20),
+        0 0 20px rgba(168,199,255,0.10);
+    }
+
+    .section-more {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .post-list {
+      margin-bottom: 58px;
+    }
+
+    .post-item {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      transition: all 0.32s ease;
+      isolation: isolate;
+    }
+
+    .post-item:hover {
+      padding-left: 12px;
+      border-color: rgba(255,255,255,0.13);
+    }
+
+    .post-date {
+      min-width: 92px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .post-tag {
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.62rem;
+      color: #dce6f4;
+      letter-spacing: 0.05em;
+    }
+
+    .post-title {
+      flex: 1;
+      min-width: 160px;
+      font-size: 0.98rem;
+      color: #e1e8f1;
+    }
+
+    .post-arrow {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      transition: transform 0.28s ease, color 0.28s ease;
+    }
+
+    .post-item:hover .post-arrow {
+      color: #ffffff;
+      transform: translateX(4px);
+    }
+
+    .testimonials {
+      padding-bottom: 58px;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .testimonial-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: 26px 22px 20px;
+      background:
+        linear-gradient(180deg, rgba(15,20,30,0.88), rgba(9,13,20,0.96));
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: var(--shadow);
+      transition: transform 0.33s ease, box-shadow 0.33s ease, border-color 0.33s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-deep);
+      border-color: rgba(255,255,255,0.11);
+    }
+
+    .t-asterism {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.16em;
+      margin-bottom: 14px;
+    }
+
+    .t-quote {
+      font-size: 0.84rem;
+      color: #bcc7d6;
+      line-height: 1.82;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .t-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,0.10);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+        rgba(255,255,255,0.02);
+    }
+
+    .t-name {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .t-role {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--line);
+      padding: 48px 0;
+      text-align: center;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      letter-spacing: 0.10em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner { padding: 14px 16px; }
+      .wrapper { padding: 0 16px; }
+      .hero { min-height: 540px; padding: 68px 16px 96px; }
+      .hero-title { font-size: 2.55rem; }
+      .hero-desc { font-size: 0.98rem; }
+      .card-grid { grid-template-columns: 1fr; gap: 16px; margin: -12px 0 48px; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="scene-root"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div id="debug-badge" class="debug-badge"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="brand">
+        <span class="brand-dot"></span>
+        Ethan BAI
+      </a>
+      <nav class="nav">
+        <a href="#" class="active">Home</a>
+        <a href="#">Writing</a>
+        <a href="#">Projects</a>
+        <a href="#">About</a>
+        <a href="#">CV</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker">Quiet Cosmos / Spiral Galaxy</div>
+      <h1 class="hero-title"><span class="soft">Ethan</span> BAI</h1>
+      <div class="hero-rule"></div>
+      <p class="hero-desc">探索深度学习的边界，用代码组织认知，用长期主义穿越复杂系统。</p>
+      <p class="hero-sub">Deep learning engineer · Notes, systems, experiments · Observer of systems and stars</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-solid">Read Journal</a>
+        <a href="#" class="btn btn-ghost">About Me</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrapper">
+    <section class="card-grid">
+      <article class="card reveal">
+        <div class="card-index">01 · Identity</div>
+        <h2 class="card-title">关于</h2>
+        <p class="card-desc">一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-index">02 · Current Focus</div>
+        <h2 class="card-title">当下</h2>
+        <p class="card-desc">系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。</p>
+      </article>
+      <article class="card reveal">
+        <div class="card-index">03 · Toolkit</div>
+        <h2 class="card-title">技能</h2>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Django</span>
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">HTML/CSS</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </article>
+      <article class="card reveal">
+        <div class="card-index">04 · Principle</div>
+        <h2 class="card-title">热爱与秩序</h2>
+        <p class="card-desc">相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。</p>
+      </article>
+    </section>
+
+    <div class="section-header reveal">
+      <h2 class="section-title">近期写作</h2>
+      <a href="#" class="section-more">All posts</a>
+    </div>
+
+    <section class="post-list">
+      <a href="#" class="post-item reveal"><span class="post-date">2024-06</span><span class="post-tag">DL</span><span class="post-title">L1W1 神经网络与深度学习笔记</span><span class="post-arrow">→</span></a>
+      <a href="#" class="post-item reveal"><span class="post-date">2024-05</span><span class="post-tag">DL</span><span class="post-title">L1W2 神经网络编程基础</span><span class="post-arrow">→</span></a>
+      <a href="#" class="post-item reveal"><span class="post-date">2024-05</span><span class="post-tag">CODE</span><span class="post-title">L1W3 浅层神经网络笔记</span><span class="post-arrow">→</span></a>
+      <a href="#" class="post-item reveal"><span class="post-date">2024-04</span><span class="post-tag">BLOG</span><span class="post-title">用 Django 搭建个人博客的完整指南</span><span class="post-arrow">→</span></a>
+    </section>
+
+    <div class="section-header reveal"><h2 class="section-title">同行评价</h2></div>
+
+    <section class="testimonials">
+      <div class="testimonial-grid">
+        <article class="testimonial-card reveal">
+          <div class="t-asterism">· · ·</div>
+          <p class="t-quote">学习的深度和笔记的清晰度让我印象深刻。每次看他的博客都能学到新的东西。</p>
+          <div class="t-author"><div class="t-avatar">L</div><div><div class="t-name">Leo Chen</div><div class="t-role">ML Engineer</div></div></div>
+        </article>
+        <article class="testimonial-card reveal">
+          <div class="t-asterism">· · ·</div>
+          <p class="t-quote">他是我见过的最自律的学习者之一。每一步都很扎实。</p>
+          <div class="t-author"><div class="t-avatar">M</div><div><div class="t-name">Mia Wang</div><div class="t-role">CS Graduate</div></div></div>
+        </article>
+        <article class="testimonial-card reveal">
+          <div class="t-asterism">· · ·</div>
+          <p class="t-quote">代码干净，注释详细。希望他持续输出高质量内容。</p>
+          <div class="t-author"><div class="t-avatar">Z</div><div><div class="t-name">Zhang Wei</div><div class="t-role">Data Scientist</div></div></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    SPIRAL ARMS · SILVER DUST · QUIET COSMOS · ETHAN BAI
+  </footer>
+
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+
+  <script>
+    (() => {
+      const badge = document.getElementById('debug-badge');
+      function showDebug(m) { console.error(m); badge.textContent = m; badge.classList.add('show'); }
+      if (!window.THREE) { showDebug('Three.js 未加载'); return; }
+
+      const isMob = window.innerWidth < 768;
+      const lowFPS = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const mount = document.getElementById('scene-root');
+
+      // ─── Reactive params object ───
+      const P = {
+        galaxyRadius: isMob ? 650 : 1000,
+        coreRadius: isMob ? 120 : 200,
+        armCount: 2,
+        armWinding: 3.2,
+        armWidth: isMob ? 100 : 160,
+        starCount: lowFPS ? 5000 : (isMob ? 10000 : 25000),
+        dustRatio: 0.35,
+        diskThickness: isMob ? 16 : 26,
+        rotSpeed: lowFPS ? 0.00006 : 0.00018,
+        armStarRatio: 0.7,
+        camDist: isMob ? 800 : 1200,
+        camHeight: isMob ? 350 : 500,
+        tiltX: -0.85,
+        tiltZ: 0.15,
+        driftX: isMob ? 5 : 10,
+        driftY: isMob ? 3 : 6,
+      };
+
+      // ─── Three.js globals ───
+      let scn, cam, ren;
+      let galGrp, bgPts, glowC, glowH, ambG;
+      let aid = null;
+      const mo = { tx: 0, ty: 0, cx: 0, cy: 0 };
+      const clock = new THREE.Clock();
+      let galParticles = null; // reference to the galaxy particle group
+
+      function tmpCol(tmp) {
+        const t = THREE.MathUtils.clamp((tmp - 1000) / 9000, 0, 1);
+        return new THREE.Color(
+          THREE.MathUtils.lerp(1.0, 0.55, t),
+          THREE.MathUtils.lerp(0.35, 0.88, t),
+          THREE.MathUtils.lerp(0.10, 1.0, t)
+        );
+      }
+
+      // ─── Generate galaxy ───
+      function makeGal() {
+        const sp = [], sc = [], dp = [], dc = [], bp = [], bc = [];
+        const { galaxyRadius: GR, coreRadius: CR, armCount: ARM_N, armWinding: ARM_WIND,
+                armWidth: ARM_WIDTH, starCount: NSTAR, dustRatio: DRAT,
+                diskThickness: THK, armStarRatio: ASR } = P;
+
+        for (let i = 0; i < NSTAR; i++) {
+          const isBulge = Math.random() < 0.08 && i > NSTAR * 0.1;
+          const r = isBulge
+            ? Math.pow(Math.random(), 2.5) * CR
+            : CR + Math.pow(Math.random(), 0.7) * (GR - CR);
+
+          let x, z, tmp;
+
+          if (isBulge) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            const rad = r;
+            x = Math.sin(phi) * Math.cos(theta) * rad;
+            z = Math.sin(phi) * Math.sin(theta) * rad * 0.7;
+            const y = Math.cos(phi) * rad * 0.6;
+            tmp = 8000 + Math.random() * 2000;
+            const col = tmpCol(tmp);
+            bp.push(x, y, z); bc.push(col.r, col.g, col.b);
+            continue;
+          }
+
+          const isOnArm = Math.random() < ASR;
+          const isDust = !isOnArm && Math.random() < DRAT;
+
+          let angle;
+          if (isOnArm) {
+            const armIdx = Math.floor(Math.random() * ARM_N);
+            const armAngleOffset = (Math.PI * 2 / ARM_N) * armIdx;
+            const t = r / GR;
+            const spiralAngle = armAngleOffset + ARM_WIND * Math.PI * 2 * Math.pow(t, 0.6);
+            const spread = (Math.random() - 0.5) * ARM_WIDTH * (0.3 + 0.7 * t);
+            const spreadAngle = (Math.random() - 0.5) * 0.25;
+            angle = spiralAngle + spreadAngle;
+            x = Math.cos(angle) * (r + spread);
+            z = Math.sin(angle) * (r + spread);
+          } else {
+            angle = Math.random() * Math.PI * 2;
+            const rr = CR + Math.random() * (GR - CR);
+            x = Math.cos(angle) * rr;
+            z = Math.sin(angle) * rr;
+          }
+
+          const y = (Math.random() - 0.5) * THK * (0.2 + 0.8 * (r / GR));
+          tmp = 3000 + 6000 * (1 - r / GR) + (Math.random() - 0.5) * 2000;
+          const col = tmpCol(tmp);
+
+          if (isDust) {
+            const d = col.clone().multiplyScalar(0.3 + Math.random() * 0.15);
+            dp.push(x, y, z); dc.push(d.r, d.g, d.b);
+          } else {
+            sp.push(x, y, z); sc.push(col.r, col.g, col.b);
+          }
+        }
+
+        function mkPts(pos, col, size, op) {
+          const g = new THREE.BufferGeometry();
+          g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
+          g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(col), 3));
+          const tex = (() => {
+            const c = document.createElement('canvas'); c.width = 48; c.height = 48;
+            const ctx = c.getContext('2d');
+            const gr = ctx.createRadialGradient(24, 24, 0, 24, 24, 24);
+            gr.addColorStop(0, 'rgba(255,255,255,1)');
+            gr.addColorStop(0.2, 'rgba(255,255,255,0.85)');
+            gr.addColorStop(0.5, 'rgba(220,225,255,0.25)');
+            gr.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = gr; ctx.fillRect(0, 0, 48, 48);
+            return new THREE.CanvasTexture(c);
+          })();
+          return new THREE.Points(g, new THREE.PointsMaterial({
+            size: size || 1.5, map: tex, transparent: true, opacity: op || 0.95,
+            vertexColors: true, depthWrite: false, sizeAttenuation: true,
+            blending: THREE.AdditiveBlending
+          }));
+        }
+
+        const g = new THREE.Group();
+        g.add(mkPts(sp, sc, 1.6, 0.95));
+        g.add(mkPts(dp, dc, 0.8, 0.30));
+        g.add(mkPts(bp, bc, 1.8, 0.85));
+        return g;
+      }
+
+      function mkBG(n) {
+        const p = [], c = [];
+        for (let i = 0; i < n; i++) {
+          p.push((Math.random() - 0.5) * 6000, (Math.random() - 0.5) * 4000, -2000 - Math.random() * 3500);
+          const v = 0.5 + Math.random() * 0.5;
+          c.push(v, v, v);
+        }
+        const g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(p), 3));
+        g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(c), 3));
+        const tex = (() => {
+          const c = document.createElement('canvas'); c.width = 24; c.height = 24;
+          const ctx = c.getContext('2d');
+          const gr = ctx.createRadialGradient(12, 12, 0, 12, 12, 12);
+          gr.addColorStop(0, 'rgba(255,255,255,1)');
+          gr.addColorStop(0.5, 'rgba(200,200,255,0.2)');
+          gr.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = gr; ctx.fillRect(0, 0, 24, 24);
+          return new THREE.CanvasTexture(c);
+        })();
+        return new THREE.Points(g, new THREE.PointsMaterial({
+          size: isMob ? 1.6 : 2.2, map: tex, transparent: true, opacity: 0.8,
+          vertexColors: true, depthWrite: false, sizeAttenuation: true,
+          blending: THREE.AdditiveBlending
+        }));
+      }
+
+      function glwTex(t) {
+        const sz = 512;
+        const c = document.createElement('canvas'); c.width = sz; c.height = sz;
+        const ctx = c.getContext('2d');
+        const gr = ctx.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, sz / 2);
+        if (t === 'core') {
+          gr.addColorStop(0, 'rgba(255,248,235,0.50)');
+          gr.addColorStop(0.12, 'rgba(255,240,220,0.28)');
+          gr.addColorStop(0.35, 'rgba(220,210,200,0.08)');
+          gr.addColorStop(1, 'rgba(0,0,0,0)');
+        } else if (t === 'halo') {
+          gr.addColorStop(0, 'rgba(240,235,255,0.10)');
+          gr.addColorStop(0.3, 'rgba(200,210,255,0.06)');
+          gr.addColorStop(0.65, 'rgba(160,180,240,0.02)');
+          gr.addColorStop(1, 'rgba(0,0,0,0)');
+        } else {
+          gr.addColorStop(0, 'rgba(200,215,255,0.04)');
+          gr.addColorStop(0.4, 'rgba(170,195,255,0.02)');
+          gr.addColorStop(1, 'rgba(0,0,0,0)');
+        }
+        ctx.fillStyle = gr; ctx.fillRect(0, 0, sz, sz);
+        return new THREE.CanvasTexture(c);
+      }
+
+      // ─── Rebuild galaxy ───
+      function rebuildGalaxy() {
+        if (!scn) return;
+        // Remove old galaxy group
+        if (galGrp) { scn.remove(galGrp); galGrp = null; }
+
+        galGrp = new THREE.Group();
+        galGrp.rotation.x = P.tiltX;
+        galGrp.rotation.z = P.tiltZ;
+
+        galParticles = makeGal();
+        galGrp.add(galParticles);
+
+        glowC = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('core'), transparent: true, opacity: 0.8, depthWrite: false, blending: THREE.AdditiveBlending }));
+        glowC.scale.set(isMob ? 140 : 220, isMob ? 140 : 220, 1);
+        galGrp.add(glowC);
+
+        glowH = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('halo'), transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending }));
+        glowH.scale.set(isMob ? 500 : 800, isMob ? 500 : 800, 1);
+        galGrp.add(glowH);
+
+        scn.add(galGrp);
+      }
+
+      function rebuildAll() {
+        rebuildGalaxy();
+        // Update camera from params
+        cam.position.set(0, P.camHeight, P.camDist);
+        cam.lookAt(0, 0, 0);
+      }
+
+      // ─── Init ───
+      function init() {
+        scn = new THREE.Scene();
+        cam = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
+        cam.position.set(0, P.camHeight, P.camDist);
+        cam.lookAt(0, 0, 0);
+
+        ren = new THREE.WebGLRenderer({ antialias: !isMob, alpha: true, powerPreference: 'high-performance' });
+        ren.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        ren.setSize(window.innerWidth, window.innerHeight);
+        ren.setClearColor(0x000000, 0);
+        if (ren.outputColorSpace && window.THREE.SRGBColorSpace) ren.outputColorSpace = THREE.SRGBColorSpace;
+        mount.innerHTML = '';
+        mount.appendChild(ren.domElement);
+
+        bgPts = mkBG(lowFPS ? 600 : (isMob ? 1000 : 2000));
+        scn.add(bgPts);
+
+        ambG = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('amb'), transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending }));
+        ambG.scale.set(isMob ? 1200 : 2000, isMob ? 1200 : 2000, 1);
+        ambG.position.set(0, 0, -400);
+        scn.add(ambG);
+
+        rebuildGalaxy();
+      }
+
+      function anim() {
+        const dt = Math.min(clock.getDelta(), 0.05);
+        const el = clock.elapsedTime;
+
+        mo.cx += (mo.tx - mo.cx) * 0.035;
+        mo.cy += (mo.ty - mo.cy) * 0.035;
+
+        cam.position.x = mo.cx * P.driftX;
+        cam.position.y = P.camHeight - mo.cy * P.driftY;
+        cam.position.z = P.camDist + mo.cy * 2;
+        cam.lookAt(0, 0, 0);
+
+        if (galGrp) galGrp.rotation.z += P.rotSpeed;
+
+        if (glowC) {
+          const p1 = 1 + Math.sin(el * 0.7) * 0.02;
+          glowC.scale.set((isMob ? 140 : 220) * p1, (isMob ? 140 : 220) * p1, 1);
+        }
+        if (glowH) {
+          const p2 = 1 + Math.cos(el * 0.5) * 0.015;
+          glowH.scale.set((isMob ? 500 : 800) * p2, (isMob ? 500 : 800) * p2, 1);
+        }
+
+        ren.render(scn, cam);
+        aid = requestAnimationFrame(anim);
+      }
+
+      function rs() {
+        cam.aspect = window.innerWidth / window.innerHeight;
+        cam.updateProjectionMatrix();
+        ren.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        ren.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      function pm(e) {
+        mo.tx = (e.clientX / window.innerWidth) * 2 - 1;
+        mo.ty = (e.clientY / window.innerHeight) * 2 - 1;
+      }
+
+      // ─────────────────────────────────────────────
+      //  Control Panel
+      // ─────────────────────────────────────────────
+      const sliders = [
+        { id:'galaxyRadius', label:'星系半径', min:200, max:2000, step:10 },
+        { id:'coreRadius',   label:'核球半径', min:20, max:600, step:5 },
+        { id:'armCount',     label:'旋臂数量', min:1, max:6, step:1 },
+        { id:'armWinding',   label:'旋臂缠绕度', min:0.5, max:10, step:0.1 },
+        { id:'armWidth',     label:'旋臂宽度', min:20, max:500, step:5 },
+        { id:'armStarRatio', label:'臂星比例', min:0.1, max:0.95, step:0.01 },
+        { id:'diskThickness',label:'盘面厚度', min:3, max:80, step:1 },
+        { id:'dustRatio',    label:'尘埃比例', min:0, max:0.8, step:0.01 },
+        { id:'rotSpeed',     label:'旋转速度', min:0, max:0.001, step:0.00001 },
+        { id:'camDist',      label:'相机距离', min:300, max:3000, step:10 },
+        { id:'camHeight',    label:'相机高度', min:50, max:1500, step:10 },
+        { id:'tiltX',        label:'星系倾斜X', min:-2, max:0, step:0.01 },
+        { id:'tiltZ',        label:'星系倾斜Z', min:-1, max:1, step:0.01 },
+        { id:'starCount',    label:'恒星数量', min:1000, max:60000, step:500 },
+      ];
+
+      // Build panel DOM
+      const panel = document.createElement('div');
+      panel.id = 'ctrl-panel';
+      panel.innerHTML = `
+        <style>
+          #ctrl-panel {
+            position: fixed; top: 80px; right: 16px; z-index: 9999;
+            width: 280px; max-height: calc(100vh - 100px);
+            background: rgba(8,12,20,0.88); backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.10); border-radius: 14px;
+            font-family: 'IBM Plex Mono','Noto Sans SC',monospace; font-size: 11px;
+            color: #d4dbe6; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; user-select: none;
+            transition: opacity 0.2s, transform 0.2s;
+          }
+          #ctrl-panel.collapsed .ctrl-body { display: none; }
+          #ctrl-panel.collapsed { width: auto; min-width: 0; }
+          .ctrl-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px; cursor: grab; border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+          }
+          .ctrl-header:active { cursor: grabbing; }
+          .ctrl-title { font-weight: 600; font-size: 12px; letter-spacing: 0.05em; color: #e8edf5; }
+          .ctrl-btns { display: flex; gap: 6px; }
+          .ctrl-btns button {
+            background: none; border: 1px solid rgba(255,255,255,0.12); color: #aab5c5;
+            border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1;
+            padding: 2px 6px 4px; transition: all 0.15s;
+          }
+          .ctrl-btns button:hover { background: rgba(255,255,255,0.08); color: #fff; }
+          .ctrl-body {
+            overflow-y: auto; padding: 6px 10px 10px; flex: 1;
+            scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.10) transparent;
+          }
+          .ctrl-body::-webkit-scrollbar { width: 4px; }
+          .ctrl-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+          .ctrl-group { margin-bottom: 2px; }
+          .ctrl-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 5px 2px; gap: 6px;
+          }
+          .ctrl-row label { flex: 0 0 auto; white-space: nowrap; min-width: 56px; font-size: 10px; color: #9aabbf; }
+          .ctrl-row input[type=range] {
+            flex: 1; height: 3px; -webkit-appearance: none; appearance: none;
+            background: rgba(255,255,255,0.10); border-radius: 2px; outline: none;
+            min-width: 0;
+          }
+          .ctrl-row input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%;
+            background: #c8d8ff; border: none; cursor: pointer;
+            box-shadow: 0 0 8px rgba(200,216,255,0.3);
+          }
+          .ctrl-row input[type=range]::-moz-range-thumb {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #c8d8ff; border: none; cursor: pointer;
+          }
+          .ctrl-val {
+            flex: 0 0 50px; text-align: right; font-size: 10px;
+            color: #c8d8ff; font-weight: 500; white-space: nowrap;
+          }
+          @media (max-width: 768px) {
+            #ctrl-panel { width: 220px; right: 8px; top: 70px; font-size: 10px; }
+            .ctrl-row label { min-width: 44px; font-size: 9px; }
+            .ctrl-val { flex: 0 0 38px; font-size: 9px; }
+          }
+        </style>
+        <div class="ctrl-header">
+          <span class="ctrl-title">✦ 星系参数</span>
+          <div class="ctrl-btns">
+            <button id="ctrl-toggle" title="收起/展开">─</button>
+            <button id="ctrl-reset" title="重置">↺</button>
+          </div>
+        </div>
+        <div class="ctrl-body"></div>
+      `;
+      document.body.appendChild(panel);
+
+      const ctrlBody = panel.querySelector('.ctrl-body');
+      const toggleBtn = panel.querySelector('#ctrl-toggle');
+      const resetBtn = panel.querySelector('#ctrl-reset');
+
+      // Build slider rows
+      sliders.forEach(s => {
+        const grp = document.createElement('div');
+        grp.className = 'ctrl-group';
+        const row = document.createElement('div');
+        row.className = 'ctrl-row';
+        const label = document.createElement('label');
+        label.textContent = s.label;
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.min = s.min; input.max = s.max; input.step = s.step;
+        input.value = P[s.id];
+        const valSpan = document.createElement('span');
+        valSpan.className = 'ctrl-val';
+
+        const fmt = s.step < 0.01 ? 4 : s.step < 0.1 ? 2 : s.step < 1 ? 1 : 0;
+        valSpan.textContent = Number(input.value).toFixed(fmt);
+
+        input.addEventListener('input', () => {
+          const v = parseFloat(input.value);
+          P[s.id] = v;
+          valSpan.textContent = v.toFixed(fmt);
+          if (s.id === 'camDist' || s.id === 'camHeight') {
+            cam.position.set(0, P.camHeight, P.camDist);
+            cam.lookAt(0, 0, 0);
+          } else if (s.id === 'tiltX' || s.id === 'tiltZ') {
+            if (galGrp) { galGrp.rotation.x = P.tiltX; galGrp.rotation.z = P.tiltZ; }
+          } else if (s.id === 'rotSpeed') {
+            // applied each frame
+          } else {
+            rebuildGalaxy();
+          }
+        });
+
+        row.appendChild(label);
+        row.appendChild(input);
+        row.appendChild(valSpan);
+        grp.appendChild(row);
+        ctrlBody.appendChild(grp);
+      });
+
+      // Toggle collapse
+      toggleBtn.addEventListener('click', () => {
+        panel.classList.toggle('collapsed');
+        toggleBtn.textContent = panel.classList.contains('collapsed') ? '+' : '─';
+      });
+
+      // Reset
+      resetBtn.addEventListener('click', () => {
+        location.reload();
+      });
+
+      // Drag
+      let dragging = false, dragOffX = 0, dragOffY = 0;
+      const header = panel.querySelector('.ctrl-header');
+      header.addEventListener('mousedown', (e) => {
+        dragging = true;
+        const rect = panel.getBoundingClientRect();
+        dragOffX = e.clientX - rect.left;
+        dragOffY = e.clientY - rect.top;
+        panel.style.cursor = 'grabbing';
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        panel.style.left = (e.clientX - dragOffX) + 'px';
+        panel.style.right = 'auto';
+        panel.style.top = (e.clientY - dragOffY) + 'px';
+      });
+      document.addEventListener('mouseup', () => {
+        dragging = false;
+        panel.style.cursor = '';
+      });
+
+      try {
+        init();
+        window.addEventListener('resize', rs);
+        window.addEventListener('mousemove', pm, { passive: true });
+        anim();
+      } catch (err) { showDebug('Error: ' + (err.message || err)); }
+
+      window.addEventListener('beforeunload', () => {
+        if (aid) cancelAnimationFrame(aid);
+        window.removeEventListener('resize', rs);
+        window.removeEventListener('mousemove', pm);
+      });
+    })();
+
+    /* 滚动出现动画 */
+    (() => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || prefersReducedMotion) {
+        items.forEach(el => el.classList.add('in-view'));
+        return;
+      }
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); obs.unobserve(entry.target); } });
+      }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
