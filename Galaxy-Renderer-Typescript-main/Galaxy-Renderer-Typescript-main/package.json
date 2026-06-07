@@ -1,0 +1,23 @@
+{
+  "name": "spiral-galaxy-renderer",
+  "version": "1.0.0",
+  "description": "",
+    "main": "./src/GalaxyRenderer.ts",
+  "scripts": {
+    "build": "webpack --mode development",
+    "prod": "webpack --mode production"
+  },
+  "keywords": ["galaxy", "simulation", "density wave theory"],
+  "author":"Ingo Berg <galaxy-renderer@beltoforion.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "nsloader": "^0.1.6",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.5",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.3.0"
+  }
+}
