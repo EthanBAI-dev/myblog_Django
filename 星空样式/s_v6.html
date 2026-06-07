@@ -929,24 +929,30 @@
         const sz = 512;
         const c = document.createElement('canvas'); c.width = sz; c.height = sz;
         const ctx = c.getContext('2d');
-        const gr = ctx.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, sz / 2);
+        const radius = sz / 2 * 0.82;
+        const gr = ctx.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, radius);
         if (t === 'core') {
           gr.addColorStop(0, 'rgba(255,248,235,0.50)');
           gr.addColorStop(0.12, 'rgba(255,240,220,0.28)');
           gr.addColorStop(0.35, 'rgba(220,210,200,0.08)');
+          gr.addColorStop(0.85, 'rgba(0,0,0,0)');
           gr.addColorStop(1, 'rgba(0,0,0,0)');
         } else if (t === 'halo') {
           gr.addColorStop(0, 'rgba(240,235,255,0.10)');
           gr.addColorStop(0.3, 'rgba(200,210,255,0.06)');
           gr.addColorStop(0.65, 'rgba(160,180,240,0.02)');
+          gr.addColorStop(0.85, 'rgba(0,0,0,0)');
           gr.addColorStop(1, 'rgba(0,0,0,0)');
         } else {
           gr.addColorStop(0, 'rgba(200,215,255,0.04)');
           gr.addColorStop(0.4, 'rgba(170,195,255,0.02)');
+          gr.addColorStop(0.85, 'rgba(0,0,0,0)');
           gr.addColorStop(1, 'rgba(0,0,0,0)');
         }
         ctx.fillStyle = gr; ctx.fillRect(0, 0, sz, sz);
-        return new THREE.CanvasTexture(c);
+        const tex = new THREE.CanvasTexture(c);
+        tex.premultiplyAlpha = false;
+        return tex;
       }
 
       // ─── Rebuild galaxy ───
@@ -962,11 +968,11 @@
         galParticles = makeGal();
         galGrp.add(galParticles);
 
-        glowC = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('core'), transparent: true, opacity: 0.8, depthWrite: false, blending: THREE.AdditiveBlending }));
+        glowC = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('core'), transparent: true, opacity: 0.8, depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false }));
         glowC.scale.set(isMob ? 140 : 220, isMob ? 140 : 220, 1);
         galGrp.add(glowC);
 
-        glowH = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('halo'), transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending }));
+        glowH = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('halo'), transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false }));
         glowH.scale.set(isMob ? 500 : 800, isMob ? 500 : 800, 1);
         galGrp.add(glowH);
 
@@ -998,7 +1004,7 @@
         bgPts = mkBG(lowFPS ? 600 : (isMob ? 1000 : 2000));
         scn.add(bgPts);
 
-        ambG = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('amb'), transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending }));
+        ambG = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('amb'), transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false }));
         ambG.scale.set(isMob ? 1200 : 2000, isMob ? 1200 : 2000, 1);
         ambG.position.set(0, 0, -400);
         scn.add(ambG);

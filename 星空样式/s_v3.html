@@ -1143,10 +1143,11 @@
           0,
           Motion.vanishCurrentX,
           Motion.vanishCurrentY,
-          Math.max(w, h) * 0.8
+          Math.max(w, h) * 1.2
         );
-        bgGlow.addColorStop(0, 'rgba(120,180,255,0.03)');
-        bgGlow.addColorStop(0.30, 'rgba(0,255,204,0.015)');
+        bgGlow.addColorStop(0, 'rgba(120,180,255,0.05)');
+        bgGlow.addColorStop(0.30, 'rgba(0,255,204,0.025)');
+        bgGlow.addColorStop(0.85, 'rgba(0,0,0,0)');
         bgGlow.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = bgGlow;
         ctx.fillRect(0, 0, w, h);
@@ -1537,11 +1538,13 @@
       }
 
       function drawAtmosphericGlow() {
-        // Hero 整体淡淡的上方辉光
-        const glow = ctx.createRadialGradient(w * 0.5, h * 0.24, 0, w * 0.5, h * 0.24, h * 0.75);
+        // Hero 整体淡淡的上方辉光 — 增大半径覆盖四角
+        const maxDim = Math.max(w, h);
+        const glow = ctx.createRadialGradient(w * 0.5, h * 0.24, 0, w * 0.5, h * 0.24, maxDim * 0.9);
         glow.addColorStop(0, 'rgba(0,255,153,0.08)');
         glow.addColorStop(0.20, 'rgba(0,255,255,0.05)');
         glow.addColorStop(0.42, 'rgba(75,0,130,0.05)');
+        glow.addColorStop(0.85, 'rgba(0,0,0,0)');
         glow.addColorStop(1, 'rgba(0,0,0,0)');
 
         ctx.fillStyle = glow;

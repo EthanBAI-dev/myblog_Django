@@ -15,32 +15,27 @@
 
   <style>
     :root {
-      --bg: #06080e;
-      --bg-2: #0a0f18;
-      --bg-3: #0e1522;
+      --bg: #05070b;
+      --bg-2: #090d14;
+      --bg-3: #0d1320;
 
-      --panel: rgba(10, 14, 22, 0.72);
-      --panel-2: rgba(14, 19, 30, 0.88);
-      --panel-3: rgba(18, 24, 36, 0.95);
+      --panel: rgba(11, 15, 22, 0.76);
+      --panel-2: rgba(15, 20, 30, 0.90);
+      --panel-3: rgba(20, 26, 38, 0.96);
 
-      --text: #f0f4fa;
-      --text-soft: #d0d8e4;
-      --text-secondary: #a5b2c4;
-      --text-muted: #6e7d94;
+      --text: #f4f7fb;
+      --text-soft: #d4dbe6;
+      --text-secondary: #aab5c5;
+      --text-muted: #738096;
 
-      --line: rgba(255,255,255,0.06);
-      --line-strong: rgba(255,255,255,0.12);
-
-      --accent: #8bb8ff;
-      --accent-warm: #ffc99b;
-      --accent-teal: #7fe0d4;
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.14);
 
       --shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
       --shadow-deep: 0 24px 56px rgba(0, 0, 0, 0.34);
 
-      --radius-sm: 10px;
-      --radius: 14px;
-      --radius-lg: 20px;
+      --radius: 16px;
+      --radius-xl: 28px;
     }
 
     * {
@@ -61,9 +56,9 @@
       line-height: 1.85;
       background:
         radial-gradient(circle at 50% 24%, rgba(255,255,255,0.02), transparent 22%),
-        radial-gradient(circle at 20% -10%, rgba(139,184,255,0.04), transparent 22%),
-        radial-gradient(circle at 82% -10%, rgba(127,224,212,0.05), transparent 24%),
-        linear-gradient(180deg, #0e1522 0%, #0a0f18 28%, #06080e 100%);
+        radial-gradient(circle at 20% -10%, rgba(168,199,255,0.05), transparent 22%),
+        radial-gradient(circle at 82% -10%, rgba(200,193,255,0.06), transparent 24%),
+        linear-gradient(180deg, #0d1320 0%, #090d14 28%, #05070b 100%);
       -webkit-font-smoothing: antialiased;
       position: relative;
     }
@@ -74,7 +69,7 @@
     }
 
     /* =========================
-       Three.js background mount
+       Three.js 背景
        ========================= */
     #scene-root {
       position: fixed;
@@ -99,10 +94,10 @@
         radial-gradient(
           circle at 50% 42%,
           rgba(255,255,255,0.00) 0%,
-          rgba(255,255,255,0.00) 30%,
-          rgba(7,10,16,0.06) 54%,
-          rgba(3,5,9,0.18) 78%,
-          rgba(2,3,6,0.35) 100%
+          rgba(255,255,255,0.00) 26%,
+          rgba(7,10,16,0.08) 52%,
+          rgba(3,5,9,0.24) 78%,
+          rgba(2,3,6,0.46) 100%
         );
     }
 
@@ -125,13 +120,13 @@
       right: 14px;
       bottom: 14px;
       z-index: 99;
-      max-width: 340px;
+      max-width: 360px;
       padding: 10px 14px;
       border-radius: 14px;
       font-size: 12px;
       line-height: 1.6;
       color: #dbe8ff;
-      background: rgba(8, 12, 18, 0.86);
+      background: rgba(8, 12, 18, 0.88);
       border: 1px solid rgba(255,255,255,0.08);
       backdrop-filter: blur(12px);
       display: none;
@@ -184,7 +179,7 @@
       background: #ffffff;
       box-shadow:
         0 0 12px rgba(255,255,255,0.42),
-        0 0 20px rgba(139,184,255,0.18);
+        0 0 20px rgba(168,199,255,0.18);
     }
 
     .nav {
@@ -276,7 +271,7 @@
       color: #e6edf7;
       text-shadow:
         0 0 12px rgba(255,255,255,0.08),
-        0 0 24px rgba(139,184,255,0.08);
+        0 0 24px rgba(168,199,255,0.08);
     }
 
     .hero-rule {
@@ -384,115 +379,110 @@
       transform: translateY(0);
     }
 
-    /* =========================
-       Cards — redesigned
-       ========================= */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+      gap: 20px;
       margin: -24px 0 62px;
     }
 
     .card {
       position: relative;
       overflow: hidden;
-      border-radius: var(--radius-lg);
-      padding: 34px 28px 30px;
+      border-radius: var(--radius-xl);
+      padding: 30px 26px;
       background:
-        linear-gradient(165deg, rgba(14,20,32,0.94) 0%, rgba(8,12,20,0.98) 100%);
-      border: 1px solid rgba(139,184,255,0.07);
+        linear-gradient(180deg, rgba(16,20,28,0.88) 0%, rgba(10,14,20,0.96) 100%);
+      border: 1px solid rgba(255,255,255,0.07);
       box-shadow:
-        0 12px 28px rgba(0,0,0,0.28),
-        inset 0 1px 0 rgba(139,184,255,0.06);
-      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        0 16px 32px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.33s ease, box-shadow 0.33s ease, border-color 0.33s ease;
     }
 
     .card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
+      inset: 0 0 auto 0;
+      height: 1px;
       background: linear-gradient(
         90deg,
-        rgba(139,184,255,0) 0%,
-        rgba(139,184,255,0.20) 22%,
-        rgba(127,224,212,0.28) 48%,
-        rgba(255,201,155,0.20) 74%,
-        rgba(255,201,155,0) 100%
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.10) 24%,
+        rgba(168,199,255,0.18) 50%,
+        rgba(200,193,255,0.14) 76%,
+        rgba(255,255,255,0) 100%
       );
-      pointer-events: none;
     }
 
     .card::after {
       content: "";
       position: absolute;
-      width: 200px;
-      height: 200px;
-      bottom: -80px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(127,224,212,0.05), transparent 72%);
-      filter: blur(16px);
+      width: 180px;
+      height: 180px;
+      top: -80px;
+      right: -65px;
+      background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 72%);
+      filter: blur(12px);
+      opacity: 0.65;
       pointer-events: none;
     }
 
     .card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(139,184,255,0.14);
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.12);
       box-shadow:
-        0 20px 48px rgba(0,0,0,0.35),
-        0 0 0 1px rgba(139,184,255,0.04),
-        inset 0 1px 0 rgba(139,184,255,0.08);
+        0 24px 52px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
     .card-index {
       font-family: "IBM Plex Mono", monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.14em;
-      color: #6e809b;
-      margin-bottom: 12px;
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      color: #7f8da3;
+      margin-bottom: 14px;
     }
 
     .card-title {
       font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
-      font-size: 1.08rem;
+      font-size: 1.10rem;
       font-weight: 700;
-      color: #eef3fa;
-      letter-spacing: -0.01em;
-      margin-bottom: 14px;
+      color: #f5f8fc;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
     }
 
     .card-desc {
-      font-size: 0.92rem;
-      color: #b2bfd2;
-      line-height: 1.92;
+      font-size: 0.94rem;
+      color: #bac5d4;
+      line-height: 1.88;
     }
 
     .skill-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
 
     .skill-tag {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid rgba(139,184,255,0.08);
-      background: rgba(139,184,255,0.04);
-      color: #d4e2f5;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: #e3ebf6;
       font-family: "IBM Plex Mono", monospace;
-      font-size: 0.70rem;
+      font-size: 0.72rem;
       transition: all 0.26s ease;
     }
 
     .skill-tag:hover {
-      transform: translateY(-2px);
-      border-color: rgba(139,184,255,0.22);
-      background: rgba(139,184,255,0.10);
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(139,184,255,0.10);
     }
 
     .section-header {
@@ -523,7 +513,7 @@
       background: #ffffff;
       box-shadow:
         0 0 10px rgba(255,255,255,0.20),
-        0 0 20px rgba(139,184,255,0.10);
+        0 0 20px rgba(168,199,255,0.10);
     }
 
     .section-more {
@@ -531,16 +521,8 @@
       font-size: 0.68rem;
       color: var(--text-muted);
       letter-spacing: 0.08em;
-      transition: color 0.28s ease;
     }
 
-    .section-more:hover {
-      color: var(--accent);
-    }
-
-    /* =========================
-       Posts — redesigned with border accent
-       ========================= */
     .post-list {
       margin-bottom: 58px;
     }
@@ -558,34 +540,9 @@
       isolation: isolate;
     }
 
-    .post-item::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 0 0;
-      height: 1px;
-      opacity: 0;
-      transform: translateX(-20%) scaleX(0.10);
-      transform-origin: left center;
-      background: linear-gradient(
-        90deg,
-        rgba(139,184,255,0) 0%,
-        rgba(139,184,255,0.08) 16%,
-        rgba(127,224,212,0.34) 40%,
-        rgba(255,201,155,0.30) 64%,
-        rgba(139,184,255,0.08) 84%,
-        rgba(139,184,255,0) 100%
-      );
-      transition: transform 0.50s ease, opacity 0.36s ease;
-    }
-
     .post-item:hover {
-      padding-left: 10px;
-      border-color: rgba(139,184,255,0.12);
-    }
-
-    .post-item:hover::after {
-      opacity: 1;
-      transform: translateX(0) scaleX(1);
+      padding-left: 12px;
+      border-color: rgba(255,255,255,0.13);
     }
 
     .post-date {
@@ -597,25 +554,20 @@
 
     .post-tag {
       padding: 3px 9px;
-      border-radius: 6px;
-      border: 1px solid rgba(139,184,255,0.08);
-      background: rgba(139,184,255,0.04);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
       font-family: "IBM Plex Mono", monospace;
-      font-size: 0.60rem;
-      color: #c8daf0;
-      letter-spacing: 0.04em;
+      font-size: 0.62rem;
+      color: #dce6f4;
+      letter-spacing: 0.05em;
     }
 
     .post-title {
       flex: 1;
       min-width: 160px;
       font-size: 0.98rem;
-      color: #d9e2ee;
-      transition: color 0.26s ease;
-    }
-
-    .post-item:hover .post-title {
-      color: #ffffff;
+      color: #e1e8f1;
     }
 
     .post-arrow {
@@ -625,13 +577,10 @@
     }
 
     .post-item:hover .post-arrow {
-      color: var(--accent);
-      transform: translateX(6px);
+      color: #ffffff;
+      transform: translateX(4px);
     }
 
-    /* =========================
-       Testimonials — redesigned
-       ========================= */
     .testimonials {
       padding-bottom: 58px;
     }
@@ -639,42 +588,25 @@
     .testimonial-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      gap: 18px;
     }
 
     .testimonial-card {
       position: relative;
       overflow: hidden;
-      border-radius: var(--radius-lg);
-      padding: 28px 24px 24px;
+      border-radius: var(--radius-xl);
+      padding: 26px 22px 20px;
       background:
-        linear-gradient(165deg, rgba(13,19,30,0.92), rgba(8,12,20,0.96));
-      border: 1px solid rgba(139,184,255,0.06);
+        linear-gradient(180deg, rgba(15,20,30,0.88), rgba(9,13,20,0.96));
+      border: 1px solid rgba(255,255,255,0.07);
       box-shadow: var(--shadow);
-      transition: transform 0.34s ease, box-shadow 0.34s ease, border-color 0.34s ease;
-    }
-
-    .testimonial-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(
-        90deg,
-        rgba(139,184,255,0) 0%,
-        rgba(127,224,212,0.14) 30%,
-        rgba(255,201,155,0.14) 70%,
-        rgba(255,201,155,0) 100%
-      );
-      pointer-events: none;
+      transition: transform 0.33s ease, box-shadow 0.33s ease, border-color 0.33s ease;
     }
 
     .testimonial-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
       box-shadow: var(--shadow-deep);
-      border-color: rgba(139,184,255,0.12);
+      border-color: rgba(255,255,255,0.11);
     }
 
     .t-asterism {
@@ -687,7 +619,7 @@
 
     .t-quote {
       font-size: 0.84rem;
-      color: #b8c5d4;
+      color: #bcc7d6;
       line-height: 1.82;
       margin-bottom: 16px;
       font-style: italic;
@@ -729,9 +661,6 @@
       color: var(--text-muted);
     }
 
-    /* =========================
-       Footer
-       ========================= */
     .site-footer {
       position: relative;
       z-index: 10;
@@ -779,7 +708,7 @@
 
       .card-grid {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 16px;
         margin: -12px 0 48px;
       }
 
@@ -790,7 +719,6 @@
   </style>
 </head>
 <body>
-  <!-- Three.js mount -->
   <div id="scene-root"></div>
   <div class="vignette" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
@@ -815,7 +743,7 @@
 
   <section class="hero" id="hero">
     <div class="hero-inner">
-      <div class="hero-kicker">Quiet Cosmos / Deep Field Transit</div>
+      <div class="hero-kicker">Quiet Cosmos / Interstellar Transit</div>
       <h1 class="hero-title"><span class="soft">Ethan</span> BAI</h1>
       <div class="hero-rule"></div>
       <p class="hero-desc">
@@ -956,70 +884,57 @@
   </main>
 
   <footer class="site-footer">
-    DEEP FIELD · SILVER DUST · QUIET COSMOS · ETHAN BAI
+    INTERSTELLAR TRANSIT · SILVER DUST · QUIET COSMOS · ETHAN BAI
   </footer>
 
-  <!-- Three.js -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 
   <script>
     (() => {
       const badge = document.getElementById('debug-badge');
+
       function showDebug(message) {
         console.error(message);
-        if (badge) {
-          badge.textContent = message;
-          badge.classList.add('show');
-        }
+        badge.textContent = message;
+        badge.classList.add('show');
       }
 
       if (!window.THREE) {
-        showDebug('Three.js 未加载成功：请检查网络、CDN 或浏览器控制台。');
+        showDebug('Three.js 未加载成功，请检查网络或 CDN。');
         return;
       }
 
-      if (!window.WebGLRenderingContext) {
-        showDebug('当前浏览器不支持 WebGL，无法显示星河背景。');
-        return;
-      }
-
+      const isMobile = window.innerWidth < 768;
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const mount = document.getElementById('scene-root');
 
       const CONFIG = {
-        STAR_COUNT: prefersReducedMotion ? 200 : 400,
-        BRIGHT_STAR_COUNT: prefersReducedMotion ? 30 : 100,
+        STAR_COUNT: prefersReducedMotion ? 200 : (isMobile ? 300 : 1000),
+        BRIGHT_STAR_COUNT: prefersReducedMotion ? 20 : (isMobile ? 80 : 200),
 
-        DEPTH: 2200,
-        TUNNEL_RADIUS: 440,
-        INNER_RADIUS: 8,
+        DEPTH: isMobile ? 1500 : 2200,
+        TUNNEL_RADIUS: isMobile ? 270 : 430,
+        INNER_RADIUS: isMobile ? 10 : 8,
 
-        // Reduced speed for calmer feel (matching v3 subtlety)
-        STAR_SPEED: prefersReducedMotion ? 1.2 : 3.2,
-        BRIGHT_STAR_SPEED: prefersReducedMotion ? 2 : 4.5,
+        STAR_SPEED: isMobile ? 2 : 5,
+        BRIGHT_STAR_SPEED: isMobile ? 22 : 30,
 
-        CAMERA_DRIFT_X: 60,
-        CAMERA_DRIFT_Y: 36,
+        CAMERA_DRIFT_X: isMobile ? 8 : 20,
+        CAMERA_DRIFT_Y: isMobile ? 5 : 12,
 
-        NEBULA_COUNT: prefersReducedMotion ? 3 : 8,
-        NEBULA_SPEED: prefersReducedMotion ? 0.6 : 1.2,
+        NEBULA_COUNT: prefersReducedMotion ? 0 : (isMobile ? 2 : 10),
+        NEBULA_SPEED: isMobile ? 1 : 1.5,
 
-        GLOW_PULSE: prefersReducedMotion ? 0.01 : 0.02
+        GLOW_PULSE: prefersReducedMotion ? 0.008 : 0.018
       };
 
-      let renderer;
-      let scene;
-      let camera;
-      let stars;
-      let brightStars;
-      let glowCore;
-      let glowRing;
-      let glowViolet;
+      let renderer, scene, camera;
+      let stars, brightStars;
       let nebulaGroup;
       let nebulaSprites = [];
+      let glowGroup, glowCore, glowMid, glowAura, glowRing;
       let animationId = null;
 
-      // Vanishing-point motion (same concept as v3)
       const motion = {
         targetX: 0,
         targetY: 0,
@@ -1033,6 +948,8 @@
 
       function randomTunnelPosition(z = -Math.random() * CONFIG.DEPTH) {
         const angle = Math.random() * Math.PI * 2;
+
+        // 偏向外圈分布，更能形成通道感
         const radius = Math.pow(Math.random(), 0.58) * CONFIG.TUNNEL_RADIUS;
         const r = Math.max(radius, CONFIG.INNER_RADIUS);
 
@@ -1045,14 +962,13 @@
 
       function randomStarColor() {
         const r = Math.random();
-        // More muted: higher chance of cooler, dimmer colors
-        if (r < 0.70) return new THREE.Color('#eef2f8');
-        if (r < 0.90) return new THREE.Color('#d8e2f0');
-        return new THREE.Color('#dcd6f0');
+        if (r < 0.82) return new THREE.Color('#ffffff');
+        if (r < 0.94) return new THREE.Color('#dfe9ff');
+        return new THREE.Color('#e5ddff');
       }
 
       function createStarTexture() {
-        const size = 48; // smaller texture = softer stars
+        const size = 64;
         const canvas = document.createElement('canvas');
         canvas.width = size;
         canvas.height = size;
@@ -1060,12 +976,14 @@
 
         const grd = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
         grd.addColorStop(0.00, 'rgba(255,255,255,1)');
-        grd.addColorStop(0.20, 'rgba(230,240,255,0.75)');
-        grd.addColorStop(0.50, 'rgba(200,215,245,0.25)');
-        grd.addColorStop(1.00, 'rgba(0,0,0,0)');
+        grd.addColorStop(0.12, 'rgba(255,255,255,1)');
+        grd.addColorStop(0.34, 'rgba(236,242,255,0.95)');
+        grd.addColorStop(0.56, 'rgba(220,229,248,0.42)');
+        grd.addColorStop(1.00, 'rgba(180,190,220,0)');
 
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, size, size);
+
         return new THREE.CanvasTexture(canvas);
       }
 
@@ -1076,26 +994,27 @@
         canvas.height = size;
         const ctx = canvas.getContext('2d');
 
-        ctx.clearRect(0, 0, size, size);
-
         const base = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-        base.addColorStop(0.00, `hsla(${210 + hueShift}, 60%, 85%, 0.18)`);
-        base.addColorStop(0.25, `hsla(${240 + hueShift * 0.5}, 55%, 78%, 0.12)`);
-        base.addColorStop(0.50, `hsla(${195 + hueShift * 0.25}, 60%, 68%, 0.06)`);
+        base.addColorStop(0.00, `hsla(${210 + hueShift}, 70%, 92%, 0.18)`);
+        base.addColorStop(0.22, `hsla(${240 + hueShift * 0.4}, 65%, 84%, 0.12)`);
+        base.addColorStop(0.48, `hsla(${195 + hueShift * 0.25}, 70%, 76%, 0.08)`);
         base.addColorStop(1.00, 'rgba(0,0,0,0)');
         ctx.fillStyle = base;
         ctx.fillRect(0, 0, size, size);
 
-        for (let i = 0; i < 30; i++) {
-          const x = rand(size * 0.18, size * 0.82);
-          const y = rand(size * 0.18, size * 0.82);
-          const r = rand(16, 52);
+        for (let i = 0; i < 32; i++) {
+          const x = rand(size * 0.14, size * 0.86);
+          const y = rand(size * 0.14, size * 0.86);
+          const r = rand(18, 60);
+
           const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-          const hue = 205 + rand(-12, 22) + hueShift;
-          const alpha = rand(0.02, 0.08);
-          g.addColorStop(0.00, `hsla(${hue}, 75%, 82%, ${alpha})`);
-          g.addColorStop(0.60, `hsla(${hue + 15}, 65%, 70%, ${alpha * 0.40})`);
+          const hue = 205 + rand(-16, 28) + hueShift;
+          const alpha = rand(0.02, 0.09);
+
+          g.addColorStop(0.00, `hsla(${hue}, 85%, 88%, ${alpha})`);
+          g.addColorStop(0.58, `hsla(${hue + 18}, 75%, 76%, ${alpha * 0.42})`);
           g.addColorStop(1.00, 'rgba(0,0,0,0)');
+
           ctx.fillStyle = g;
           ctx.beginPath();
           ctx.arc(x, y, r, 0, Math.PI * 2);
@@ -1105,21 +1024,62 @@
         return new THREE.CanvasTexture(canvas);
       }
 
-      function createGlowTexture() {
-        const size = 256;
+      /*
+        电影级光晕核心：
+        目标：
+        1. 中心不过曝
+        2. 外层范围很大
+        3. 更像“光在空间中扩散”
+      */
+      function createGlowTexture(type = 'core') {
+        const size = 512;
         const canvas = document.createElement('canvas');
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext('2d');
-        const g = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-        g.addColorStop(0.00, 'rgba(255,255,255,0.45)');
-        g.addColorStop(0.18, 'rgba(220,232,255,0.32)');
-        g.addColorStop(0.45, 'rgba(190,210,250,0.14)');
-        g.addColorStop(0.78, 'rgba(160,185,240,0.04)');
-        g.addColorStop(1.00, 'rgba(0,0,0,0)');
+
+        // Leave transparent border for macOS Metal compatibility
+        const radius = size / 2 * 0.82;
+        const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, radius);
+
+        if (type === 'core') {
+          g.addColorStop(0.00, 'rgba(255,255,255,0.72)');
+          g.addColorStop(0.07, 'rgba(255,255,255,0.62)');
+          g.addColorStop(0.16, 'rgba(236,242,255,0.52)');
+          g.addColorStop(0.34, 'rgba(214,226,255,0.24)');
+          g.addColorStop(0.62, 'rgba(180,198,255,0.08)');
+          g.addColorStop(0.85, 'rgba(0,0,0,0)');
+          g.addColorStop(1.00, 'rgba(0,0,0,0)');
+        } else if (type === 'mid') {
+          g.addColorStop(0.00, 'rgba(222,234,255,0.20)');
+          g.addColorStop(0.15, 'rgba(210,225,255,0.18)');
+          g.addColorStop(0.38, 'rgba(190,210,255,0.12)');
+          g.addColorStop(0.72, 'rgba(160,186,255,0.05)');
+          g.addColorStop(0.85, 'rgba(0,0,0,0)');
+          g.addColorStop(1.00, 'rgba(0,0,0,0)');
+        } else if (type === 'aura') {
+          g.addColorStop(0.00, 'rgba(204,198,255,0.08)');
+          g.addColorStop(0.18, 'rgba(186,198,255,0.07)');
+          g.addColorStop(0.42, 'rgba(164,182,255,0.05)');
+          g.addColorStop(0.78, 'rgba(146,170,255,0.025)');
+          g.addColorStop(0.85, 'rgba(0,0,0,0)');
+          g.addColorStop(1.00, 'rgba(0,0,0,0)');
+        } else if (type === 'ring') {
+          g.addColorStop(0.00, 'rgba(0,0,0,0)');
+          g.addColorStop(0.34, 'rgba(0,0,0,0)');
+          g.addColorStop(0.54, 'rgba(188,206,255,0.015)');
+          g.addColorStop(0.68, 'rgba(207,220,255,0.030)');
+          g.addColorStop(0.78, 'rgba(166,186,255,0.014)');
+          g.addColorStop(0.85, 'rgba(0,0,0,0)');
+          g.addColorStop(1.00, 'rgba(0,0,0,0)');
+        }
+
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, size, size);
-        return new THREE.CanvasTexture(canvas);
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.premultiplyAlpha = false;
+        return tex;
       }
 
       function createStarField(count, size, opacity, speed, additive = false) {
@@ -1149,7 +1109,7 @@
           opacity,
           vertexColors: true,
           depthWrite: false,
-          sizeAttenuation: true,
+          sizeAttenuation: !isMobile,
           blending: additive ? THREE.AdditiveBlending : THREE.NormalBlending
         });
 
@@ -1171,12 +1131,12 @@
         camera.lookAt(0, 0, -1000);
 
         renderer = new THREE.WebGLRenderer({
-          antialias: true,
+          antialias: !isMobile,
           alpha: true,
           powerPreference: 'high-performance'
         });
 
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x000000, 0);
 
@@ -1187,78 +1147,119 @@
         mount.innerHTML = '';
         mount.appendChild(renderer.domElement);
 
-        // Smaller sizes, lower opacity = reduced visual weight (matching v3 subtlety)
-        stars = createStarField(CONFIG.STAR_COUNT, 2.0, 0.85, CONFIG.STAR_SPEED, false);
-        brightStars = createStarField(CONFIG.BRIGHT_STAR_COUNT, 4.0, 0.70, CONFIG.BRIGHT_STAR_SPEED, true);
+        // 星尘
+        stars = createStarField(
+          CONFIG.STAR_COUNT,
+          isMobile ? 2.2 : 3.1,
+          0.98,
+          CONFIG.STAR_SPEED,
+          false
+        );
+
+        brightStars = createStarField(
+          CONFIG.BRIGHT_STAR_COUNT,
+          isMobile ? 4.2 : 6.4,
+          isMobile ? 0.78 : 0.92,
+          CONFIG.BRIGHT_STAR_SPEED,
+          true
+        );
 
         scene.add(stars);
         scene.add(brightStars);
 
-        // Glows — reduced brightness
+        // =========================
+        // 星际穿越风光晕系统（重点）
+        // core = 核心
+        // mid = 中层柔光
+        // aura = 大范围扩散
+        // ring = 极淡透镜圈
+        // =========================
+        glowGroup = new THREE.Group();
+
         glowCore = new THREE.Sprite(
           new THREE.SpriteMaterial({
-            map: createGlowTexture(),
+            map: createGlowTexture('core'),
             transparent: true,
-            opacity: 0.005,
+            opacity: 0.5,
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           })
         );
-        glowCore.scale.set(600, 600, 1);
-        glowCore.position.set(0, 0, -CONFIG.DEPTH + 420);
+        glowCore.scale.set(isMobile ? 180 : 230, isMobile ? 360 : 460, 1);
+        glowCore.position.set(0, 0, -CONFIG.DEPTH + 380);
+
+        glowMid = new THREE.Sprite(
+          new THREE.SpriteMaterial({
+            map: createGlowTexture('mid'),
+            transparent: true,
+            opacity: 0.30,
+            depthWrite: false,
+            premultipliedAlpha: false,
+            blending: THREE.AdditiveBlending
+          })
+        );
+        glowMid.scale.set(isMobile ? 540 : 760, isMobile ? 540 : 760, 1);
+        glowMid.position.set(0, 0, -CONFIG.DEPTH + 450);
+
+        glowAura = new THREE.Sprite(
+          new THREE.SpriteMaterial({
+            map: createGlowTexture('aura'),
+            transparent: true,
+            opacity: 0.13,
+            depthWrite: false,
+            premultipliedAlpha: false,
+            blending: THREE.AdditiveBlending
+          })
+        );
+        glowAura.scale.set(isMobile ? 980 : 1420, isMobile ? 980 : 1420, 1);
+        glowAura.position.set(0, 0, -CONFIG.DEPTH + 520);
 
         glowRing = new THREE.Sprite(
           new THREE.SpriteMaterial({
-            map: createGlowTexture(),
+            map: createGlowTexture('ring'),
             transparent: true,
             opacity: 0.12,
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           })
         );
-        glowRing.scale.set(700, 700, 1);
+        glowRing.scale.set(isMobile ? 860 : 1260, isMobile ? 860 : 1260, 1);
         glowRing.position.set(0, 0, -CONFIG.DEPTH + 500);
 
-        glowViolet = new THREE.Sprite(
-          new THREE.SpriteMaterial({
-            map: createGlowTexture(),
-            transparent: true,
-            opacity: 0.06,
-            depthWrite: false,
-            blending: THREE.AdditiveBlending
-          })
-        );
-        glowViolet.scale.set(1000, 1000, 1);
-        glowViolet.position.set(0, 0, -CONFIG.DEPTH + 560);
-
-        const glowGroup = new THREE.Group();
-        glowGroup.add(glowViolet, glowRing, glowCore);
+        glowGroup.add(glowAura, glowRing, glowMid, glowCore);
         scene.add(glowGroup);
 
+        // 星云
         nebulaGroup = new THREE.Group();
         nebulaSprites = [];
 
         for (let i = 0; i < CONFIG.NEBULA_COUNT; i++) {
-          const texture = createNebulaTexture(rand(-8, 14));
+          const texture = createNebulaTexture(rand(-12, 18));
           const material = new THREE.SpriteMaterial({
             map: texture,
             transparent: true,
-            opacity: rand(0.06, 0.14),
+            opacity: rand(0.08, 0.16),
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           });
 
           const sprite = new THREE.Sprite(material);
-          const radius = rand(50, 180);
+
+          const radius = rand(60, isMobile ? 160 : 220);
           const angle = Math.random() * Math.PI * 2;
           const z = -Math.random() * CONFIG.DEPTH;
+
           sprite.position.set(
             Math.cos(angle) * radius,
             Math.sin(angle) * radius * 0.72,
             z
           );
-          const s = rand(200, 500);
-          sprite.scale.set(s, s * rand(0.70, 1.10), 1);
+
+          const s = rand(isMobile ? 180 : 260, isMobile ? 320 : 560);
+          sprite.scale.set(s, s * rand(0.65, 1.16), 1);
           sprite.material.rotation = rand(0, Math.PI * 2);
 
           sprite.userData = {
@@ -1266,7 +1267,7 @@
             baseScaleY: sprite.scale.y,
             rotSpeed: rand(-0.00018, 0.00018),
             pulsePhase: rand(0, Math.PI * 2),
-            speedMul: rand(0.40, 0.85),
+            speedMul: rand(0.45, 0.95),
             orbitalPhase: rand(0, Math.PI * 2)
           };
 
@@ -1300,78 +1301,98 @@
           sprite.position.z += CONFIG.NEBULA_SPEED * sprite.userData.speedMul * delta * 60;
           sprite.material.rotation += sprite.userData.rotSpeed * delta * 60;
 
-          const pulse = 1 + Math.sin(elapsed * 0.5 + sprite.userData.pulsePhase) * 0.05;
+          const pulse = 1 + Math.sin(elapsed * 0.7 + sprite.userData.pulsePhase) * 0.06;
           sprite.scale.set(
             sprite.userData.baseScaleX * pulse,
             sprite.userData.baseScaleY * pulse,
             1
           );
 
-          sprite.position.x += Math.sin(elapsed * 0.18 + sprite.userData.orbitalPhase) * 0.08;
-          sprite.position.y += Math.cos(elapsed * 0.14 + sprite.userData.orbitalPhase) * 0.06;
+          sprite.position.x += Math.sin(elapsed * 0.22 + sprite.userData.orbitalPhase) * 0.10;
+          sprite.position.y += Math.cos(elapsed * 0.18 + sprite.userData.orbitalPhase) * 0.07;
 
           if (sprite.position.z > 140) {
-            const radius = rand(50, 200);
+            const radius = rand(60, isMobile ? 160 : 220);
             const angle = Math.random() * Math.PI * 2;
             sprite.position.set(
               Math.cos(angle) * radius,
               Math.sin(angle) * radius * 0.72,
-              -CONFIG.DEPTH - rand(160, 620)
+              -CONFIG.DEPTH - rand(120, 520)
             );
           }
         }
 
-        nebulaGroup.rotation.z += 0.00010 * delta * 60;
+        nebulaGroup.rotation.z += 0.00014 * delta * 60;
       }
 
       function updateGlow(elapsed) {
-        const p1 = 1 + Math.sin(elapsed * 1.0) * CONFIG.GLOW_PULSE;
-        const p2 = 1 + Math.sin(elapsed * 0.7) * CONFIG.GLOW_PULSE * 0.8;
-        const p3 = 1 + Math.cos(elapsed * 0.55) * CONFIG.GLOW_PULSE * 0.9;
+        const p1 = 1 + Math.sin(elapsed * 1.12) * CONFIG.GLOW_PULSE;
+        const p2 = 1 + Math.sin(elapsed * 0.82) * CONFIG.GLOW_PULSE * 0.85;
+        const p3 = 1 + Math.cos(elapsed * 0.58) * CONFIG.GLOW_PULSE * 1.1;
 
-        glowCore.scale.set(300 * p1, 300 * p1, 1);
-        glowRing.scale.set(700 * p2, 700 * p2, 1);
-        glowViolet.scale.set(1000 * p3, 1000 * p3, 1);
+        const coreBase = isMobile ? 180 : 230;
+        const midBase = isMobile ? 540 : 760;
+        const auraBase = isMobile ? 980 : 1420;
+        const ringBase = isMobile ? 860 : 1260;
+
+        glowCore.scale.set(coreBase * p1, coreBase * p1, 1);
+        glowMid.scale.set(midBase * p2, midBase * p2, 1);
+        glowAura.scale.set(auraBase * p3, auraBase * p3, 1);
+
+        const ringPulse = 1 + Math.sin(elapsed * 0.46) * CONFIG.GLOW_PULSE * 0.55;
+        glowRing.scale.set(ringBase * ringPulse, ringBase * ringPulse, 1);
+        glowRing.material.rotation += 0.00012;
       }
 
       const clock = new THREE.Clock();
+      let skipFrame = 0;
 
       function animate() {
         const delta = Math.min(clock.getDelta(), 0.05);
         const elapsed = clock.elapsedTime;
 
-        // Vanishing-point following (same technique as v3)
-        motion.currentX += (motion.targetX - motion.currentX) * 0.035;
-        motion.currentY += (motion.targetY - motion.currentY) * 0.035;
+        if (isMobile) {
+          skipFrame++;
+          if (skipFrame % 2 === 0) {
+            animationId = requestAnimationFrame(animate);
+            return;
+          }
+        }
 
-        // Camera pans to shift vanishing point
+        motion.currentX += (motion.targetX - motion.currentX) * 0.04;
+        motion.currentY += (motion.targetY - motion.currentY) * 0.04;
+
         camera.position.x = motion.currentX * CONFIG.CAMERA_DRIFT_X;
         camera.position.y = -motion.currentY * CONFIG.CAMERA_DRIFT_Y;
         camera.lookAt(
-          motion.currentX * 20,
-          -motion.currentY * 15,
+          motion.currentX * 16,
+          -motion.currentY * 11,
           -1000
         );
 
         updateStars(stars, delta);
         updateStars(brightStars, delta);
-        updateNebula(delta, elapsed);
-        updateGlow(elapsed);
 
+        if (nebulaSprites.length) {
+          updateNebula(delta, elapsed);
+        }
+
+        updateGlow(elapsed);
         renderer.render(scene, camera);
         animationId = requestAnimationFrame(animate);
       }
 
       function onResize() {
         if (!renderer || !camera) return;
+
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
       }
 
       function onPointerMove(e) {
-        // Normalize mouse to [-1, 1] — same as v3 vanishing-point logic
         motion.targetX = (e.clientX / window.innerWidth) * 2 - 1;
         motion.targetY = (e.clientY / window.innerHeight) * 2 - 1;
       }
@@ -1392,7 +1413,7 @@
       });
     })();
 
-    /* 滚动出现动画 */
+    // 滚动出现动画
     (() => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const items = document.querySelectorAll('.reveal');

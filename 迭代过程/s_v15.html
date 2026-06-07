@@ -1114,8 +1114,9 @@
       const warpFlash = document.getElementById('warp-flash');
 
       const CONFIG = {
-        STAR_COUNT: prefersReducedMotion ? 250 : 500,
-        BRIGHT_STAR_COUNT: prefersReducedMotion ? 50 : 150,
+        // Reduced counts for performance
+        STAR_COUNT: prefersReducedMotion ? 150 : 300,
+        BRIGHT_STAR_COUNT: prefersReducedMotion ? 30 : 80,
 
         DEPTH: 2800,
         TUNNEL_RADIUS: 520,
@@ -1127,53 +1128,300 @@
         CAMERA_DRIFT_X: 40,
         CAMERA_DRIFT_Y: 24,
 
-        NEBULA_COUNT: prefersReducedMotion ? 5 : 14,
+        NEBULA_COUNT: prefersReducedMotion ? 3 : 8,
         NEBULA_SPEED: prefersReducedMotion ? 1.2 : 2.5,
 
-        GLOW_PULSE: prefersReducedMotion ? 0.015 : 0.035
+        // Simplified glow
+        GLOW_PULSE: prefersReducedMotion ? 0.01 : 0.02,
+
+        // Entry sequence — faster deceleration
+        ENTRY_INITIAL_SPEED: 50,
+        ENTRY_DURATION: 1000,
+
+        // Near-stop cruise speed
+        CRUISE_SPEED: 0.3,
+
+        // Streak-to-star threshold (like s_v10)
+        // When speedFactor > STREAK_THRESHOLD → particles become streaks/lines
+        // When speedFactor <= STREAK_THRESHOLD → particles are points
+        STREAK_THRESHOLD: 4,
+
+        // Star point size at cruise
+        STAR_SIZE: 3.0,
+        BRIGHT_STAR_SIZE: 6.0,
+
+        // Line segment stretch (real geometry lines)
+        LINE_BASE_LENGTH: 0.5,
+        LINE_MAX_STRETCH: 250,
+        BRIGHT_LINE_BASE_LENGTH: 1.0,
+        BRIGHT_LINE_MAX_STRETCH: 350,
+
+        // ================================
+        // Simple performance adaptation
+        // ================================
+        PERF: {
+          FPS_SAMPLE_SIZE: 20,
+          LOW_FPS_THRESHOLD: 24,
+          CHECK_INTERVAL: 3000,
+          LOW_STAR_COUNT: 100,
+          LOW_BRIGHT_COUNT: 25,
+          LOW_PIXEL_RATIO: 1,
+          LOW_NEBULA_COUNT: 2,
+          LOW_STAR_SIZE: 2.0,
+          isLowPerf: false,
+          fpsHistory: [],
+          lastCheck: 0
+        }
       };
 
+      // No INTERACTION state — removed scroll boost, gravity wells, ripples
+
       // =============================================
-      // WARP SPEED SYSTEM — instant deceleration
+      // STARSHIP TRANSIT SYSTEM
+      // Three-phase flight narrative:
+      //   entry  →  cruise  →  jump
       // =============================================
       const WARP = {
-        // speed multiplier
-        factor: 40,
-        targetFactor: 1,
-        // FAST easeIn: ~0.5s to reach ~1 (was 0.012)
-        easeIn: 0.18,
-        easeOut: 0.08,
-        phase: 'decelerate',
-        flashOpacity: 0.6,
+        // Current speed factor (50 initially = extreme warp)
+        factor: CONFIG.ENTRY_INITIAL_SPEED,
+        targetFactor: CONFIG.ENTRY_INITIAL_SPEED,
+        phase: 'entry',
+        flashOpacity: 0.8,
+
+        // Entry deceleration timing
+        entryStartTime: 0,
+
+        // Jump
         onJumpComplete: null,
-        isJumping: false
+        isJumping: false,
+
+        // Ease out for deceleration (cubic bezier approximation)
+        easeOutCruise: 0.012,
+
+        // Get normalized entry progress [0,1]
+        getEntryProgress: function() {
+          const elapsed = performance.now() - this.entryStartTime;
+          return Math.min(elapsed / CONFIG.ENTRY_DURATION, 1);
+        },
+
+        // Cubic bezier-like ease: slow start, fast end
+        easeOutCubic: function(t) {
+          return 1 - Math.pow(1 - t, 2.2);
+        }
       };
 
-      // ---- Streak texture for high-speed warp ----
-      function createStreakTexture() {
-        const size = 128;
-        const canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
+      // =============================================
+      // PERFORMANCE MONITORING & AUTO-DOWNGRADE
+      // =============================================
+      const PERF = CONFIG.PERF;
+      let perfFrameCount = 0;
+      let perfLastTime = 0;
+      let pointStars = null; // Fallback lightweight Points
 
-        const cx = size / 2;
-        const cy = size / 2;
-        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 2);
-        g.addColorStop(0.00, 'rgba(220,228,240,1)');
-        g.addColorStop(0.06, 'rgba(220,228,240,0.95)');
-        g.addColorStop(0.18, 'rgba(188,200,220,0.60)');
-        g.addColorStop(0.35, 'rgba(200,210,226,0.25)');
-        g.addColorStop(0.60, 'rgba(200,210,226,0.08)');
-        g.addColorStop(1.00, 'rgba(0,0,0,0)');
-
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, size, size);
-
-        return new THREE.CanvasTexture(canvas);
+      function initPerfMonitor() {
+        perfLastTime = performance.now();
+        PERF.lastCheck = perfLastTime;
       }
 
-      // ---- Normal star texture ----
+      // Called each frame — samples FPS, checks if downgrade needed
+      function samplePerformance() {
+        const now = performance.now();
+        const delta = now - perfLastTime;
+        perfLastTime = now;
+        perfFrameCount++;
+
+        // Collect FPS samples every N frames
+        if (perfFrameCount >= 5) {
+          const fps = perfFrameCount / (delta / 1000);
+          perfFrameCount = 0;
+
+          PERF.fpsHistory.push(fps);
+          if (PERF.fpsHistory.length > PERF.FPS_SAMPLE_SIZE) {
+            PERF.fpsHistory.shift();
+          }
+
+          // Periodically check if we need to adapt
+          if (now - PERF.lastCheck > PERF.CHECK_INTERVAL) {
+            PERF.lastCheck = now;
+            checkAndAdaptPerformance();
+          }
+        }
+      }
+
+      function getAverageFps() {
+        if (PERF.fpsHistory.length === 0) return 60;
+        let sum = 0;
+        for (let i = 0; i < PERF.fpsHistory.length; i++) sum += PERF.fpsHistory[i];
+        return sum / PERF.fpsHistory.length;
+      }
+
+      function checkAndAdaptPerformance() {
+        const avgFps = getAverageFps();
+        if (avgFps < PERF.LOW_FPS_THRESHOLD && !PERF.isLowPerf) {
+          PERF.isLowPerf = true;
+          applyLowPerformanceMode();
+        } else if (avgFps >= PERF.LOW_FPS_THRESHOLD * 1.5 && PERF.isLowPerf) {
+          // Restore if FPS recovers sufficiently
+          PERF.isLowPerf = false;
+          restorePerformanceMode();
+        }
+      }
+
+      // =============================================
+      // Simplified performance adaptation
+      // =============================================
+      function applyLowPerformanceMode() {
+        if (!scene) return;
+        PERF.isLowPerf = true;
+
+        renderer.setPixelRatio(PERF.LOW_PIXEL_RATIO);
+
+        // Remove expensive line segments, create lightweight point stars
+        if (starLines) { scene.remove(starLines); starLines.geometry.dispose(); starLines.material.dispose(); starLines = null; }
+        if (brightStarLines) { scene.remove(brightStarLines); brightStarLines.geometry.dispose(); brightStarLines.material.dispose(); brightStarLines = null; }
+        if (sparklePoints) { scene.remove(sparklePoints); sparklePoints.geometry.dispose(); sparklePoints.material.dispose(); sparklePoints = null; }
+
+        // Reduce nebula count
+        if (nebulaGroup) {
+          while (nebulaSprites.length > PERF.LOW_NEBULA_COUNT) {
+            const sprite = nebulaSprites.pop();
+            nebulaGroup.remove(sprite);
+            sprite.material.dispose();
+          }
+        }
+      }
+
+      function restorePerformanceMode() {
+        if (!scene) return;
+        PERF.isLowPerf = false;
+
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Recreate line segments if removed
+        if (!starLines) {
+          starLines = createStarLines(CONFIG.STAR_COUNT, CONFIG.STAR_SPEED, false);
+          scene.add(starLines);
+        }
+        if (!brightStarLines) {
+          brightStarLines = createStarLines(CONFIG.BRIGHT_STAR_COUNT, CONFIG.BRIGHT_STAR_SPEED, true);
+          scene.add(brightStarLines);
+        }
+      }
+
+      // =============================================
+      // REAL LINE SEGMENTS — star ↔ streak via geometry
+      // =============================================
+      function createStarLines(count, speed, isBright) {
+        const geometry = new THREE.BufferGeometry();
+        // Each star = 2 vertices (line segment), 3 components each
+        const positions = new Float32Array(count * 2 * 3);
+        const colors = new Float32Array(count * 2 * 3);
+
+        for (let i = 0; i < count; i++) {
+          const p = randomTunnelPosition(-Math.random() * CONFIG.DEPTH);
+          const idx = i * 6;
+          const c = randomStarColor();
+          const mul = isBright ? 2.0 : 1.2;
+          const tailMul = isBright ? 0.65 : 0.45;
+
+          // Head vertex (leading edge)
+          positions[idx + 0] = p.x;
+          positions[idx + 1] = p.y;
+          positions[idx + 2] = p.z;
+
+          // Tail vertex (trailing edge) — starts at same position (point-like)
+          positions[idx + 3] = p.x;
+          positions[idx + 4] = p.y;
+          positions[idx + 5] = p.z - 0.5;
+
+          // Head color
+          colors[idx + 0] = Math.min(c.r * mul, 1);
+          colors[idx + 1] = Math.min(c.g * mul, 1);
+          colors[idx + 2] = Math.min(c.b * mul, 1);
+          // Tail color (dimmed)
+          colors[idx + 3] = c.r * tailMul;
+          colors[idx + 4] = c.g * tailMul;
+          colors[idx + 5] = c.b * tailMul;
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const material = new THREE.LineBasicMaterial({
+          vertexColors: true,
+          transparent: true,
+          opacity: 1.0,
+          depthWrite: false,
+          blending: THREE.AdditiveBlending
+        });
+
+        const lines = new THREE.LineSegments(geometry, material);
+        lines.userData.speed = speed;
+        lines.frustumCulled = false;
+        return lines;
+      }
+
+      function updateStarLines(lines, delta, speedFactor) {
+        if (!lines) return;
+        const positions = lines.geometry.attributes.position.array;
+        const colors = lines.geometry.attributes.color.array;
+        const speed = lines.userData.speed * speedFactor;
+
+        // Trail length: near-zero at cruise, long at warp
+        const rawRatio = Math.min(speedFactor / CONFIG.ENTRY_INITIAL_SPEED, 1);
+        const speedRatio = rawRatio < 0.05 ? 0 : Math.pow(rawRatio, 1.8);
+        // trailLen = 0.5 (dot) + speedRatio * 250 (streak)
+        const trailLen = 0.5 + speedRatio * 250;
+
+        // Point-mode blend: 0 = dot, 1 = streak
+        const pointBlend = Math.min(speedFactor / 4, 1);
+
+        for (let i = 0; i < positions.length; i += 6) {
+          // Move head forward (in z)
+          positions[i + 2] += speed * delta * 60;
+
+          // Tail follows head at dynamic distance
+          positions[i + 5] = positions[i + 2] - trailLen;
+          positions[i + 3] = positions[i + 0];
+          positions[i + 4] = positions[i + 1];
+
+          // At low speed, dim tail so it blends into head → looks like a dot
+          if (pointBlend < 1) {
+            const dim = 0.05 + 0.95 * pointBlend;
+            colors[i + 3] *= dim;
+            colors[i + 4] *= dim;
+            colors[i + 5] *= dim;
+          }
+
+          // Reset when past camera
+          if (positions[i + 2] > 90) {
+            const p = randomTunnelPosition(-CONFIG.DEPTH - rand(0, 220));
+            positions[i + 0] = p.x;
+            positions[i + 1] = p.y;
+            positions[i + 2] = p.z;
+            positions[i + 3] = p.x;
+            positions[i + 4] = p.y;
+            positions[i + 5] = p.z - trailLen * 0.5;
+
+            // Reset colors
+            const c = randomStarColor();
+            const isBright = false; // simplified: just use nice colors
+            const mul = 1.2;
+            const tailMul = 0.45;
+            colors[i + 0] = Math.min(c.r * mul, 1);
+            colors[i + 1] = Math.min(c.g * mul, 1);
+            colors[i + 2] = Math.min(c.b * mul, 1);
+            colors[i + 3] = c.r * tailMul;
+            colors[i + 4] = c.g * tailMul;
+            colors[i + 5] = c.b * tailMul;
+          }
+        }
+
+        lines.geometry.attributes.position.needsUpdate = true;
+        lines.geometry.attributes.color.needsUpdate = true;
+      }
+
+      // ---- Star point texture (round glow) ----
       function createStarTexture() {
         const size = 64;
         const canvas = document.createElement('canvas');
@@ -1183,9 +1431,9 @@
 
         const grd = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
         grd.addColorStop(0.00, 'rgba(255,255,255,1)');
-        grd.addColorStop(0.12, 'rgba(255,255,255,1)');
-        grd.addColorStop(0.34, 'rgba(236,242,255,0.95)');
-        grd.addColorStop(0.55, 'rgba(220,229,248,0.42)');
+        grd.addColorStop(0.15, 'rgba(255,255,255,0.95)');
+        grd.addColorStop(0.35, 'rgba(236,242,255,0.6)');
+        grd.addColorStop(0.60, 'rgba(220,229,248,0.2)');
         grd.addColorStop(1.00, 'rgba(180,190,220,0)');
 
         ctx.fillStyle = grd;
@@ -1216,7 +1464,7 @@
         return new THREE.CanvasTexture(canvas);
       }
 
-      // ---- Colorful nebula texture with silver/blue/purple ----
+      // ---- Colorful nebula texture ----
       function createNebulaTexture(hueShift = 0) {
         const size = 256;
         const canvas = document.createElement('canvas');
@@ -1235,11 +1483,11 @@
         ctx.fillRect(0, 0, size, size);
 
         const palette = [
-          { h: 210, s: 70 }, // blue
-          { h: 240, s: 60 }, // violet
-          { h: 190, s: 65 }, // cyan
-          { h: 0,   s: 55 }, // red
-          { h: 30,  s: 60 }, // orange
+          { h: 210, s: 70 },
+          { h: 240, s: 60 },
+          { h: 190, s: 65 },
+          { h: 0,   s: 55 },
+          { h: 30,  s: 60 },
         ];
 
         for (let i = 0; i < 50; i++) {
@@ -1287,62 +1535,22 @@
       // =============================================
       function randomStarColor() {
         const r = Math.random();
-        if (r < 0.35) return new THREE.Color('#ffffff');        // white
-        if (r < 0.50) return new THREE.Color('#dfe9ff');        // blue-white
-        if (r < 0.62) return new THREE.Color('#ffe8cc');        // orange
-        if (r < 0.73) return new THREE.Color('#ffcccc');        // red
-        if (r < 0.82) return new THREE.Color('#f5dd90');        // gold
-        if (r < 0.91) return new THREE.Color('#d4c8ff');        // violet
-        return new THREE.Color('#c8e8ff');                       // cyan
-      }
-
-      let starTexture;
-      let streakTexture;
-
-      function createStarField(count, size, opacity, speed, additive = false) {
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(count * 3);
-        const colors = new Float32Array(count * 3);
-
-        for (let i = 0; i < count; i++) {
-          const p = randomTunnelPosition(-Math.random() * CONFIG.DEPTH);
-          positions[i * 3 + 0] = p.x;
-          positions[i * 3 + 1] = p.y;
-          positions[i * 3 + 2] = p.z;
-
-          const c = randomStarColor();
-          colors[i * 3 + 0] = c.r;
-          colors[i * 3 + 1] = c.g;
-          colors[i * 3 + 2] = c.b;
-        }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-        const material = new THREE.PointsMaterial({
-          size,
-          map: starTexture,
-          transparent: true,
-          opacity,
-          vertexColors: true,
-          depthWrite: false,
-          sizeAttenuation: true,
-          blending: additive ? THREE.AdditiveBlending : THREE.NormalBlending
-        });
-
-        const points = new THREE.Points(geometry, material);
-        points.userData.speed = speed;
-        points.userData.baseSize = size;
-        points.userData.baseOpacity = opacity;
-        points.userData.isAdditive = additive;
-        return points;
+        if (r < 0.35) return new THREE.Color('#ffffff');
+        if (r < 0.50) return new THREE.Color('#dfe9ff');
+        if (r < 0.62) return new THREE.Color('#ffe8cc');
+        if (r < 0.73) return new THREE.Color('#ffcccc');
+        if (r < 0.82) return new THREE.Color('#f5dd90');
+        if (r < 0.91) return new THREE.Color('#d4c8ff');
+        return new THREE.Color('#c8e8ff');
       }
 
       let renderer;
       let scene;
       let camera;
-      let stars;
-      let brightStars;
+      let starLines;
+      let brightStarLines;
+      let sparklePoints;
+      let starTexture;
       let glowCore;
       let glowRing;
       let glowSilver;
@@ -1359,7 +1567,6 @@
 
       function initScene() {
         starTexture = createStarTexture();
-        streakTexture = createStreakTexture();
 
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
@@ -1369,26 +1576,51 @@
         renderer = new THREE.WebGLRenderer({
           antialias: true,
           alpha: true,
-          powerPreference: 'high-performance'
+          powerPreference: 'high-performance',
+          premultipliedAlpha: false
         });
 
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x000000, 0);
 
-        if ('outputColorSpace' in renderer && window.THREE.SRGBColorSpace) {
-          renderer.outputColorSpace = THREE.SRGBColorSpace;
-        }
-
         mount.innerHTML = '';
         mount.appendChild(renderer.domElement);
 
-        stars = createStarField(CONFIG.STAR_COUNT, 3.2, 1.0, CONFIG.STAR_SPEED, false);
-        brightStars = createStarField(CONFIG.BRIGHT_STAR_COUNT, 6.6, 0.96, CONFIG.BRIGHT_STAR_SPEED, true);
-        scene.add(stars);
-        scene.add(brightStars);
+        // ---- Star field (LineSegments) ----
+        starLines = createStarLines(CONFIG.STAR_COUNT, CONFIG.STAR_SPEED, false);
+        scene.add(starLines);
 
-        // Silver glow group
+        brightStarLines = createStarLines(CONFIG.BRIGHT_STAR_COUNT, CONFIG.BRIGHT_STAR_SPEED, true);
+        scene.add(brightStarLines);
+
+        // ---- Sparkle points (small dots, complement) ----
+        sparklePoints = (function() {
+          const g = new THREE.BufferGeometry();
+          const p = new Float32Array(50 * 3);
+          for (let i = 0; i < 50; i++) {
+            const pos = randomTunnelPosition(-Math.random() * CONFIG.DEPTH);
+            p[i*3] = pos.x;
+            p[i*3+1] = pos.y;
+            p[i*3+2] = pos.z;
+          }
+          g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+          const m = new THREE.PointsMaterial({
+            size: 4,
+            map: starTexture,
+            transparent: true,
+            opacity: 0.6,
+            depthWrite: false,
+            sizeAttenuation: true,
+            blending: THREE.AdditiveBlending
+          });
+          const pts = new THREE.Points(g, m);
+          pts.frustumCulled = false;
+          return pts;
+        })();
+        scene.add(sparklePoints);
+
+        // ---- Silver glow group ----
         const glowGroup = new THREE.Group();
 
         glowSilver = new THREE.Sprite(
@@ -1397,10 +1629,11 @@
             transparent: true,
             opacity: 0.15,
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           })
         );
-        glowSilver.scale.set(1200, 1200, 1);
+        glowSilver.scale.set(1500, 1500, 1);
         glowSilver.position.set(0, 0, -CONFIG.DEPTH + 360);
 
         glowCore = new THREE.Sprite(
@@ -1421,12 +1654,13 @@
               return new THREE.CanvasTexture(c);
             })(),
             transparent: true,
-            opacity: 0.01,
+            opacity: 0.03,
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           })
         );
-        glowCore.scale.set(800, 800, 1);
+        glowCore.scale.set(900, 900, 1);
         glowCore.position.set(0, 0, -CONFIG.DEPTH + 420);
 
         glowRing = new THREE.Sprite(
@@ -1437,9 +1671,9 @@
               c.width = size; c.height = size;
               const ctx = c.getContext('2d');
               const g = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
-              g.addColorStop(0.00, 'rgba(188, 200, 220, 0.35)');
-              g.addColorStop(0.20, 'rgba(220, 228, 240, 0.18)');
-              g.addColorStop(0.50, 'rgba(200, 210, 226, 0.10)');
+              g.addColorStop(0.00, 'rgba(188, 200, 220, 0.50)');
+              g.addColorStop(0.20, 'rgba(220, 228, 240, 0.25)');
+              g.addColorStop(0.50, 'rgba(200, 210, 226, 0.12)');
               g.addColorStop(1.00, 'rgba(0,0,0,0)');
               ctx.fillStyle = g;
               ctx.fillRect(0, 0, size, size);
@@ -1447,6 +1681,7 @@
             })(),
             transparent: true,
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           })
         );
@@ -1456,7 +1691,7 @@
         glowGroup.add(glowSilver, glowRing, glowCore);
         scene.add(glowGroup);
 
-        // Colorful nebula
+        // ---- Colorful nebula ----
         nebulaGroup = new THREE.Group();
         nebulaSprites = [];
 
@@ -1467,6 +1702,7 @@
             transparent: true,
             opacity: rand(0.08, 0.20),
             depthWrite: false,
+            premultipliedAlpha: false,
             blending: THREE.AdditiveBlending
           });
 
@@ -1499,71 +1735,6 @@
         }
 
         scene.add(nebulaGroup);
-      }
-
-      function updateWarpAppearance(points, factor) {
-        const mat = points.material;
-        const blend = factor > 4 ? 1 : (factor - 1) / 3;
-
-        mat.map = blend > 0.5 ? streakTexture : starTexture;
-        mat.map.needsUpdate = true;
-
-        const sizeMul = 1 + blend * 5;
-        mat.size = points.userData.baseSize * sizeMul;
-
-        const opMul = 1 - blend * 0.55;
-        mat.opacity = points.userData.baseOpacity * Math.max(opMul, 0.25);
-
-        if (blend > 0.3 && !points.userData.isAdditive) {
-          mat.blending = THREE.AdditiveBlending;
-        } else if (blend <= 0.3 && !points.userData.isAdditive) {
-          mat.blending = THREE.NormalBlending;
-        }
-
-        mat.needsUpdate = true;
-      }
-
-      function triggerWarpJump(callback) {
-        if (WARP.isJumping) return;
-        WARP.isJumping = true;
-        WARP.phase = 'accelerate';
-        WARP.targetFactor = 60;
-        WARP.onJumpComplete = callback;
-      }
-
-      function setupNavigationInterception() {
-        document.querySelectorAll('[data-warp]').forEach(link => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = link.getAttribute('href');
-            link.style.transform = 'scale(0.96)';
-            setTimeout(() => { link.style.transform = ''; }, 150);
-
-            triggerWarpJump(() => {
-              if (href && href !== '#') {
-                window.location.href = href;
-              }
-            });
-          });
-        });
-      }
-
-      function updateStars(points, delta, speedFactor) {
-        const positions = points.geometry.attributes.position.array;
-        const speed = points.userData.speed * speedFactor;
-
-        for (let i = 0; i < positions.length; i += 3) {
-          positions[i + 2] += speed * delta * 60;
-
-          if (positions[i + 2] > 90) {
-            const p = randomTunnelPosition(-CONFIG.DEPTH - rand(0, 220));
-            positions[i + 0] = p.x;
-            positions[i + 1] = p.y;
-            positions[i + 2] = p.z;
-          }
-        }
-
-        points.geometry.attributes.position.needsUpdate = true;
       }
 
       function updateNebula(delta, elapsed, speedFactor) {
@@ -1601,15 +1772,15 @@
         const p1 = 1 + Math.sin(elapsed * 1.15) * CONFIG.GLOW_PULSE;
         const p2 = 1 + Math.sin(elapsed * 0.82) * CONFIG.GLOW_PULSE * 0.9;
 
-        glowCore.scale.set(400 * p1, 400 * p1, 1);
-        glowRing.scale.set(900 * p2, 900 * p2, 1);
+        glowCore.scale.set(500 * p1, 500 * p1, 1);
+        glowRing.scale.set(1000 * p2, 1000 * p2, 1);
 
-        const silverPulse = 1 + Math.sin(elapsed * 0.5) * 0.08;
-        glowSilver.scale.set(1200 * silverPulse, 1200 * silverPulse, 1);
+        const silverPulse = 1 + Math.sin(elapsed * 0.5) * 0.12;
+        glowSilver.scale.set(1500 * silverPulse, 1500 * silverPulse, 1);
 
-        const glowBoost = 1 + (speedFactor - 1) * 0.015;
-        glowSilver.material.opacity = Math.min(0.15 * glowBoost, 0.6);
-        glowCore.material.opacity = Math.min(0.01 * glowBoost, 0.08);
+        const glowBoost = 1 + (speedFactor - 1) * 0.02;
+        glowSilver.material.opacity = Math.min(0.18 * glowBoost, 0.5);
+        glowCore.material.opacity = Math.min(0.03 * glowBoost, 0.10);
       }
 
       const clock = new THREE.Clock();
@@ -1618,26 +1789,30 @@
         const delta = Math.min(clock.getDelta(), 0.05);
         const elapsed = clock.elapsedTime;
 
-        // =============================================
-        // WARP SPEED — instant deceleration
-        // =============================================
-        if (WARP.phase === 'decelerate') {
-          // Fast decay: easeIn 0.18 → reaches ~1 in ~0.5s
-          WARP.factor += (WARP.targetFactor - WARP.factor) * WARP.easeIn;
-          // Flash fades very quickly
-          WARP.flashOpacity *= 0.92;
+        // ---- Performance sampling ----
+        samplePerformance();
 
-          if (Math.abs(WARP.factor - 1) < 0.05) {
-            WARP.factor = 1;
+        // ---- Three-phase transit system (no interactions) ----
+        if (WARP.phase === 'entry') {
+          const progress = WARP.getEntryProgress();
+          const eased = WARP.easeOutCubic(progress);
+          const startSpeed = CONFIG.ENTRY_INITIAL_SPEED;
+          const endSpeed = CONFIG.CRUISE_SPEED;
+          WARP.factor = startSpeed - (startSpeed - endSpeed) * eased;
+          WARP.flashOpacity = 0.8 * (1 - eased);
+          if (progress >= 1) {
+            WARP.factor = endSpeed;
             WARP.phase = 'cruise';
             WARP.flashOpacity = 0;
           }
-        } else if (WARP.phase === 'accelerate') {
-          WARP.targetFactor = 60;
-          WARP.factor += (WARP.targetFactor - WARP.factor) * WARP.easeOut;
-          WARP.flashOpacity = Math.min(WARP.flashOpacity + 0.04, 0.85);
-
-          if (WARP.factor > 55 && WARP.isJumping && WARP.onJumpComplete) {
+        } else if (WARP.phase === 'cruise') {
+          WARP.factor = CONFIG.CRUISE_SPEED;
+        } else if (WARP.phase === 'jump') {
+          const progress = Math.min((performance.now() - WARP.entryStartTime) / 2000, 1);
+          const eased = 1 - Math.pow(1 - progress, 2.5);
+          WARP.factor = CONFIG.CRUISE_SPEED + (CONFIG.ENTRY_INITIAL_SPEED - CONFIG.CRUISE_SPEED) * eased;
+          WARP.flashOpacity = Math.min(WARP.flashOpacity + (1 - WARP.flashOpacity) * 0.04, 0.85);
+          if (progress >= 1 && WARP.isJumping && WARP.onJumpComplete) {
             const cb = WARP.onJumpComplete;
             WARP.onJumpComplete = null;
             setTimeout(cb, 200);
@@ -1649,31 +1824,48 @@
         // ---- Warp flash ----
         if (warpFlash) {
           warpFlash.style.opacity = Math.min(WARP.flashOpacity, 0.7);
-          if (WARP.phase === 'accelerate') {
-            warpFlash.style.background = `
-              radial-gradient(
-                ellipse at 50% 42%,
-                rgba(220, 228, 240, ${WARP.flashOpacity * 0.8}) 0%,
-                rgba(188, 200, 220, ${WARP.flashOpacity * 0.3}) 20%,
-                rgba(200, 210, 226, ${WARP.flashOpacity * 0.1}) 40%,
-                transparent 65%
-              )
-            `;
+          if (WARP.phase === 'jump' || WARP.phase === 'entry') {
+            warpFlash.style.background = [
+              'radial-gradient(',
+              'ellipse at 50% 42%,',
+              'rgba(220, 228, 240, ' + (WARP.flashOpacity * 0.8) + ') 0%,',
+              'rgba(188, 200, 220, ' + (WARP.flashOpacity * 0.3) + ') 20%,',
+              'rgba(200, 210, 226, ' + (WARP.flashOpacity * 0.1) + ') 40%,',
+              'transparent 65%',
+              ')'
+            ].join(' ');
           } else {
-            warpFlash.style.background = `
-              radial-gradient(
-                ellipse at 50% 42%,
-                rgba(200, 210, 226, ${WARP.flashOpacity * 0.5}) 0%,
-                rgba(58, 108, 168, ${WARP.flashOpacity * 0.15}) 25%,
-                transparent 60%
-              )
-            `;
+            warpFlash.style.background = [
+              'radial-gradient(',
+              'ellipse at 50% 42%,',
+              'rgba(200, 210, 226, ' + (WARP.flashOpacity * 0.5) + ') 0%,',
+              'rgba(58, 108, 168, ' + (WARP.flashOpacity * 0.15) + ') 25%,',
+              'transparent 60%',
+              ')'
+            ].join(' ');
           }
         }
 
-        updateWarpAppearance(stars, speedFactor);
-        updateWarpAppearance(brightStars, speedFactor);
+        // ---- Update star line segments (streak when fast, dot when slow) ----
+        updateStarLines(starLines, delta, speedFactor);
+        updateStarLines(brightStarLines, delta, speedFactor);
 
+        // ---- Sparkle points drift slowly ----
+        if (sparklePoints) {
+          const sp = sparklePoints.geometry.attributes.position.array;
+          for (let i = 0; i < sp.length; i += 3) {
+            sp[i + 2] += CONFIG.STAR_SPEED * 0.3 * delta * 60;
+            if (sp[i + 2] > 90) {
+              const pos = randomTunnelPosition(-CONFIG.DEPTH - rand(0, 220));
+              sp[i] = pos.x;
+              sp[i + 1] = pos.y;
+              sp[i + 2] = pos.z;
+            }
+          }
+          sparklePoints.geometry.attributes.position.needsUpdate = true;
+        }
+
+        // ---- Camera drift (mouse parallax) ----
         motion.currentX += (motion.targetX - motion.currentX) * 0.04;
         motion.currentY += (motion.targetY - motion.currentY) * 0.04;
 
@@ -1685,9 +1877,10 @@
           -1000
         );
 
-        updateStars(stars, delta, speedFactor);
-        updateStars(brightStars, delta, speedFactor);
+        // ---- Nebula ----
         updateNebula(delta, elapsed, speedFactor);
+
+        // ---- Glow ----
         updateGlow(elapsed, speedFactor);
 
         renderer.render(scene, camera);
@@ -1707,14 +1900,55 @@
         motion.targetY = (e.clientY / window.innerHeight) * 2 - 1;
       }
 
+      function triggerWarpJump(callback) {
+        if (WARP.isJumping) return;
+        WARP.isJumping = true;
+        WARP.phase = 'jump';
+        WARP.entryStartTime = performance.now();
+        WARP.flashOpacity = 0;
+        WARP.onJumpComplete = callback;
+      }
+
+      function setupNavigationInterception() {
+        document.querySelectorAll('[data-warp]').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            link.style.transform = 'scale(0.96)';
+            setTimeout(() => { link.style.transform = ''; }, 150);
+            triggerWarpJump(() => {
+              if (href && href !== '#') {
+                window.location.href = href;
+              }
+            });
+          });
+        });
+      }
+
       try {
         initScene();
+        initPerfMonitor();
 
-        // Start warp — instant deceleration from 40x to 1x
-        WARP.phase = 'decelerate';
-        WARP.factor = 40;
-        WARP.targetFactor = 1;
-        WARP.flashOpacity = 0.5;
+        WARP.phase = 'entry';
+        WARP.factor = CONFIG.ENTRY_INITIAL_SPEED;
+        WARP.entryStartTime = performance.now();
+
+        mount.style.opacity = '0';
+        let fadeInProgress = 0;
+        let sceneFading = true;
+
+        const origAnimate = animate;
+        animate = function() {
+          if (sceneFading) {
+            fadeInProgress = Math.min(fadeInProgress + 0.02, 1.0);
+            mount.style.opacity = fadeInProgress;
+            if (fadeInProgress >= 1.0) {
+              sceneFading = false;
+              mount.style.opacity = '';
+            }
+          }
+          origAnimate();
+        };
 
         window.addEventListener('resize', onResize);
         window.addEventListener('mousemove', onPointerMove, { passive: true });
