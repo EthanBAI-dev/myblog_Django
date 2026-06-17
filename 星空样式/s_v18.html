@@ -907,11 +907,23 @@
         grid-template-columns: 1fr;
       }
     }
+    /* ─── Galaxy overlay ─── */
+    #galaxy-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.8s ease;
+    }
+    #galaxy-overlay.fade-out { opacity: 0; }
+    #galaxy-overlay.fade-in { opacity: 1; }
   </style>
 </head>
 <body>
   <!-- Three.js mount -->
   <div id="scene-root"></div>
+  <div id="galaxy-overlay"></div>
   <div id="warp-flash"></div>
   <div class="vignette" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
@@ -1161,28 +1173,7 @@
         },
 
         // Planets specific
-        PLANET_COUNT: 3,
-
-        // ================================
-        // Spiral Galaxy (ported from s_v6)
-        // ================================
-        GALAXY_ENABLED: true,
-        GALAXY_RADIUS: prefersReducedMotion ? 700 : 1200,
-        GALAXY_CORE_RADIUS: 200,
-        GALAXY_ARM_COUNT: 2,
-        GALAXY_ARM_WINDING: 3.2,
-        GALAXY_ARM_WIDTH: 160,
-        GALAXY_STAR_COUNT: prefersReducedMotion ? 6000 : 20000,
-        GALAXY_DUST_RATIO: 0.35,
-        GALAXY_DISK_THICKNESS: 26,
-        GALAXY_ROT_SPEED: 0.00015,
-        GALAXY_ARM_STAR_RATIO: 0.7,
-        GALAXY_DISTANCE: 3200,
-        GALAXY_SCALE: 1.2,
-        GALAXY_TILT_X: -0.85,
-        GALAXY_TILT_Z: 0.15,
-        GALAXY_DRIFT_X: 10,
-        GALAXY_DRIFT_Y: 6
+        PLANET_COUNT: 3
       };
 
       // =============================================
@@ -1560,215 +1551,6 @@
         currentY: 0
       };
 
-      // ---- Spiral galaxy (s_v6) globals ----
-      let galGroup = null;
-      let galGlowCore = null;
-      let galGlowHalo = null;
-      let galBgPts = null;
-
-      // ─── Galaxy: color by temperature ───
-      function galTmpCol(tmp) {
-        const t = THREE.MathUtils.clamp((tmp - 1000) / 9000, 0, 1);
-        return new THREE.Color(
-          THREE.MathUtils.lerp(1.0, 0.55, t),
-          THREE.MathUtils.lerp(0.35, 0.88, t),
-          THREE.MathUtils.lerp(0.10, 1.0, t)
-        );
-      }
-
-      // ─── Galaxy: generate particle system ───
-      function makeGal() {
-        const sp = [], sc = [], dp = [], dc = [], bp = [], bc = [];
-        const GR = CONFIG.GALAXY_RADIUS;
-        const CR = CONFIG.GALAXY_CORE_RADIUS;
-        const ARM_N = CONFIG.GALAXY_ARM_COUNT;
-        const ARM_WIND = CONFIG.GALAXY_ARM_WINDING;
-        const ARM_WIDTH = CONFIG.GALAXY_ARM_WIDTH;
-        const NSTAR = CONFIG.GALAXY_STAR_COUNT;
-        const DRAT = CONFIG.GALAXY_DUST_RATIO;
-        const THK = CONFIG.GALAXY_DISK_THICKNESS;
-        const ASR = CONFIG.GALAXY_ARM_STAR_RATIO;
-
-        for (let i = 0; i < NSTAR; i++) {
-          const isBulge = Math.random() < 0.08 && i > NSTAR * 0.1;
-          const r = isBulge
-            ? Math.pow(Math.random(), 2.5) * CR
-            : CR + Math.pow(Math.random(), 0.7) * (GR - CR);
-
-          let x, z, tmp;
-
-          if (isBulge) {
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(2 * Math.random() - 1);
-            const rad = r;
-            x = Math.sin(phi) * Math.cos(theta) * rad;
-            z = Math.sin(phi) * Math.sin(theta) * rad * 0.7;
-            const y = Math.cos(phi) * rad * 0.6;
-            tmp = 8000 + Math.random() * 2000;
-            const col = galTmpCol(tmp);
-            bp.push(x, y, z); bc.push(col.r, col.g, col.b);
-            continue;
-          }
-
-          const isOnArm = Math.random() < ASR;
-          const isDust = !isOnArm && Math.random() < DRAT;
-
-          let angle;
-          if (isOnArm) {
-            const armIdx = Math.floor(Math.random() * ARM_N);
-            const armAngleOffset = (Math.PI * 2 / ARM_N) * armIdx;
-            const t = r / GR;
-            const spiralAngle = armAngleOffset + ARM_WIND * Math.PI * 2 * Math.pow(t, 0.6);
-            const spread = (Math.random() - 0.5) * ARM_WIDTH * (0.3 + 0.7 * t);
-            const spreadAngle = (Math.random() - 0.5) * 0.25;
-            angle = spiralAngle + spreadAngle;
-            x = Math.cos(angle) * (r + spread);
-            z = Math.sin(angle) * (r + spread);
-          } else {
-            angle = Math.random() * Math.PI * 2;
-            const rr = CR + Math.random() * (GR - CR);
-            x = Math.cos(angle) * rr;
-            z = Math.sin(angle) * rr;
-          }
-
-          const y = (Math.random() - 0.5) * THK * (0.2 + 0.8 * (r / GR));
-          tmp = 3000 + 6000 * (1 - r / GR) + (Math.random() - 0.5) * 2000;
-          const col = galTmpCol(tmp);
-
-          if (isDust) {
-            const d = col.clone().multiplyScalar(0.3 + Math.random() * 0.15);
-            dp.push(x, y, z); dc.push(d.r, d.g, d.b);
-          } else {
-            sp.push(x, y, z); sc.push(col.r, col.g, col.b);
-          }
-        }
-
-        function mkPts(pos, col, size, op) {
-          const g = new THREE.BufferGeometry();
-          g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
-          g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(col), 3));
-          const tex = (() => {
-            const c = document.createElement('canvas'); c.width = 48; c.height = 48;
-            const ctx = c.getContext('2d');
-            const gr = ctx.createRadialGradient(24, 24, 0, 24, 24, 24);
-            gr.addColorStop(0, 'rgba(255,255,255,1)');
-            gr.addColorStop(0.2, 'rgba(255,255,255,0.85)');
-            gr.addColorStop(0.5, 'rgba(220,225,255,0.25)');
-            gr.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = gr; ctx.fillRect(0, 0, 48, 48);
-            return new THREE.CanvasTexture(c);
-          })();
-          const pts = new THREE.Points(g, new THREE.PointsMaterial({
-            size: size || 1.5, map: tex, transparent: true, opacity: op || 0.95,
-            vertexColors: true, depthWrite: false, sizeAttenuation: true,
-            blending: THREE.AdditiveBlending
-          }));
-          pts.userData._baseOpacity = op || 0.95;
-          return pts;
-        }
-
-        const g = new THREE.Group();
-        g.add(mkPts(sp, sc, 1.6, 0.95));
-        g.add(mkPts(dp, dc, 0.8, 0.30));
-        g.add(mkPts(bp, bc, 1.8, 0.85));
-        return g;
-      }
-
-      // ─── Galaxy: glow texture ───
-      function galGlwTex(t) {
-        const sz = 512;
-        const c = document.createElement('canvas'); c.width = sz; c.height = sz;
-        const ctx = c.getContext('2d');
-        const radius = sz / 2 * 0.82;
-        const gr = ctx.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, radius);
-        if (t === 'core') {
-          gr.addColorStop(0, 'rgba(255,248,235,0.50)');
-          gr.addColorStop(0.12, 'rgba(255,240,220,0.28)');
-          gr.addColorStop(0.35, 'rgba(220,210,200,0.08)');
-          gr.addColorStop(0.85, 'rgba(0,0,0,0)');
-          gr.addColorStop(1, 'rgba(0,0,0,0)');
-        } else if (t === 'halo') {
-          gr.addColorStop(0, 'rgba(240,235,255,0.10)');
-          gr.addColorStop(0.3, 'rgba(200,210,255,0.06)');
-          gr.addColorStop(0.65, 'rgba(160,180,240,0.02)');
-          gr.addColorStop(0.85, 'rgba(0,0,0,0)');
-          gr.addColorStop(1, 'rgba(0,0,0,0)');
-        } else {
-          gr.addColorStop(0, 'rgba(200,215,255,0.04)');
-          gr.addColorStop(0.4, 'rgba(170,195,255,0.02)');
-          gr.addColorStop(0.85, 'rgba(0,0,0,0)');
-          gr.addColorStop(1, 'rgba(0,0,0,0)');
-        }
-        ctx.fillStyle = gr; ctx.fillRect(0, 0, sz, sz);
-        const tex = new THREE.CanvasTexture(c);
-        tex.premultiplyAlpha = false;
-        return tex;
-      }
-
-      // ─── Galaxy: background star field ───
-      function makeGalBg(n) {
-        const p = [], c = [];
-        for (let i = 0; i < n; i++) {
-          p.push((Math.random() - 0.5) * 6000, (Math.random() - 0.5) * 4000, -2000 - Math.random() * 3500);
-          const v = 0.5 + Math.random() * 0.5;
-          c.push(v, v, v);
-        }
-        const g = new THREE.BufferGeometry();
-        g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(p), 3));
-        g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(c), 3));
-        const tex = (() => {
-          const c2 = document.createElement('canvas'); c2.width = 24; c2.height = 24;
-          const ctx = c2.getContext('2d');
-          const gr = ctx.createRadialGradient(12, 12, 0, 12, 12, 12);
-          gr.addColorStop(0, 'rgba(255,255,255,1)');
-          gr.addColorStop(0.5, 'rgba(200,200,255,0.2)');
-          gr.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = gr; ctx.fillRect(0, 0, 24, 24);
-          return new THREE.CanvasTexture(c2);
-        })();
-        return new THREE.Points(g, new THREE.PointsMaterial({
-          size: 2.2, map: tex, transparent: true, opacity: 0.8,
-          vertexColors: true, depthWrite: false, sizeAttenuation: true,
-          blending: THREE.AdditiveBlending
-        }));
-      }
-
-      // ─── Galaxy: rebuild ───
-      function rebuildGalaxy() {
-        if (!scene) return;
-        if (galGroup) { scene.remove(galGroup); galGroup = null; }
-
-        const dist = CONFIG.GALAXY_DISTANCE;
-        const s = CONFIG.GALAXY_SCALE;
-
-        galGroup = new THREE.Group();
-        galGroup.position.z = -dist;
-        galGroup.scale.set(s, s, s);
-        galGroup.rotation.x = CONFIG.GALAXY_TILT_X;
-        galGroup.rotation.z = CONFIG.GALAXY_TILT_Z;
-
-        const parts = makeGal();
-        galGroup.add(parts);
-
-        galGlowCore = new THREE.Sprite(new THREE.SpriteMaterial({
-          map: galGlwTex('core'), transparent: true, opacity: 0.8,
-          depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false
-        }));
-        galGlowCore.userData._baseSpriteOpacity = 0.8;
-        galGlowCore.scale.set(220, 220, 1);
-        galGroup.add(galGlowCore);
-
-        galGlowHalo = new THREE.Sprite(new THREE.SpriteMaterial({
-          map: galGlwTex('halo'), transparent: true, opacity: 0.2,
-          depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false
-        }));
-        galGlowHalo.userData._baseSpriteOpacity = 0.2;
-        galGlowHalo.scale.set(800, 800, 1);
-        galGroup.add(galGlowHalo);
-
-        scene.add(galGroup);
-      }
-
       function initScene() {
 
         scene = new THREE.Scene();
@@ -1929,14 +1711,6 @@
         // ---- Planets ----
         planets = createPlanets(CONFIG.PLANET_COUNT);
         for (const p of planets) scene.add(p);
-
-        // ---- Spiral galaxy (s_v6 port) ----
-        if (CONFIG.GALAXY_ENABLED) {
-          const bgCount = prefersReducedMotion ? 300 : 1000;
-          galBgPts = makeGalBg(bgCount);
-          scene.add(galBgPts);
-          rebuildGalaxy();
-        }
       }
 
       // =============================================
@@ -2266,40 +2040,6 @@
         // ---- Glow ----
         updateGlow(elapsed, speedFactor);
 
-        // ---- Spiral galaxy (s_v6 port) ----
-        if (CONFIG.GALAXY_ENABLED && galGroup) {
-          galGroup.rotation.z += CONFIG.GALAXY_ROT_SPEED * (speedFactor < 2 ? 1 : 0.2);
-
-          // Fade galaxy out during warp (speedFactor > 2), in during cruise (speedFactor < 2)
-          const galTarget = speedFactor < 2 ? 1 : (speedFactor > 5 ? 0 : 1 - (speedFactor - 2) / 3);
-          if (typeof window._galaxyOpacity === 'undefined') window._galaxyOpacity = 1;
-          window._galaxyOpacity += (galTarget - window._galaxyOpacity) * 0.06;
-
-          const op = window._galaxyOpacity;
-          galGroup.traverse(child => {
-            if (child.isPoints && child.material) {
-              child.material.opacity = child.userData._baseOpacity !== undefined
-                ? child.userData._baseOpacity * (0.15 + 0.85 * op)
-                : op;
-            }
-            if (child.isSprite && child.material) {
-              child.material.opacity = child.userData._baseSpriteOpacity !== undefined
-                ? child.userData._baseSpriteOpacity * op
-                : op;
-            }
-          });
-
-          // Glow breathing
-          if (galGlowCore) {
-            const p1 = 1 + Math.sin(elapsed * 0.7) * 0.02;
-            galGlowCore.scale.set(220 * p1, 220 * p1, 1);
-          }
-          if (galGlowHalo) {
-            const p2 = 1 + Math.cos(elapsed * 0.5) * 0.015;
-            galGlowHalo.scale.set(800 * p2, 800 * p2, 1);
-          }
-        }
-
         renderer.render(scene, camera);
         animationId = requestAnimationFrame(animate);
       }
@@ -2349,168 +2089,6 @@
       // ---- Click ripple ----
       // REMOVED in v18: click ripple and gravity well effects have been stripped
 
-      // ═══════════════════════════════════════════════
-      // Galaxy Control Panel (ported from s_v6)
-      // ═══════════════════════════════════════════════
-      const galSliders = [
-        { id:'GALAXY_RADIUS',     label:'星系半径', min:100, max:4000, step:10 },
-        { id:'GALAXY_CORE_RADIUS',label:'核球半径', min:10, max:1000, step:5 },
-        { id:'GALAXY_ARM_COUNT',  label:'旋臂数量', min:1, max:8, step:1 },
-        { id:'GALAXY_ARM_WINDING',label:'旋臂缠绕度', min:0.2, max:15, step:0.1 },
-        { id:'GALAXY_ARM_WIDTH',  label:'旋臂宽度', min:10, max:1000, step:5 },
-        { id:'GALAXY_ARM_STAR_RATIO',label:'臂星比例', min:0.05, max:0.99, step:0.01 },
-        { id:'GALAXY_DISK_THICKNESS',label:'盘面厚度', min:1, max:200, step:1 },
-        { id:'GALAXY_DUST_RATIO', label:'尘埃比例', min:0, max:1, step:0.01 },
-        { id:'GALAXY_ROT_SPEED',  label:'旋转速度', min:0, max:0.005, step:0.00001 },
-        { id:'GALAXY_DISTANCE',   label:'星系距离', min:500, max:12000, step:50 },
-        { id:'GALAXY_SCALE',      label:'星系缩放', min:0.1, max:5.0, step:0.05 },
-        { id:'GALAXY_TILT_X',     label:'星系倾斜X', min:-3, max:3, step:0.01 },
-        { id:'GALAXY_TILT_Z',     label:'星系倾斜Z', min:-3, max:3, step:0.01 },
-        { id:'GALAXY_STAR_COUNT', label:'恒星数量', min:500, max:80000, step:500 },
-      ];
-
-      const galPanel = document.createElement('div');
-      galPanel.id = 'gal-ctrl-panel';
-      galPanel.innerHTML = `
-        <style>
-          #gal-ctrl-panel {
-            position: fixed; top: 80px; right: 16px; z-index: 9999;
-            width: 280px; max-height: calc(100vh - 100px);
-            background: rgba(8,12,20,0.88); backdrop-filter: blur(14px);
-            border: 1px solid rgba(255,255,255,0.10); border-radius: 14px;
-            font-family: 'IBM Plex Mono','Noto Sans SC',monospace; font-size: 11px;
-            color: #d4dbe6; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column; user-select: none;
-            transition: opacity 0.2s, transform 0.2s;
-          }
-          #gal-ctrl-panel.collapsed .gal-ctrl-body { display: none; }
-          #gal-ctrl-panel.collapsed { width: auto; min-width: 0; }
-          .gal-ctrl-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 14px; cursor: grab; border-bottom: 1px solid rgba(255,255,255,0.06);
-            flex-shrink: 0;
-          }
-          .gal-ctrl-header:active { cursor: grabbing; }
-          .gal-ctrl-title { font-weight: 600; font-size: 12px; letter-spacing: 0.05em; color: #e8edf5; }
-          .gal-ctrl-btns { display: flex; gap: 6px; }
-          .gal-ctrl-btns button {
-            background: none; border: 1px solid rgba(255,255,255,0.12); color: #aab5c5;
-            border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1;
-            padding: 2px 6px 4px; transition: all 0.15s;
-          }
-          .gal-ctrl-btns button:hover { background: rgba(255,255,255,0.08); color: #fff; }
-          .gal-ctrl-body {
-            overflow-y: auto; padding: 6px 10px 10px; flex: 1;
-            scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.10) transparent;
-          }
-          .gal-ctrl-body::-webkit-scrollbar { width: 4px; }
-          .gal-ctrl-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
-          .gal-ctrl-group { margin-bottom: 2px; }
-          .gal-ctrl-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 5px 2px; gap: 6px;
-          }
-          .gal-ctrl-row label { flex: 0 0 auto; white-space: nowrap; min-width: 56px; font-size: 10px; color: #9aabbf; }
-          .gal-ctrl-row input[type=range] {
-            flex: 1; height: 3px; -webkit-appearance: none; appearance: none;
-            background: rgba(255,255,255,0.10); border-radius: 2px; outline: none;
-            min-width: 0;
-          }
-          .gal-ctrl-row input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%;
-            background: #c8d8ff; border: none; cursor: pointer;
-            box-shadow: 0 0 8px rgba(200,216,255,0.3);
-          }
-          .gal-ctrl-row input[type=range]::-moz-range-thumb {
-            width: 12px; height: 12px; border-radius: 50%;
-            background: #c8d8ff; border: none; cursor: pointer;
-          }
-          .gal-ctrl-val {
-            flex: 0 0 50px; text-align: right; font-size: 10px;
-            color: #c8d8ff; font-weight: 500; white-space: nowrap;
-          }
-          @media (max-width: 768px) {
-            #gal-ctrl-panel { width: 220px; right: 8px; top: 70px; font-size: 10px; }
-            .gal-ctrl-row label { min-width: 44px; font-size: 9px; }
-            .gal-ctrl-val { flex: 0 0 38px; font-size: 9px; }
-          }
-        </style>
-        <div class="gal-ctrl-header">
-          <span class="gal-ctrl-title">✦ 星系参数</span>
-          <div class="gal-ctrl-btns">
-            <button id="gal-ctrl-toggle" title="收起/展开">─</button>
-            <button id="gal-ctrl-reset" title="重置">↺</button>
-          </div>
-        </div>
-        <div class="gal-ctrl-body"></div>
-      `;
-      document.body.appendChild(galPanel);
-
-      const galCtrlBody = galPanel.querySelector('.gal-ctrl-body');
-      const galToggleBtn = galPanel.querySelector('#gal-ctrl-toggle');
-      const galResetBtn = galPanel.querySelector('#gal-ctrl-reset');
-
-      galSliders.forEach(s => {
-        const grp = document.createElement('div');
-        grp.className = 'gal-ctrl-group';
-        const row = document.createElement('div');
-        row.className = 'gal-ctrl-row';
-        const label = document.createElement('label');
-        label.textContent = s.label;
-        const input = document.createElement('input');
-        input.type = 'range';
-        input.min = s.min; input.max = s.max; input.step = s.step;
-        input.value = CONFIG[s.id];
-        const valSpan = document.createElement('span');
-        valSpan.className = 'gal-ctrl-val';
-
-        const fmt = s.step < 0.01 ? 4 : s.step < 0.1 ? 2 : s.step < 1 ? 1 : 0;
-        valSpan.textContent = Number(input.value).toFixed(fmt);
-
-        input.addEventListener('input', () => {
-          const v = parseFloat(input.value);
-          CONFIG[s.id] = v;
-          valSpan.textContent = v.toFixed(fmt);
-          rebuildGalaxy();
-        });
-
-        row.appendChild(label);
-        row.appendChild(input);
-        row.appendChild(valSpan);
-        grp.appendChild(row);
-        galCtrlBody.appendChild(grp);
-      });
-
-      galToggleBtn.addEventListener('click', () => {
-        galPanel.classList.toggle('collapsed');
-        galToggleBtn.textContent = galPanel.classList.contains('collapsed') ? '+' : '─';
-      });
-
-      galResetBtn.addEventListener('click', () => {
-        location.reload();
-      });
-
-      // Drag
-      let galDragging = false, galDragOffX = 0, galDragOffY = 0;
-      const galHeader = galPanel.querySelector('.gal-ctrl-header');
-      galHeader.addEventListener('mousedown', (e) => {
-        galDragging = true;
-        const rect = galPanel.getBoundingClientRect();
-        galDragOffX = e.clientX - rect.left;
-        galDragOffY = e.clientY - rect.top;
-        galPanel.style.cursor = 'grabbing';
-      });
-      document.addEventListener('mousemove', (e) => {
-        if (!galDragging) return;
-        galPanel.style.left = (e.clientX - galDragOffX) + 'px';
-        galPanel.style.right = 'auto';
-        galPanel.style.top = (e.clientY - galDragOffY) + 'px';
-      });
-      document.addEventListener('mouseup', () => {
-        galDragging = false;
-        galPanel.style.cursor = '';
-      });
-
       try {
         initScene();
         initPerfMonitor();
@@ -2536,6 +2114,323 @@
       });
 
       window.__WARP = WARP;
+
+      // ══════════════════════════════════════════
+      // Standalone galaxy overlay (s_v6 exact code)
+      // Independent renderer/scene/camera
+      // ══════════════════════════════════════════
+      (function initGalaxyOverlay() {
+        if (!window.THREE) return;
+        const mount = document.getElementById('galaxy-overlay');
+        if (!mount) return;
+
+        const isMob = window.innerWidth < 768;
+        const lowFPS = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ─── Reactive params (same as s_v6) ───
+        const GP = {
+          galaxyRadius: isMob ? 650 : 1000,
+          coreRadius: isMob ? 120 : 200,
+          armCount: 2,
+          armWinding: 3.2,
+          armWidth: isMob ? 100 : 160,
+          starCount: lowFPS ? 5000 : (isMob ? 10000 : 25000),
+          dustRatio: 0.35,
+          diskThickness: isMob ? 16 : 26,
+          rotSpeed: lowFPS ? 0.00006 : 0.00018,
+          armStarRatio: 0.7,
+          camDist: isMob ? 800 : 1200,
+          camHeight: isMob ? 350 : 500,
+          tiltX: -0.21,
+          tiltZ: 0.15,
+          driftX: isMob ? 5 : 10,
+          driftY: isMob ? 3 : 6,
+        };
+
+        // ─── Three.js setup ───
+        const gScn = new THREE.Scene();
+        const gCam = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
+        gCam.position.set(0, GP.camHeight, GP.camDist);
+        gCam.lookAt(0, 0, 0);
+
+        const gRen = new THREE.WebGLRenderer({
+          antialias: !isMob,
+          alpha: true,
+          powerPreference: 'high-performance'
+        });
+        gRen.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        gRen.setSize(window.innerWidth, window.innerHeight);
+        gRen.setClearColor(0x000000, 0);
+        mount.appendChild(gRen.domElement);
+        // Make canvas inherit overlay CSS
+        gRen.domElement.style.display = 'block';
+        gRen.domElement.style.width = '100%';
+        gRen.domElement.style.height = '100%';
+
+        // ─── Color helper ───
+        function galCol(tmp) {
+          const t = THREE.MathUtils.clamp((tmp - 1000) / 9000, 0, 1);
+          return new THREE.Color(
+            THREE.MathUtils.lerp(1.0, 0.55, t),
+            THREE.MathUtils.lerp(0.35, 0.88, t),
+            THREE.MathUtils.lerp(0.10, 1.0, t)
+          );
+        }
+
+        // ─── Generate galaxy ───
+        function makeGal() {
+          const sp = [], sc = [], dp = [], dc = [], bp = [], bc = [];
+          const GR = GP.galaxyRadius, CR = GP.coreRadius, ARM_N = GP.armCount;
+          const ARM_WIND = GP.armWinding, ARM_WIDTH = GP.armWidth;
+          const NSTAR = GP.starCount, DRAT = GP.dustRatio, THK = GP.diskThickness, ASR = GP.armStarRatio;
+
+          for (let i = 0; i < NSTAR; i++) {
+            const isBulge = Math.random() < 0.08 && i > NSTAR * 0.1;
+            const r = isBulge ? Math.pow(Math.random(), 2.5) * CR : CR + Math.pow(Math.random(), 0.7) * (GR - CR);
+            let x, z, tmp;
+            if (isBulge) {
+              const theta = Math.random() * Math.PI * 2;
+              const phi = Math.acos(2 * Math.random() - 1);
+              const rad = r;
+              x = Math.sin(phi) * Math.cos(theta) * rad;
+              z = Math.sin(phi) * Math.sin(theta) * rad * 0.7;
+              const y = Math.cos(phi) * rad * 0.6;
+              tmp = 8000 + Math.random() * 2000;
+              const col = galCol(tmp);
+              bp.push(x, y, z); bc.push(col.r, col.g, col.b);
+              continue;
+            }
+            const isOnArm = Math.random() < ASR;
+            const isDust = !isOnArm && Math.random() < DRAT;
+            let angle;
+            if (isOnArm) {
+              const armIdx = Math.floor(Math.random() * ARM_N);
+              const armAngleOffset = (Math.PI * 2 / ARM_N) * armIdx;
+              const t = r / GR;
+              const spiralAngle = armAngleOffset + ARM_WIND * Math.PI * 2 * Math.pow(t, 0.6);
+              const spread = (Math.random() - 0.5) * ARM_WIDTH * (0.3 + 0.7 * t);
+              const spreadAngle = (Math.random() - 0.5) * 0.25;
+              angle = spiralAngle + spreadAngle;
+              x = Math.cos(angle) * (r + spread);
+              z = Math.sin(angle) * (r + spread);
+            } else {
+              angle = Math.random() * Math.PI * 2;
+              const rr = CR + Math.random() * (GR - CR);
+              x = Math.cos(angle) * rr;
+              z = Math.sin(angle) * rr;
+            }
+            const y = (Math.random() - 0.5) * THK * (0.2 + 0.8 * (r / GR));
+            tmp = 3000 + 6000 * (1 - r / GR) + (Math.random() - 0.5) * 2000;
+            const col = galCol(tmp);
+            if (isDust) {
+              const d = col.clone().multiplyScalar(0.3 + Math.random() * 0.15);
+              dp.push(x, y, z); dc.push(d.r, d.g, d.b);
+            } else {
+              sp.push(x, y, z); sc.push(col.r, col.g, col.b);
+            }
+          }
+
+          function mkPts(pos, col, size, op) {
+            const g = new THREE.BufferGeometry();
+            g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pos), 3));
+            g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(col), 3));
+            const tex = (() => {
+              const c = document.createElement('canvas'); c.width = 48; c.height = 48;
+              const ctx = c.getContext('2d');
+              const gr = ctx.createRadialGradient(24, 24, 0, 24, 24, 24);
+              gr.addColorStop(0, 'rgba(255,255,255,1)');
+              gr.addColorStop(0.2, 'rgba(255,255,255,0.85)');
+              gr.addColorStop(0.5, 'rgba(220,225,255,0.25)');
+              gr.addColorStop(1, 'rgba(0,0,0,0)');
+              ctx.fillStyle = gr; ctx.fillRect(0, 0, 48, 48);
+              return new THREE.CanvasTexture(c);
+            })();
+            return new THREE.Points(g, new THREE.PointsMaterial({
+              size: size || 1.5, map: tex, transparent: true, opacity: op || 0.95,
+              vertexColors: true, depthWrite: false, sizeAttenuation: true,
+              blending: THREE.AdditiveBlending
+            }));
+          }
+
+          const g = new THREE.Group();
+          g.add(mkPts(sp, sc, 1.6, 0.95));
+          g.add(mkPts(dp, dc, 0.8, 0.30));
+          g.add(mkPts(bp, bc, 1.8, 0.85));
+          return g;
+        }
+
+        // ─── Glow texture ───
+        function glwTex(t) {
+          const sz = 512;
+          const c = document.createElement('canvas'); c.width = sz; c.height = sz;
+          const ctx = c.getContext('2d');
+          const radius = sz / 2 * 0.82;
+          const gr = ctx.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, radius);
+          if (t === 'core') {
+            gr.addColorStop(0, 'rgba(255,248,235,0.50)');
+            gr.addColorStop(0.12, 'rgba(255,240,220,0.28)');
+            gr.addColorStop(0.35, 'rgba(220,210,200,0.08)');
+            gr.addColorStop(0.85, 'rgba(0,0,0,0)');
+            gr.addColorStop(1, 'rgba(0,0,0,0)');
+          } else if (t === 'halo') {
+            gr.addColorStop(0, 'rgba(240,235,255,0.10)');
+            gr.addColorStop(0.3, 'rgba(200,210,255,0.06)');
+            gr.addColorStop(0.65, 'rgba(160,180,240,0.02)');
+            gr.addColorStop(0.85, 'rgba(0,0,0,0)');
+            gr.addColorStop(1, 'rgba(0,0,0,0)');
+          } else {
+            gr.addColorStop(0, 'rgba(200,215,255,0.04)');
+            gr.addColorStop(0.4, 'rgba(170,195,255,0.02)');
+            gr.addColorStop(0.85, 'rgba(0,0,0,0)');
+            gr.addColorStop(1, 'rgba(0,0,0,0)');
+          }
+          ctx.fillStyle = gr; ctx.fillRect(0, 0, sz, sz);
+          const tex = new THREE.CanvasTexture(c);
+          tex.premultiplyAlpha = false;
+          return tex;
+        }
+
+        // ─── Background stars ───
+        function mkBG(n) {
+          const p = [], c = [];
+          for (let i = 0; i < n; i++) {
+            p.push((Math.random() - 0.5) * 6000, (Math.random() - 0.5) * 4000, -2000 - Math.random() * 3500);
+            const v = 0.5 + Math.random() * 0.5;
+            c.push(v, v, v);
+          }
+          const g = new THREE.BufferGeometry();
+          g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(p), 3));
+          g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(c), 3));
+          const tex = (() => {
+            const c2 = document.createElement('canvas'); c2.width = 24; c2.height = 24;
+            const ctx = c2.getContext('2d');
+            const gr = ctx.createRadialGradient(12, 12, 0, 12, 12, 12);
+            gr.addColorStop(0, 'rgba(255,255,255,1)');
+            gr.addColorStop(0.5, 'rgba(200,200,255,0.2)');
+            gr.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = gr; ctx.fillRect(0, 0, 24, 24);
+            return new THREE.CanvasTexture(c2);
+          })();
+          return new THREE.Points(g, new THREE.PointsMaterial({
+            size: isMob ? 1.6 : 2.2, map: tex, transparent: true, opacity: 0.8,
+            vertexColors: true, depthWrite: false, sizeAttenuation: true,
+            blending: THREE.AdditiveBlending
+          }));
+        }
+
+        // ─── Build galaxy scene ───
+        let galGrp, glowC, glowH, ambG;
+
+        function buildGal() {
+          if (galGrp) { gScn.remove(galGrp); }
+          galGrp = new THREE.Group();
+          galGrp.rotation.x = GP.tiltX;
+          galGrp.rotation.z = GP.tiltZ;
+          galGrp.add(makeGal());
+
+          glowC = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: glwTex('core'), transparent: true, opacity: 0.8,
+            depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false
+          }));
+          glowC.scale.set(isMob ? 140 : 220, isMob ? 140 : 220, 1);
+          galGrp.add(glowC);
+
+          glowH = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: glwTex('halo'), transparent: true, opacity: 0.2,
+            depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false
+          }));
+          glowH.scale.set(isMob ? 500 : 800, isMob ? 500 : 800, 1);
+          galGrp.add(glowH);
+
+          gScn.add(galGrp);
+        }
+
+        // Background stars
+        const bgPts = mkBG(lowFPS ? 600 : (isMob ? 1000 : 2000));
+        gScn.add(bgPts);
+
+        // Ambient glow
+        ambG = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: glwTex('amb'), transparent: true, opacity: 1,
+          depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false
+        }));
+        ambG.scale.set(isMob ? 1200 : 2000, isMob ? 1200 : 2000, 1);
+        ambG.position.set(0, 0, -400);
+        gScn.add(ambG);
+
+        buildGal();
+
+        // ─── Mouse tracking ───
+        const gMo = { tx: 0, ty: 0, cx: 0, cy: 0 };
+        function gPm(e) {
+          gMo.tx = (e.clientX / window.innerWidth) * 2 - 1;
+          gMo.ty = (e.clientY / window.innerHeight) * 2 - 1;
+        }
+        window.addEventListener('mousemove', gPm, { passive: true });
+
+        // ─── WARP fade sync ───
+        let galOpacity = 1;
+
+        // ─── Animation ───
+        const gClock = new THREE.Clock();
+        let gAid = null;
+
+        function gAnim() {
+          gAid = requestAnimationFrame(gAnim);
+          const dt = Math.min(gClock.getDelta(), 0.05);
+          const el = gClock.elapsedTime;
+
+          // Mouse parallax
+          gMo.cx += (gMo.tx - gMo.cx) * 0.035;
+          gMo.cy += (gMo.ty - gMo.cy) * 0.035;
+          gCam.position.x = gMo.cx * GP.driftX;
+          gCam.position.y = GP.camHeight - gMo.cy * GP.driftY;
+          gCam.position.z = GP.camDist + gMo.cy * 2;
+          gCam.lookAt(0, 0, 0);
+
+          // Galaxy self-rotation (Y axis = galaxy's normal)
+          if (galGrp) galGrp.rotation.y += GP.rotSpeed;
+
+          // Glow breathing
+          if (glowC) {
+            const p1 = 1 + Math.sin(el * 0.7) * 0.02;
+            glowC.scale.set((isMob ? 140 : 220) * p1, (isMob ? 140 : 220) * p1, 1);
+          }
+          if (glowH) {
+            const p2 = 1 + Math.cos(el * 0.5) * 0.015;
+            glowH.scale.set((isMob ? 500 : 800) * p2, (isMob ? 500 : 800) * p2, 1);
+          }
+
+          // Sync opacity with WARP phase
+          if (window.__WARP) {
+            const sf = window.__WARP.factor || 0.4;
+            const target = sf < 2 ? 1 : (sf > 5 ? 0 : 1 - (sf - 2) / 3);
+            galOpacity += (target - galOpacity) * 0.06;
+            mount.style.opacity = galOpacity;
+          }
+
+          gRen.render(gScn, gCam);
+        }
+
+        // ─── Resize ───
+        function gRs() {
+          gCam.aspect = window.innerWidth / window.innerHeight;
+          gCam.updateProjectionMatrix();
+          gRen.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          gRen.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener('resize', gRs);
+
+        // ─── Start ───
+        gAnim();
+
+        // ─── Cleanup ───
+        window.addEventListener('beforeunload', () => {
+          if (gAid) cancelAnimationFrame(gAid);
+          window.removeEventListener('mousemove', gPm);
+          window.removeEventListener('resize', gRs);
+        });
+      })();
     })();
 
     /* 滚动出现动画 */
