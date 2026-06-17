@@ -798,6 +798,7 @@
       const mo = { tx: 0, ty: 0, cx: 0, cy: 0 };
       const clock = new THREE.Clock();
       let galParticles = null; // reference to the galaxy particle group
+      let galRotGrp = null;   // inner group that rotates around normal (Y axis)
 
       function tmpCol(tmp) {
         const t = THREE.MathUtils.clamp((tmp - 1000) / 9000, 0, 1);
@@ -961,20 +962,23 @@
         // Remove old galaxy group
         if (galGrp) { scn.remove(galGrp); galGrp = null; }
 
-        galGrp = new THREE.Group();
+        galGrp = new THREE.Group();          // outer: handles tilt (fixed)
         galGrp.rotation.x = P.tiltX;
         galGrp.rotation.z = P.tiltZ;
 
+        galRotGrp = new THREE.Group();        // inner: rotates around normal (Y axis)
+        galGrp.add(galRotGrp);
+
         galParticles = makeGal();
-        galGrp.add(galParticles);
+        galRotGrp.add(galParticles);
 
         glowC = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('core'), transparent: true, opacity: 0.8, depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false }));
         glowC.scale.set(isMob ? 140 : 220, isMob ? 140 : 220, 1);
-        galGrp.add(glowC);
+        galRotGrp.add(glowC);
 
         glowH = new THREE.Sprite(new THREE.SpriteMaterial({ map: glwTex('halo'), transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending, premultipliedAlpha: false }));
         glowH.scale.set(isMob ? 500 : 800, isMob ? 500 : 800, 1);
-        galGrp.add(glowH);
+        galRotGrp.add(glowH);
 
         scn.add(galGrp);
       }
@@ -1024,7 +1028,8 @@
         cam.position.z = P.camDist + mo.cy * 2;
         cam.lookAt(0, 0, 0);
 
-        if (galGrp) galGrp.rotation.z += P.rotSpeed;
+        // Rotate inner group around local Y axis (disk normal)
+        if (galRotGrp) galRotGrp.rotation.y += P.rotSpeed;
 
         if (glowC) {
           const p1 = 1 + Math.sin(el * 0.7) * 0.02;
