@@ -5,117 +5,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Ethan BAI's blog{% endblock %}</title>
+  <title>{% block title %}Ethan BAI's Blog{% endblock %}</title>
 
-  <!-- GitHub Markdown 样式 -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
+  <!-- Google Fonts: Space Grotesk + Noto Sans SC + IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="{% static 'blog/css/style.css' %}?v=20260603_1">
+  <!-- GitHub Markdown CSS (for article body) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
+
+  <!-- Theme stylesheet -->
+  <link rel="stylesheet" href="{% static 'blog/css/style.css' %}?v=20260622_2">
 
   {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <!-- Three.js Background -->
+  <div id="scene-root"></div>
+
+  <!-- Dark overlay: dims galaxy on non-hero pages -->
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div id="debug-badge" class="debug-badge"></div>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="{% url 'blog:home' %}" class="brand">
+          <span class="brand-dot"></span>
+          Ethan BAI
+        </a>
+
+        <!-- Header Search -->
+        <form action="{% url 'blog:search' %}" method="get" class="header-search">
+          <input type="text" name="q" placeholder="搜索..." class="header-search-input">
+          <button type="submit" class="header-search-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+            </svg>
+          </button>
+        </form>
+
+        <nav class="nav-links">
+          <a href="{% url 'blog:home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>Home</a>
+
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-trigger" onclick="this.parentElement.classList.toggle('open'); event.stopPropagation()">
+              Logbook
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="nav-dropdown-panel">
+              {% get_category_list as categories %}
+              {% get_tag_list as tags %}
+              <div class="dropdown-section">
+                <a href="{% url 'blog:post_list' %}" class="dropdown-quick-link">All Entries →</a>
+              </div>
+              {% if categories %}
+              <div class="dropdown-section">
+                <span class="dropdown-label">Categories</span>
+                <div class="dropdown-bubbles">
+                  {% for c in categories %}
+                  <a href="{% url 'blog:category_list' c.slug %}" class="dropdown-bubble bubble-category">{{ c.name }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+              {% if tags %}
+              <div class="dropdown-section">
+                <span class="dropdown-label">Tags</span>
+                <div class="dropdown-bubbles">
+                  {% for t in tags %}
+                  <a href="{% url 'blog:post_list' %}?tag={{ t.slug }}" class="dropdown-bubble bubble-tag">{{ t.name }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <a href="{% url 'blog:portfolio' %}" {% if request.resolver_match.url_name == 'portfolio' %}class="active"{% endif %}>Projects</a>
+          <a href="{% url 'blog:about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>About</a>
+          <a href="https://github.com/EthanBAI-dev" target="_blank" rel="noopener">GitHub</a>
+          <a href="{% url 'blog:resume' %}" {% if request.resolver_match.url_name == 'resume' %}class="active"{% endif %}>CV</a>
+
+          {% if user.is_authenticated %}
+          {% else %}
+            <a href="{% url 'users:login' %}">Log In</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="site-grid {% block grid_class %}{% endblock %}">
+        {% block sidebar_area %}
+        <div class="site-sidebar">
+          {% block sidebar %}
+          {% include 'blog/sidebar.html' %}
+          {% endblock %}
+        </div>
+        {% endblock sidebar_area %}
+
+        <div class="site-content">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <span class="silver-line"></span>
+        <p>WARP TRANSIT · ETHAN BAI · {% now "Y" %}</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Three.js -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="{% static 'blog/js/space-theme.js' %}?v=20260622_2"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // 点击页面其他地方关闭下拉
+      // Close dropdown on outside click
       document.addEventListener('click', function () {
         document.querySelectorAll('.nav-dropdown.open').forEach(function (d) {
           d.classList.remove('open');
         });
       });
+
+      // ── Scroll-aware galaxy dimming ──
+      var overlay = document.querySelector('.bg-overlay');
+      if (overlay) {
+        var isHero = document.body.classList.contains('hero-page');
+        var ticking = false;
+
+        function updateOverlay() {
+          if (isHero) {
+            var hero = document.querySelector('.hero');
+            if (hero) {
+              var heroBottom = hero.offsetTop + hero.offsetHeight;
+              var scrollY = window.scrollY;
+              var fadeZone = heroBottom * 0.3;
+              var progress = Math.min(Math.max(scrollY / fadeZone, 0), 1);
+              overlay.style.opacity = progress;
+            }
+          } else {
+            overlay.style.opacity = 1;
+          }
+          ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+          if (!ticking) {
+            requestAnimationFrame(updateOverlay);
+            ticking = true;
+          }
+        });
+
+        // Set initial state
+        updateOverlay();
+      }
     });
   </script>
-</head>
-
-<body>
-  <header class="site-header">
-    <div class="site-header-inner">
-      <a href="{% url 'blog:home' %}" class="brand">Ethan BAI's blog</a>
-
-      <!-- 导航栏中间搜索 -->
-      <form action="{% url 'blog:search' %}" method="get" class="header-search">
-        <input type="text" name="q" placeholder="搜索文章..." class="header-search-input">
-        <button type="submit" class="header-search-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
-          </svg>
-        </button>
-      </form>
-
-      <nav class="nav-links">
-        <a href="{% url 'blog:home' %}">首页</a>
-
-        <div class="nav-dropdown">
-          <button class="nav-dropdown-trigger" onclick="this.parentElement.classList.toggle('open'); event.stopPropagation()">
-            博客
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-          <div class="nav-dropdown-panel">
-            {% get_category_list as categories %}
-            {% get_tag_list as tags %}
-            <div class="dropdown-section">
-              <a href="{% url 'blog:post_list' %}" class="dropdown-quick-link">全部文章</a>
-            </div>
-            {% if categories %}
-            <div class="dropdown-section">
-              <span class="dropdown-label">分类</span>
-              <div class="dropdown-bubbles">
-                {% for c in categories %}
-                <a href="{% url 'blog:category_list' c.slug %}" class="dropdown-bubble bubble-category">{{ c.name }}</a>
-                {% endfor %}
-              </div>
-            </div>
-            {% endif %}
-            {% if tags %}
-            <div class="dropdown-section">
-              <span class="dropdown-label">标签</span>
-              <div class="dropdown-bubbles">
-                {% for t in tags %}
-                <a href="{% url 'blog:post_list' %}?tag={{ t.slug }}" class="dropdown-bubble bubble-tag">{{ t.name }}</a>
-                {% endfor %}
-              </div>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-
-        <a href="{% url 'blog:portfolio' %}">项目</a>
-        <a href="{% url 'blog:about' %}">关于</a>
-        <a href="https://github.com/EthanBAI-dev" target="_blank" rel="noopener">GitHub</a>
-        <a href="{% url 'blog:resume' %}">简历</a>
-
-        {% if user.is_authenticated %}
-        {% else %}
-          <a href="{% url 'users:login' %}">登录</a>
-          <a href="{% url 'users:register' %}">注册</a>
-        {% endif %}
-      </nav>
-    </div>
-  </header>
-
-  <main class="site-main">
-    <div class="site-grid {% block grid_class %}{% endblock %}">
-      {% block sidebar_area %}
-      <div class="site-sidebar">
-        {% block sidebar %}
-        {% include 'blog/sidebar.html' %}
-        {% endblock %}
-      </div>
-      {% endblock sidebar_area %}
-
-      <div class="site-content">
-        {% block content %}{% endblock %}
-      </div>
-    </div>
-  </main>
-
-  <footer class="site-footer">
-    <div class="site-footer-inner">
-      <p>Built with Django · Markdown · Notes by Bai</p>
-    </div>
-  </footer>
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

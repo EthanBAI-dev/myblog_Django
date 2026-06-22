@@ -1,148 +1,144 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 
-{% block title %}Ethan BAI's blog{% endblock %}
+{% block title %}Ethan BAI — Quiet Cosmos{% endblock %}
+
+{% block body_class %}hero-page{% endblock %}
 
 {% block grid_class %}no-sidebar{% endblock %}
 {% block sidebar_area %}{% endblock sidebar_area %}
 
 {% block content %}
-<section class="home-hero">
-    <div class="home-hero-inner">
-        <p class="hero-greeting">Hello, 我是</p>
-        <h1 class="hero-name">
-            {% if blog_owner and blog_owner.nike_name %}
-                {{ blog_owner.nike_name }}
-            {% elif blog_owner %}
-                {{ blog_owner.owner.username }}
-            {% else %}
-                Ethan BAI
-            {% endif %}
-        </h1>
-        <p class="hero-slogan">
-            {% if homepage %}
-                {{ homepage.slogan }}
-            {% else %}
-                探索深度学习的边界，用代码构建智能的未来。
-            {% endif %}
-        </p>
-        <p class="hero-sub">
-            {% if homepage and homepage.hero_sub %}
-                {{ homepage.hero_sub }}
-            {% else %}
-                深度学习工程师 &amp; AI 技术探索者 · 持续学习中
-            {% endif %}
-        </p>
-
-        <div class="hero-actions">
-            <a href="{% url 'blog:post_list' %}" class="hero-btn hero-btn-primary">阅读博客</a>
-            <a href="{% url 'blog:about' %}" class="hero-btn hero-btn-outline">了解更多</a>
-        </div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Quiet Cosmos / Spiral Galaxy</div>
+    <h1 class="hero-name">
+      <span class="soft">
+        {% if blog_owner and blog_owner.nike_name %}
+          {{ blog_owner.nike_name }}
+        {% elif blog_owner %}
+          {{ blog_owner.owner.username }}
+        {% else %}
+          Ethan
+        {% endif %}
+      </span>
+      <span class="bai">BAI</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-slogan">
+      {% if homepage and homepage.slogan %}
+        {{ homepage.slogan }}
+      {% else %}
+        「探索 · 创造 · 分享」
+      {% endif %}
+    </p>
+    <p class="hero-sub">
+      {% if homepage and homepage.hero_sub %}
+        {{ homepage.hero_sub }}
+      {% else %}
+        全站工程师 & AI 技术探索者 · 终身学习者。
+      {% endif %}
+    </p>
+    <div class="hero-actions">
+      <a href="{% url 'blog:post_list' %}" class="hero-btn hero-btn-primary">Read Journal</a>
+      <a href="{% url 'blog:about' %}" class="hero-btn hero-btn-outline">About Me</a>
     </div>
+  </div>
 </section>
 
 <section class="home-grid">
-    <!-- 关于我 -->
-    <div class="home-card">
-        <div class="home-card-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-        </div>
-        <h2 class="home-card-title">关于</h2>
-        <div class="home-card-desc">
-            {% if homepage and homepage.about_me %}
-                {{ homepage.about_me|safe }}
-            {% elif blog_owner and blog_owner.desc %}
-                {{ blog_owner.desc|truncatechars:120 }}
-            {% else %}
-                一个持续探索 AI 与深度学习领域的技术爱好者，热衷于将复杂的理论转化为可实践的代码。
-            {% endif %}
-        </div>
-    </div>
+  <!-- About -->
+  <article class="home-card">
+    <div class="home-card-index">01 · Identity</div>
+    <h2 class="home-card-title">关于</h2>
+    <p class="home-card-desc">
+      {% if homepage and homepage.about_me %}
+        {{ homepage.about_me|safe }}
+      {% elif blog_owner and blog_owner.desc %}
+        {{ blog_owner.desc|truncatechars:120 }}
+      {% else %}
+        一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。
+      {% endif %}
+    </p>
+  </article>
 
-    <!-- 当前在做的事 -->
-    <div class="home-card">
-        <div class="home-card-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-            </svg>
-        </div>
-        <h2 class="home-card-title">当下</h2>
-        <div class="home-card-desc">
-            {% if homepage and homepage.current_work %}
-                {{ homepage.current_work|safe }}
-            {% else %}
-                正在系统性地学习深度学习课程（Andrew Ng 专项课程），整理笔记并构建个人知识体系。同时维护这个博客平台，记录学习过程中的思考与收获。
-            {% endif %}
-        </div>
-    </div>
+  <!-- Current Work -->
+  <article class="home-card">
+    <div class="home-card-index">02 · Current Focus</div>
+    <h2 class="home-card-title">当下</h2>
+    <p class="home-card-desc">
+      {% if homepage and homepage.current_work %}
+        {{ homepage.current_work|safe }}
+      {% else %}
+        系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。
+      {% endif %}
+    </p>
+  </article>
 
-    <!-- 核心技能 -->
-    <div class="home-card">
-        <div class="home-card-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-            </svg>
-        </div>
-        <h2 class="home-card-title">技能</h2>
-        <div class="home-card-skills">
-            {% if homepage and homepage.get_skills_list %}
-                {% for skill in homepage.get_skills_list %}
-                <span class="skill-tag">{{ skill }}</span>
-                {% endfor %}
-            {% else %}
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Django</span>
-                <span class="skill-tag">PyTorch</span>
-                <span class="skill-tag">TensorFlow</span>
-                <span class="skill-tag">NumPy</span>
-                <span class="skill-tag">Pandas</span>
-                <span class="skill-tag">Scikit-learn</span>
-                <span class="skill-tag">Git</span>
-                <span class="skill-tag">HTML/CSS</span>
-                <span class="skill-tag">SQL</span>
-            {% endif %}
-        </div>
-    </div>
-
-    <!-- 兴趣爱好 & 长期坚持 -->
-    <div class="home-card">
-        <div class="home-card-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
-        </div>
-        <h2 class="home-card-title">热爱 &amp; 坚持</h2>
-        <div class="home-card-desc">
-            {% if homepage and homepage.hobbies %}
-                {{ homepage.hobbies|safe }}
-            {% else %}
-                长期坚持深度学习知识的系统化学习与笔记整理。热爱阅读技术论文、参与开源社区、探索 AI 在不同领域的应用。相信持续积累的力量。
-            {% endif %}
-        </div>
-    </div>
-</section>
-
-<section class="home-recent">
-    <div class="home-recent-header">
-        <h2 class="home-recent-title">最新文章</h2>
-        <a href="{% url 'blog:post_list' %}" class="home-recent-more">查看全部 &rarr;</a>
-    </div>
-
-    {% if sidebar_recent_posts %}
-    <div class="home-recent-list">
-        {% for post in sidebar_recent_posts|slice:":3" %}
-        <a href="{% url 'blog:post_detail' post.slug %}" class="home-recent-item">
-            <span class="home-recent-date">{{ post.created_at|date:"Y-m-d" }}</span>
-            <span class="home-recent-title-text">{{ post.title }}</span>
-            <span class="home-recent-arrow">&rarr;</span>
-        </a>
+  <!-- Skills -->
+  <article class="home-card">
+    <div class="home-card-index">03 · Toolkit</div>
+    <h2 class="home-card-title">技能</h2>
+    <div class="home-card-skills">
+      {% if homepage and homepage.get_skills_list %}
+        {% for skill in homepage.get_skills_list %}
+        <span class="skill-tag">{{ skill }}</span>
         {% endfor %}
+      {% else %}
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Django</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">Scikit-learn</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">HTML/CSS</span>
+        <span class="skill-tag">SQL</span>
+      {% endif %}
     </div>
-    {% else %}
-    <div class="home-recent-empty">
-        <p>还没有文章，敬请期待。</p>
-    </div>
-    {% endif %}
+  </article>
+
+  <!-- Principles -->
+  <article class="home-card">
+    <div class="home-card-index">04 · Principle</div>
+    <h2 class="home-card-title">热爱与秩序</h2>
+    <p class="home-card-desc">
+      {% if homepage and homepage.hobbies %}
+        {{ homepage.hobbies|safe }}
+      {% else %}
+        相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。
+      {% endif %}
+    </p>
+  </article>
 </section>
+
+<!-- Recent Posts -->
+{% if sidebar_recent_posts %}
+<div class="home-recent">
+  <div class="home-recent-header">
+    <h2 class="home-recent-title">近期写作</h2>
+    <a href="{% url 'blog:post_list' %}" class="home-recent-more">All posts →</a>
+  </div>
+
+  <section class="home-recent-list">
+    {% for post in sidebar_recent_posts|slice:":6" %}
+    <a href="{% url 'blog:post_detail' post.slug %}" class="home-recent-item">
+      <span class="home-recent-date">{{ post.created_at|date:"Y-m-d" }}</span>
+      <span class="home-recent-title-text">{{ post.title }}</span>
+      <span class="home-recent-arrow">→</span>
+    </a>
+    {% endfor %}
+  </section>
+</div>
+{% else %}
+<section class="home-recent">
+  <div class="home-recent-header">
+    <h2 class="home-recent-title">近期写作</h2>
+  </div>
+  <div class="home-recent-empty">
+    <p>还没有文章，敬请期待。</p>
+  </div>
+</section>
+{% endif %}
 {% endblock %}
