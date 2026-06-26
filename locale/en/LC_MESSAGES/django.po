@@ -1,0 +1,40 @@
+# English translations for myblog.
+msgid ""
+msgstr ""
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Ethan BAI's Blog"
+msgstr "Ethan BAI's Blog"
+
+msgid "搜索..."
+msgstr "Search..."
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Logbook"
+msgstr "Logbook"
+
+msgid "All Entries →"
+msgstr "All Entries →"
+
+msgid "Categories"
+msgstr "Categories"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Projects"
+msgstr "Projects"
+
+msgid "About"
+msgstr "About"
+
+msgid "CV"
+msgstr "CV"
+
+msgid "WARP TRANSIT · ETHAN BAI ·"
+msgstr "WARP TRANSIT · ETHAN BAI ·"

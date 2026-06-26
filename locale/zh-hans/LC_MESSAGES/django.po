@@ -1,0 +1,40 @@
+# Chinese translations for myblog.
+msgid ""
+msgstr ""
+"Language: zh-hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Ethan BAI's Blog"
+msgstr "Ethan BAI 的博客"
+
+msgid "搜索..."
+msgstr "搜索..."
+
+msgid "Home"
+msgstr "首页"
+
+msgid "Logbook"
+msgstr "日志"
+
+msgid "All Entries →"
+msgstr "所有文章 →"
+
+msgid "Categories"
+msgstr "分类"
+
+msgid "Tags"
+msgstr "标签"
+
+msgid "Projects"
+msgstr "项目"
+
+msgid "About"
+msgstr "关于"
+
+msgid "CV"
+msgstr "简历"
+
+msgid "WARP TRANSIT · ETHAN BAI ·"
+msgstr "WARP TRANSIT · ETHAN BAI ·"

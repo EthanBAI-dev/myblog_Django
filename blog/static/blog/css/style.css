@@ -211,10 +211,38 @@ a {
   border-radius: 999px;
   transition: all 0.28s ease;
   letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 .nav-links > a:hover {
   color: var(--text);
   background: rgba(255, 255, 255, 0.03);
+}
+.nav-links > a[aria-label="GitHub"] {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+}
+.lang-switcher {
+  margin-left: 4px;
+}
+.lang-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.28s ease;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+.lang-btn:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
 }
 .nav-links > a.active,
 .nav-links > a.current-page {
@@ -243,6 +271,7 @@ a {
   gap: 4px;
   transition: all 0.28s ease;
   letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 .nav-dropdown-trigger:hover {
   color: var(--text);
@@ -658,6 +687,21 @@ a {
   color: var(--text-muted);
   margin-bottom: 42px;
   animation: fadeUp 0.9s 0.52s ease-out forwards;
+
+  /* 背景提升可读性，防止被银河星空遮挡 */
+  display: inline-block;
+  padding: 6px 20px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 20, 0) 0%,
+    rgba(10, 10, 20, 0.5) 10%,
+    rgba(10, 10, 20, 0.7) 50%,
+    rgba(10, 10, 20, 0.5) 90%,
+    rgba(10, 10, 20, 0) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .hero-actions {
