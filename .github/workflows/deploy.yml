@@ -1,0 +1,23 @@
+name: Deploy to PythonAnywhere
+
+on:
+  push:
+    branches: [personal-website-redesign]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 触发 PythonAnywhere 部署脚本
+        run: |
+          # 先通过 console API 执行部署脚本
+          curl -s -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
+               "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
+               -d "executable=/bin/bash&arguments=~/deploy-full.sh"
+
+      - name: 🔁 重载 Web App
+        run: |
+          curl -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
+               -H "Content-Type: application/json" \
+               -X POST \
+               "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/${{ secrets.PA_USERNAME }}.pythonanywhere.com/reload/"
