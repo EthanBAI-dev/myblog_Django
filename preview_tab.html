@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案二 · Tab 分类 + 卡片列表</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0c12;--bg-2:#0e1118;--text:#e8eaee;--text-soft:#d5d8e0;
+  --text-secondary:#b0b5c4;--text-muted:#787e98;
+  --line:rgba(210,205,200,0.07);--line-strong:rgba(210,205,200,0.13);
+  --radius:16px;--radius-xl:28px;
+  --font-display:'Space Grotesk','Noto Sans SC',sans-serif;
+  --font-body:'Noto Sans SC',system-ui,-apple-system,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+body{
+  background:linear-gradient(180deg,#121520 0%,#0e1118 28%,#0a0c12 100%);
+  color:var(--text);font-family:var(--font-body);line-height:1.6;min-height:100vh
+}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px 80px}
+
+.page-intro{margin-bottom:28px}
+.intro-kicker{font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted);letter-spacing:.18em;margin-bottom:8px}
+.intro-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;letter-spacing:-.03em;margin-bottom:4px}
+.intro-desc{font-size:.88rem;color:var(--text-secondary);max-width:600px}
+
+/* Tab Bar */
+.tab-bar{
+  display:flex;gap:0;margin:28px 0 24px;
+  border-bottom:1px solid var(--line);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{
+  flex-shrink:0;padding:12px 20px;
+  font-family:var(--font-display);font-size:.82rem;font-weight:500;
+  color:var(--text-muted);background:none;border:none;
+  cursor:pointer;transition:all .25s ease;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--text-soft)}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--text);font-weight:600}
+
+/* Project grid */
+.project-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  min-height:300px;
+}
+.project-card{
+  border-radius:var(--radius);overflow:hidden;
+  background:rgba(16,19,28,0.7);border:1px solid var(--line);
+  cursor:pointer;transition:all .3s ease;opacity:1;
+  display:flex;flex-direction:column;
+}
+.project-card.hidden{display:none}
+.project-card:hover{
+  border-color:rgba(255,255,255,0.12);
+  transform:translateY(-3px);
+  box-shadow:0 16px 32px rgba(0,0,0,0.3);
+}
+.project-cover{aspect-ratio:16/10;overflow:hidden;position:relative;flex-shrink:0}
+.project-cover img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.project-card:hover .project-cover img{transform:scale(1.06)}
+.project-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(10,12,18,0.85) 100%);
+}
+.project-tags-top{
+  position:absolute;top:10px;left:10px;display:flex;gap:4px;
+}
+.project-tags-top span{
+  padding:2px 8px;border-radius:4px;font-size:.62rem;font-family:var(--font-mono);
+  background:rgba(0,0,0,0.5);color:var(--text-soft);backdrop-filter:blur(4px);
+}
+.project-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
+.project-body h3{font-family:var(--font-display);font-size:.95rem;font-weight:600;letter-spacing:-.02em;margin-bottom:6px;line-height:1.3}
+.project-body p{font-size:.78rem;color:var(--text-secondary);line-height:1.5;flex:1;-webkit-line-clamp:3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.project-footer{margin-top:10px;display:flex;align-items:center;justify-content:space-between}
+.project-footer .year{font-size:.68rem;color:var(--text-muted);font-family:var(--font-mono)}
+.project-footer .links{display:flex;gap:8px}
+.project-footer .links a{font-size:.68rem;color:var(--text-soft);text-decoration:none;opacity:.5;transition:opacity .2s}
+.project-footer .links a:hover{opacity:1;text-decoration:underline}
+
+/* Skill FAB */
+.skill-fab{
+  position:fixed;bottom:28px;right:28px;z-index:50;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(16,19,28,0.85);border:1px solid var(--line-strong);
+  color:var(--text);font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);
+  transition:all .25s ease;box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+.skill-fab:hover{background:rgba(24,28,36,0.9);border-color:rgba(255,255,255,0.15);transform:scale(1.05)}
+
+/* Skill panel (modal-like popup) */
+.skill-panel{
+  position:fixed;right:24px;bottom:96px;z-index:49;
+  width:360px;max-height:60vh;
+  background:rgba(14,17,24,0.96);border:1px solid var(--line-strong);
+  border-radius:var(--radius-xl);
+  backdrop-filter:blur(16px);
+  padding:20px 20px 16px;
+  overflow-y:auto;
+  transform:scale(0.9);opacity:0;pointer-events:none;
+  transition:all .25s ease;box-shadow:0 24px 48px rgba(0,0,0,0.4);
+}
+.skill-panel.active{transform:scale(1);opacity:1;pointer-events:all}
+.skill-panel h3{font-size:.72rem;color:var(--text-muted);font-family:var(--font-mono);margin-bottom:12px}
+.skill-panel .block{margin-bottom:14px}
+.skill-panel .block:last-child{margin-bottom:0}
+.skill-panel .label{font-size:.68rem;color:var(--text-muted);margin-bottom:6px;font-family:var(--font-mono)}
+.skill-panel .tags{display:flex;flex-wrap:wrap;gap:4px}
+.skill-panel .tags span{padding:3px 10px;border-radius:4px;font-size:.66rem;background:rgba(255,255,255,0.03);color:var(--text-secondary);font-family:var(--font-mono)}
+
+/* Tab transition animation */
+.project-card.entering{animation:fadeInUp .35s ease forwards}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Modal */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .28s ease;
+}
+.modal-overlay.active{display:flex;opacity:1}
+.modal{
+  position:relative;width:min(90vw,960px);max-height:88vh;
+  background:rgba(14,17,24,0.98);border:1px solid var(--line-strong);
+  border-radius:var(--radius-xl);overflow:hidden;
+  transform:scale(0.92);transition:transform .28s ease;
+  display:flex;flex-direction:column;
+}
+.modal-overlay.active .modal{transform:scale(1)}
+.modal-close{
+  position:absolute;top:14px;right:14px;z-index:10;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:none;
+  color:var(--text);font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.modal-close:hover{background:rgba(255,255,255,0.12)}
+.modal-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,0.04);border:1px solid var(--line);
+  color:var(--text);font-size:1.1rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;z-index:10;
+}
+.modal-nav:hover{background:rgba(255,255,255,0.1)}
+.modal-nav.prev{left:12px}
+.modal-nav.next{right:56px}
+.modal-counter{
+  position:absolute;top:18px;left:50%;transform:translateX(-50%);
+  font-size:.72rem;color:var(--text-muted);font-family:var(--font-mono);
+  letter-spacing:.04em;z-index:10;
+}
+.modal-body{overflow-y:auto;padding:32px 28px 28px;flex:1}
+.modal-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.modal-img img{width:100%;border-radius:12px;display:block}
+.modal-info{}
+.modal-info .title{font-family:var(--font-display);font-size:1.4rem;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.modal-info .meta{font-size:.76rem;color:var(--text-muted);margin-bottom:12px}
+.modal-info .desc{font-size:.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:14px}
+.modal-info .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.modal-info .tags span{padding:4px 12px;border-radius:6px;font-size:.7rem;background:rgba(255,255,255,0.04);color:var(--text-secondary);font-family:var(--font-mono)}
+.modal-info .list li{font-size:.82rem;color:var(--text-secondary);line-height:1.8;margin-left:16px}
+
+@media(max-width:900px){
+  .project-grid{grid-template-columns:repeat(2,1fr)}
+  .modal-layout{grid-template-columns:1fr}
+  .skill-panel{width:calc(100vw - 32px);right:16px}
+}
+@media(max-width:600px){
+  .project-grid{grid-template-columns:1fr;gap:14px}
+  .container{padding:24px 16px}
+  .modal{padding:0;width:100vw;max-height:100vh;border-radius:0}
+  .modal-body{padding:16px}
+  .skill-fab{bottom:20px;right:20px}
+  .skill-panel{bottom:84px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-intro">
+    <p class="intro-kicker">PORTFOLIO · 方案二</p>
+    <h1 class="intro-title">Tab 分类 + 卡片列表</h1>
+    <p class="intro-desc">分类 Tab 导航切换 — 技能收纳为右下角悬浮按钮，点击即可展开。</p>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" data-cat="all">全部</button>
+    <button class="tab-btn" data-cat="ext">Chrome 扩展</button>
+    <button class="tab-btn" data-cat="cv">CV / OCR</button>
+    <button class="tab-btn" data-cat="rag">RAG / LLM</button>
+    <button class="tab-btn" data-cat="industrial">工业控制</button>
+  </div>
+
+  <!-- Project Grid -->
+  <div class="project-grid" id="projectGrid">
+    <!-- 1. NoteFlow -->
+    <div class="project-card" data-cat="ext" onclick="openModal(0)">
+      <div class="project-cover" style="background:linear-gradient(135deg,rgba(16,19,26,0.97),rgba(10,12,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+          <div style="width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem">📓</div>
+          <p style="font-family:var(--font-display);font-size:.9rem;color:var(--text-soft)">NoteFlow</p>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-body">
+        <h3>NoteFlow — 批量导入 NotebookLM</h3>
+        <p>WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3），支持 Bilibili/YouTube/播客批量导入。</p>
+        <div class="project-footer">
+          <span class="year">2025</span>
+          <div class="links"><a>GitHub</a><a>Chrome Web Store</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Receipt Digitizer -->
+    <div class="project-card" data-cat="cv" onclick="openModal(1)">
+      <div class="project-cover" style="background:linear-gradient(135deg,rgba(20,16,26,0.97),rgba(12,10,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted)">Receipt Auto Digitizer</p>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-body">
+        <h3>Receipt Auto Digitizer</h3>
+        <p>四阶段 CV 流水线：YOLOv8m → 透视校正 → PaddleOCR，自动输出结构化 CSV。</p>
+        <div class="project-footer">
+          <span class="year">2024</span>
+          <div class="links"><a>GitHub</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. RAG QA -->
+    <div class="project-card" data-cat="rag" onclick="openModal(2)">
+      <div class="project-cover" style="background:linear-gradient(135deg,rgba(18,22,30,0.97),rgba(10,12,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted)">RAG QA System</p>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-body">
+        <h3>RAG QA System</h3>
+        <p>轻量 VectorStore + DeepSeek + ZhipuAI 实现本地文档智能问答。Streamlit Web UI。</p>
+        <div class="project-footer">
+          <span class="year">2024</span>
+          <div class="links"><a>GitHub</a><a>在线体验</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Furukawa -->
+    <div class="project-card" data-cat="industrial" onclick="openModal(3)">
+      <div class="project-cover" style="background:linear-gradient(135deg,rgba(22,20,26,0.97),rgba(14,12,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted)">Industrial Control</p>
+        </div>
+        <div class="project-overlay"></div>
+      </div>
+      <div class="project-body">
+        <h3>机械设备控制 · AI 开发</h3>
+        <p>PLC → ROS → YOLO 完整控制层级开发。主导新技術导入并开发自动化工具。</p>
+        <div class="project-footer">
+          <span class="year">2025 — 至今</span>
+          <div class="links"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Skill FAB -->
+<button class="skill-fab" id="skillFab">⚡</button>
+<!-- Skill Panel -->
+<div class="skill-panel" id="skillPanel">
+  <h3>专业技能</h3>
+  <div class="block"><div class="label">编程语言</div><div class="tags"><span>Python · 3yr</span><span>C/C++ · 3yr</span><span>TypeScript · 1yr</span></div></div>
+  <div class="block"><div class="label">AI/ML</div><div class="tags"><span>PyTorch</span><span>YOLOv8/5</span><span>ResNet34</span><span>PaddleOCR</span></div></div>
+  <div class="block"><div class="label">前端</div><div class="tags"><span>React 18</span><span>TypeScript</span><span>Tailwind</span><span>WXT</span><span>Streamlit</span></div></div>
+  <div class="block"><div class="label">后端/DevOps</div><div class="tags"><span>Django</span><span>Docker</span><span>AWS</span><span>Git</span></div></div>
+  <div class="block"><div class="label">工业控制</div><div class="tags"><span>PLC</span><span>ROS</span><span>CAN</span><span>EtherCAT</span><span>PID</span></div></div>
+  <div class="block"><div class="label">工具</div><div class="tags"><span>Vite</span><span>Vitest</span><span>Mintlify</span></div></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <span class="modal-counter" id="modalCounter"></span>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-nav prev" onclick="navModal(-1)" id="prevBtn">‹</button>
+    <button class="modal-nav next" onclick="navModal(1)" id="nextBtn">›</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {
+    title:'NoteFlow — 批量导入 NotebookLM',
+    meta:'2025 · Chrome 扩展 · 已上架 Chrome Web Store',
+    desc:'一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 Bilibili、YouTube、Apple Podcasts、小宇宙等多种来源批量导入内容到 Google NotebookLM。',
+    tags:['WXT','React 18','TypeScript','Tailwind','Vite','Supabase'],
+    list:['Bilibili 字幕批量提取','YouTube 播放列表导入','播客自动下载','Web 页面提取','AI 对话分享卡片','RSS 订阅'],
+    links:[{text:'GitHub ↗',url:'#'},{text:'Chrome Web Store ↗',url:'#'},{text:'文档 ↗',url:'#'}]
+  },
+  {
+    title:'Receipt Auto Digitizer — 多票据自动识别',
+    meta:'2024 · 计算机视觉 · OCR',
+    desc:'YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域检测 → PaddleOCR 文字识别，自动输出结构化 CSV。',
+    tags:['YOLOv8m','ResNet34','PaddleOCR','OpenCV','PyTorch'],
+    list:['独立完成整条流水线架构设计','基于 OpenCV 透视变换矫正','训练 YOLOv8m 关键字段检测','端到端耗时 3 秒以内'],
+    links:[{text:'GitHub ↗',url:'#'}]
+  },
+  {
+    title:'RAG QA System — 本地文档智能问答',
+    meta:'2024 · RAG · 大语言模型',
+    desc:'基于 RAG 架构的本地文档 QA 系统。上传文档后自动分割、向量化，通过 ZhipuAI 嵌入 + DeepSeek API 实现自然语言问答。自研 NumPy+JSON 轻量 VectorStore。',
+    tags:['DeepSeek','ZhipuAI','NumPy','Streamlit','Python'],
+    list:['从零实现 RAG 完整流水线','自研轻量 VectorStore','增量索引构建','4 种回答风格 + 检索可视化'],
+    links:[{text:'GitHub ↗',url:'#'},{text:'在线体验 ↗',url:'#'}]
+  },
+  {
+    title:'机械设备控制 · AI 功能开发',
+    meta:'2025.04 — 至今 · 古河机械金属株式会社',
+    desc:'核心研发部门从事产品搭载软件的全栈开发。PLC 基本控制、ROS 自动化流程构建、YOLO 图像识别算法实现等多个控制层级。',
+    tags:['PLC','ROS','YOLO','Python','CAN','PID','CREO'],
+    list:['覆盖 PLC→ROS→AI 完整控制层级','主导 YOLO/ROS 技术导入','开发自动化工具缩短 95% 作业时间','参与电气/油压回路设计'],
+    links:[]
+  }
+]
+
+let current = 0
+const tabBtns = document.querySelectorAll('.tab-btn')
+const cards = document.querySelectorAll('.project-card')
+
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'))
+    btn.classList.add('active')
+    const cat = btn.dataset.cat
+    cards.forEach((card,i)=>{
+      if(cat==='all'||card.dataset.cat===cat){
+        card.classList.remove('hidden')
+        card.classList.remove('entering')
+        void card.offsetWidth
+        card.classList.add('entering')
+      }else{
+        card.classList.add('hidden')
+      }
+    })
+  })
+})
+
+function openModal(i){
+  current=i;renderModal()
+  document.getElementById('modal').classList.add('active')
+}
+function closeModal(){document.getElementById('modal').classList.remove('active')}
+function navModal(d){
+  current=(current+d+projects.length)%projects.length;renderModal()
+}
+function renderModal(){
+  const p=projects[current]
+  document.getElementById('modalCounter').textContent=(current+1)+'/'+projects.length
+  document.getElementById('prevBtn').style.display=projects.length>1?'flex':'none'
+  document.getElementById('nextBtn').style.display=projects.length>1?'flex':'none'
+  document.getElementById('modalBody').innerHTML=`
+    <div class="modal-layout">
+      <div class="modal-img">
+        <div style="width:100%;aspect-ratio:16/10;border-radius:12px;background:linear-gradient(135deg,rgba(16,19,26,0.95),rgba(10,12,18,0.98));display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.88rem">📸 演示图区域</div>
+      </div>
+      <div class="modal-info">
+        <h2 class="title">${p.title}</h2>
+        <p class="meta">${p.meta}</p>
+        <p class="desc">${p.desc}</p>
+        <div class="tags">${p.tags.map(t=>'<span>'+t+'</span>').join('')}</div>
+        <div class="list"><ul>${p.list.map(l=>'<li>'+l+'</li>').join('')}</ul></div>
+        <div class="btns">${p.links.map(l=>'<a href="'+l.url+'" target="_blank" style="padding:8px 18px;border-radius:8px;font-size:.76rem;text-decoration:none;border:1px solid rgba(255,255,255,0.1);color:var(--text);display:inline-block;margin-right:8px;margin-top:8px">'+l.text+'</a>').join('')}</div>
+      </div>
+    </div>`
+}
+
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()})
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeModal()
+  if(e.key==='ArrowLeft'&&document.getElementById('modal').classList.contains('active'))navModal(-1)
+  if(e.key==='ArrowRight'&&document.getElementById('modal').classList.contains('active'))navModal(1)
+})
+
+// Skill FAB
+const fab=document.getElementById('skillFab')
+const panel=document.getElementById('skillPanel')
+fab.addEventListener('click',()=>{panel.classList.toggle('active')})
+document.addEventListener('click',e=>{
+  if(!fab.contains(e.target)&&!panel.contains(e.target))panel.classList.remove('active')
+})
+</script>
+</body>
+</html>

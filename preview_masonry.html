@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案三 · Masonry 极简画廊</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0c12;--bg-2:#0e1118;--text:#e8eaee;--text-soft:#d5d8e0;
+  --text-secondary:#b0b5c4;--text-muted:#787e98;
+  --line:rgba(210,205,200,0.07);--line-strong:rgba(210,205,200,0.13);
+  --radius:14px;--radius-xl:24px;
+  --font-display:'Space Grotesk','Noto Sans SC',sans-serif;
+  --font-body:'Noto Sans SC',system-ui,-apple-system,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+body{
+  background:linear-gradient(180deg,#121520 0%,#0e1118 28%,#0a0c12 100%);
+  color:var(--text);font-family:var(--font-body);line-height:1.6;min-height:100vh
+}
+.container{max-width:1260px;margin:0 auto;padding:40px 20px 80px}
+
+.page-intro{margin-bottom:24px}
+.intro-kicker{font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted);letter-spacing:.18em;margin-bottom:8px}
+.intro-title{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;letter-spacing:-.03em;margin-bottom:14px}
+
+/* Skill bar - horizontal scroll */
+.skill-bar{
+  margin-bottom:36px;
+  display:flex;gap:6px;flex-wrap:wrap;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  padding-bottom:4px;
+}
+.skill-bar::-webkit-scrollbar{height:3px}
+.skill-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:4px}
+.skill-pill{
+  flex-shrink:0;padding:4px 14px;
+  border:1px solid rgba(255,255,255,0.05);border-radius:999px;
+  font-size:.7rem;font-family:var(--font-mono);
+  color:var(--text-secondary);background:rgba(255,255,255,0.02);
+  transition:all .2s;cursor:default;white-space:nowrap;
+}
+.skill-pill:hover{color:var(--text);border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.04)}
+
+/* Masonry Grid */
+.masonry{column-count:3;column-gap:16px}
+
+.masonry-item{
+  break-inside:avoid;margin-bottom:16px;
+  border-radius:var(--radius);overflow:hidden;
+  background:rgba(16,19,28,0.6);border:1px solid var(--line);
+  cursor:pointer;transition:all .3s ease;
+  display:inline-block;width:100%;
+}
+.masonry-item:hover{
+  border-color:rgba(255,255,255,0.12);
+  transform:translateY(-3px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.masonry-cover{
+  position:relative;overflow:hidden;
+  width:100%;
+}
+.masonry-cover img{width:100%;display:block;transition:transform .6s ease}
+.masonry-item:hover .masonry-cover img{transform:scale(1.06)}
+
+.masonry-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 30%,rgba(10,12,18,0.9) 100%);
+  opacity:0;transition:opacity .35s ease;
+}
+.masonry-item:hover .masonry-overlay{opacity:1}
+
+/* Bottom info bar */
+.masonry-info{
+  padding:14px 16px 16px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.masonry-info h3{
+  font-family:var(--font-display);font-size:.92rem;font-weight:600;
+  letter-spacing:-.01em;line-height:1.3;
+}
+.masonry-info .meta{
+  display:flex;align-items:center;gap:10px;
+  font-size:.7rem;color:var(--text-muted);font-family:var(--font-mono);
+}
+.masonry-info .tags{
+  display:flex;gap:4px;flex-wrap:wrap;
+}
+.masonry-info .tags span{
+  padding:2px 8px;border-radius:4px;
+  font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);
+  font-family:var(--font-mono);
+}
+.masonry-info .brief{
+  font-size:.78rem;color:var(--text-secondary);line-height:1.5;
+  -webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ========== Fullscreen Gallery Modal ========== */
+.gallery-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.92);
+  display:none;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .3s ease;
+}
+.gallery-overlay.active{display:flex;opacity:1}
+.gallery{
+  position:relative;width:100%;height:100%;
+  display:grid;grid-template-columns:1fr 1.2fr;gap:0;
+  padding:0;
+}
+.gallery-close{
+  position:absolute;top:20px;left:20px;z-index:20;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);
+  color:var(--text);font-size:1.3rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.gallery-close:hover{background:rgba(255,255,255,0.12)}
+.gallery-counter{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:20;font-size:.78rem;color:var(--text-muted);
+  font-family:var(--font-mono);letter-spacing:.06em;
+}
+.gallery-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:20;width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);
+  color:var(--text-soft);font-size:1.5rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+  backdrop-filter:blur(8px);
+}
+.gallery-nav:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.gallery-nav.prev{left:32px}
+.gallery-nav.next{right:32px}
+
+.gallery-visual{
+  display:flex;align-items:center;justify-content:center;
+  padding:40px;background:rgba(0,0,0,0.3);
+  overflow:hidden;
+}
+.gallery-visual .visual-inner{
+  width:100%;max-width:90%;
+  border-radius:12px;overflow:hidden;
+}
+.gallery-visual .visual-inner div{
+  width:100%;aspect-ratio:4/3;
+  background:linear-gradient(135deg,rgba(20,22,30,0.8),rgba(10,12,18,0.9));
+  display:flex;align-items:center;justify-content:center;
+  border-radius:12px;font-size:1.2rem;color:var(--text-muted);
+}
+
+.gallery-content{
+  padding:64px 48px 40px;
+  overflow-y:auto;
+}
+.gallery-content .cat{
+  font-family:var(--font-mono);font-size:.72rem;
+  color:var(--text-muted);letter-spacing:.12em;margin-bottom:10px;
+}
+.gallery-content h2{
+  font-family:var(--font-display);font-size:1.8rem;font-weight:600;
+  letter-spacing:-.03em;margin-bottom:8px;line-height:1.2;
+}
+.gallery-content .year{font-size:.78rem;color:var(--text-muted);font-family:var(--font-mono);margin-bottom:16px}
+.gallery-content .desc{font-size:.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.gallery-content .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.gallery-content .tags span{padding:4px 14px;border-radius:6px;font-size:.72rem;background:rgba(255,255,255,0.04);color:var(--text-secondary);font-family:var(--font-mono)}
+.gallery-content .list li{font-size:.84rem;color:var(--text-secondary);line-height:1.9;margin-left:16px}
+.gallery-content .btns{margin-top:20px;display:flex;gap:12px}
+.gallery-content .btns a{padding:10px 22px;border-radius:8px;font-size:.8rem;text-decoration:none;border:1px solid rgba(255,255,255,0.1);color:var(--text);transition:all .2s}
+.gallery-content .btns a:hover{background:rgba(255,255,255,0.06)}
+
+/* Mobile adapt */
+@media(max-width:900px){
+  .masonry{column-count:2;column-gap:14px}
+  .gallery{grid-template-columns:1fr}
+  .gallery-visual{padding:24px;max-height:40vh}
+  .gallery-content{padding:32px 24px 24px}
+  .gallery-nav{width:40px;height:40px;font-size:1.1rem}
+  .gallery-nav.prev{left:12px}
+  .gallery-nav.next{right:12px}
+}
+@media(max-width:600px){
+  .masonry{column-count:1;column-gap:0}
+  .container{padding:24px 16px}
+  .gallery-visual{padding:16px;max-height:35vh}
+  .gallery-content{padding:24px 16px 16px}
+  .gallery-nav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-intro">
+    <p class="intro-kicker">PORTFOLIO · 方案三</p>
+    <h1 class="intro-title">Masonry 极简画廊</h1>
+  </div>
+
+  <!-- Skill bar -->
+  <div class="skill-bar">
+    <span class="skill-pill">Python · 3yr</span>
+    <span class="skill-pill">PyTorch</span>
+    <span class="skill-pill">YOLOv8m</span>
+    <span class="skill-pill">React 18</span>
+    <span class="skill-pill">TypeScript</span>
+    <span class="skill-pill">Django</span>
+    <span class="skill-pill">Docker</span>
+    <span class="skill-pill">PLC</span>
+    <span class="skill-pill">ROS</span>
+    <span class="skill-pill">OpenCV</span>
+    <span class="skill-pill">PaddleOCR</span>
+    <span class="skill-pill">Streamlit</span>
+    <span class="skill-pill">CAN</span>
+    <span class="skill-pill">AWS</span>
+    <span class="skill-pill">CREO</span>
+  </div>
+
+  <!-- Masonry -->
+  <div class="masonry">
+    <!-- NoteFlow (tall) -->
+    <div class="masonry-item" onclick="openGallery(0)">
+      <div class="masonry-cover">
+        <div style="width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,rgba(16,19,26,0.97),rgba(10,12,18,0.99));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px">
+          <div style="width:72px;height:72px;border-radius:18px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:2rem">📓</div>
+          <p style="font-family:var(--font-display);font-size:1.1rem;color:var(--text-soft)">NoteFlow</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">Chrome Ext</span>
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">React 18</span>
+          </div>
+        </div>
+        <div class="masonry-overlay"></div>
+      </div>
+      <div class="masonry-info">
+        <h3>NoteFlow — 批量导入 NotebookLM</h3>
+        <div class="meta"><span>2025</span><span>Chrome 扩展</span></div>
+        <p class="brief">WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3）</p>
+      </div>
+    </div>
+
+    <!-- Receipt (wide) - use more horizontal style, taller naturally -->
+    <div class="masonry-item" onclick="openGallery(1)">
+      <div class="masonry-cover">
+        <div style="width:100%;aspect-ratio:3/2;background:linear-gradient(135deg,rgba(20,16,26,0.97),rgba(12,10,18,0.99));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.78rem;color:var(--text-muted)">Receipt Auto Digitizer</p>
+          <div style="display:flex;gap:6px">
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">YOLOv8</span>
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">OCR</span>
+          </div>
+        </div>
+        <div class="masonry-overlay"></div>
+      </div>
+      <div class="masonry-info">
+        <h3>Receipt Auto Digitizer — 多票据识别</h3>
+        <div class="meta"><span>2024</span><span>CV · OCR</span></div>
+        <p class="brief">四阶段 CV 流水线：YOLOv8m → PaddleOCR，自动输出 CSV</p>
+      </div>
+    </div>
+
+    <!-- RAG (medium) -->
+    <div class="masonry-item" onclick="openGallery(2)">
+      <div class="masonry-cover">
+        <div style="width:100%;aspect-ratio:1/1;background:linear-gradient(135deg,rgba(18,22,30,0.97),rgba(10,12,18,0.99));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.78rem;color:var(--text-muted)">RAG QA System</p>
+          <div style="display:flex;gap:6px">
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">RAG</span>
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">LLM</span>
+          </div>
+        </div>
+        <div class="masonry-overlay"></div>
+      </div>
+      <div class="masonry-info">
+        <h3>RAG QA System — 本地文档问答</h3>
+        <div class="meta"><span>2024</span><span>RAG · LLM</span></div>
+        <p class="brief">轻量 VectorStore + DeepSeek + ZhipuAI</p>
+      </div>
+    </div>
+
+    <!-- Furukawa (tall) -->
+    <div class="masonry-item" onclick="openGallery(3)">
+      <div class="masonry-cover">
+        <div style="width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,rgba(22,20,26,0.97),rgba(14,12,18,0.99));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.78rem;color:var(--text-muted)">Furukawa</p>
+          <div style="display:flex;gap:6px">
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">PLC</span>
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">ROS</span>
+            <span style="padding:2px 10px;border-radius:4px;font-size:.62rem;background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:var(--font-mono)">YOLO</span>
+          </div>
+        </div>
+        <div class="masonry-overlay"></div>
+      </div>
+      <div class="masonry-info">
+        <h3>机械设备控制 · AI 开发</h3>
+        <div class="meta"><span>2025 — 至今</span><span>古河机械</span></div>
+        <p class="brief">PLC → ROS → YOLO 完整控制层级开发</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gallery Overlay -->
+<div class="gallery-overlay" id="gallery">
+  <div class="gallery">
+    <button class="gallery-close" onclick="closeGallery()">✕</button>
+    <button class="gallery-nav prev" onclick="navGallery(-1)" id="gPrev">‹</button>
+    <button class="gallery-nav next" onclick="navGallery(1)" id="gNext">›</button>
+    <span class="gallery-counter" id="gCounter"></span>
+    <div class="gallery-visual" id="gVisual"></div>
+    <div class="gallery-content" id="gContent"></div>
+  </div>
+</div>
+
+<script>
+const items = [
+  {
+    cat:'Chrome 扩展',
+    title:'NoteFlow — Bilibili/YouTube/Podcast 批量导入 NotebookLM',
+    year:'2025',
+    desc:'一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 Bilibili、YouTube、Apple Podcasts、小宇宙、Web 页面、AI 对话等多种来源批量导入内容到 Google NotebookLM。采用 Side Panel UI 设计，自动识别当前站点并匹配导入工具。',
+    tags:['WXT','React 18','TypeScript','Tailwind CSS','Vite','Supabase'],
+    list:['Bilibili 字幕/评论批量提取','YouTube 频道/播放列表导入','播客（Apple/小宇宙）下载','Web 页面 Markdown 提取','AI 对话分享卡片','RSS 自动订阅'],
+    links:[{text:'GitHub ↗',url:'#'},{text:'Chrome Web Store ↗',url:'#'},{text:'文档 ↗',url:'#'}]
+  },
+  {
+    cat:'CV · OCR',
+    title:'Receipt Auto Digitizer — 端到端多票据自动识别系统',
+    year:'2024',
+    desc:'YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域检测 → PaddleOCR 文字识别的四阶段流水线，自动输出结构化 CSV 数据。',
+    tags:['YOLOv8m','ResNet34','PaddleOCR','OpenCV','PyTorch'],
+    list:['独立完成整条流水线架构设计','基于 OpenCV 透视变换矫正','训练 YOLOv8m 关键字段检测','端到端耗时优化至 3 秒以内'],
+    links:[{text:'GitHub ↗',url:'#'}]
+  },
+  {
+    cat:'RAG · 大语言模型',
+    title:'RAG QA System — 本地文档智能问答系统',
+    year:'2024',
+    desc:'基于 RAG 架构的本地文档 QA 系统。上传文档后自动分割、向量化，通过 ZhipuAI 嵌入 + DeepSeek API 实现自然语言问答。自研 NumPy+JSON 轻量 VectorStore。Streamlit Web UI 提供聊天式交互、回答风格选择、Top-K 检索可视化。',
+    tags:['DeepSeek','ZhipuAI','NumPy','Streamlit','Python'],
+    list:['从零实现 RAG 完整流水线','自研轻量 VectorStore 无外部 DB 依赖','增量索引构建','4 种回答风格 + 检索可视化'],
+    links:[{text:'GitHub ↗',url:'#'},{text:'在线体验 ↗',url:'#'}]
+  },
+  {
+    cat:'工业控制系统',
+    title:'机械设备控制 · AI 功能开发',
+    year:'2025 — 至今 · 古河机械金属株式会社',
+    desc:'核心研发部门从事产品搭载软件的全栈开发。涵盖 PLC 基本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO 图像识别算法实现。同时参与电气回路 / 油压回路设计、CREO 机械设计。',
+    tags:['PLC','ROS','YOLO','Python','CAN','PID','CREO'],
+    list:['覆盖 PLC→ROS→AI 完整控制层级','主导 YOLO/ROS 技术导入','开发自动化工具缩短 95% 作业时间','参与电气/油压回路设计'],
+    links:[]
+  }
+]
+
+let gIdx = 0
+
+function openGallery(i){
+  gIdx = i
+  renderGallery()
+  document.getElementById('gallery').classList.add('active')
+  document.body.style.overflow = 'hidden'
+}
+
+function closeGallery(){
+  document.getElementById('gallery').classList.remove('active')
+  document.body.style.overflow = ''
+}
+
+function navGallery(d){
+  gIdx = (gIdx + d + items.length) % items.length
+  renderGallery()
+}
+
+function renderGallery(){
+  const p = items[gIdx]
+  document.getElementById('gCounter').textContent = (gIdx+1) + ' / ' + items.length
+  document.getElementById('gPrev').style.display = items.length > 1 ? 'flex' : 'none'
+  document.getElementById('gNext').style.display = items.length > 1 ? 'flex' : 'none'
+
+  document.getElementById('gVisual').innerHTML = `
+    <div class="visual-inner">
+      <div style="width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,rgba(16,19,26,0.95),rgba(10,12,18,0.98));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;border-radius:12px">
+        <div style="width:80px;height:80px;border-radius:20px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:2.4rem">📸</div>
+        <p style="font-family:var(--font-display);font-size:1.2rem;color:var(--text-soft)">${p.title.split('—')[0].trim()}</p>
+      </div>
+    </div>`
+
+  document.getElementById('gContent').innerHTML = `
+    <p class="cat">${p.cat}</p>
+    <h2>${p.title}</h2>
+    <p class="year">${p.year}</p>
+    <p class="desc">${p.desc}</p>
+    <div class="tags">${p.tags.map(t=>'<span>'+t+'</span>').join('')}</div>
+    <div class="list"><ul>${p.list.map(l=>'<li>'+l+'</li>').join('')}</ul></div>
+    ${p.links.length ? '<div class="btns">'+p.links.map(l=>'<a href="'+l.url+'" target="_blank">'+l.text+'</a>').join('')+'</div>' : ''}`
+}
+
+document.getElementById('gallery').addEventListener('click',e=>{
+  if(e.target===e.currentTarget) closeGallery()
+})
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeGallery()
+  if(e.key==='ArrowLeft' && document.getElementById('gallery').classList.contains('active')) navGallery(-1)
+  if(e.key==='ArrowRight' && document.getElementById('gallery').classList.contains('active')) navGallery(1)
+})
+</script>
+</body>
+</html>

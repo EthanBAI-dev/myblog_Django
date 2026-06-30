@@ -839,6 +839,9 @@ msgstr "学歴"
 msgid "Resume"
 msgstr "履歴書"
 
+msgid "Deep Learning Engineer · AI Enthusiast"
+msgstr "ディープラーニングエンジニア · AI 技術愛好家"
+
 msgid "Technical Skills"
 msgstr "技術スキル"
 
@@ -900,6 +903,3 @@ msgid ""
 msgstr ""
 "軽量VectorStore（NumPy + JSON）を自社開発。DeepSeek + ZhipuAI "
 "を統合し、ローカルドキュメントのインテリジェントQAを実現。"
-
-msgid "Fullstack Engineer · AI Enthusiast"
-msgstr "フルスタックエンジニア · AI 技術愛好家"

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方案一 · Bento Grid 沉浸式卡片</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0c12;--bg-2:#0e1118;--text:#e8eaee;--text-soft:#d5d8e0;
+  --text-secondary:#b0b5c4;--text-muted:#787e98;
+  --line:rgba(210,205,200,0.07);--line-strong:rgba(210,205,200,0.13);
+  --radius:16px;--radius-xl:28px;
+  --font-display:'Space Grotesk','Noto Sans SC',sans-serif;
+  --font-body:'Noto Sans SC',system-ui,-apple-system,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+body{
+  background:linear-gradient(180deg,#121520 0%,#0e1118 28%,#0a0c12 100%);
+  color:var(--text);font-family:var(--font-body);line-height:1.6;min-height:100vh
+}
+.container{max-width:1320px;margin:0 auto;padding:40px 24px 80px}
+
+/* Page intro */
+.page-intro{margin-bottom:36px}
+.intro-kicker{font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted);letter-spacing:.18em;margin-bottom:8px}
+.intro-title{font-family:var(--font-display);font-size:clamp(2rem,4.8vw,3.2rem);font-weight:600;letter-spacing:-.03em}
+
+/* Skill cloud - compact horizontal scroll bar */
+.skill-cloud{
+  margin:20px 0 32px;
+  overflow-x:auto;white-space:nowrap;
+  padding-bottom:10px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.skill-cloud{-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent}
+.skill-cloud::-webkit-scrollbar{height:4px}
+.skill-cloud::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:4px}
+.skill-tag{
+  display:inline-flex;padding:5px 12px;
+  border:1px solid rgba(255,255,255,0.06);border-radius:999px;
+  font-size:.72rem;color:var(--text-secondary);background:rgba(255,255,255,0.02);
+  transition:all .2s;white-space:nowrap;cursor:default;
+  font-family:var(--font-mono);
+}
+.skill-tag:hover{color:var(--text);border-color:rgba(255,255,255,0.15);background:rgba(255,255,255,0.04)}
+
+/* Bento Grid */
+.bento-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+
+/* Card base */
+.bento-card{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  background:rgba(16,19,28,0.7);border:1px solid var(--line);
+  cursor:pointer;transition:all .3s ease;
+  display:flex;flex-direction:column;
+}
+.bento-card:hover{
+  border-color:rgba(255,255,255,0.12);
+  transform:translateY(-2px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Card cover image */
+.bento-cover{
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.bento-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.bento-card:hover .bento-cover img{transform:scale(1.05)}
+
+.bento-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(10,12,18,0.88) 100%);
+}
+
+/* Card body */
+.bento-body{padding:16px 18px 20px;flex:1;display:flex;flex-direction:column}
+.bento-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.bento-tag{
+  padding:2px 8px;border-radius:4px;
+  font-size:.65rem;font-family:var(--font-mono);
+  background:rgba(255,255,255,0.04);color:var(--text-muted);
+  letter-spacing:.02em;
+}
+.bento-title{
+  font-family:var(--font-display);font-size:1.1rem;font-weight:600;
+  letter-spacing:-.02em;margin-bottom:6px;line-height:1.3;
+}
+.bento-desc{
+  font-size:.82rem;color:var(--text-secondary);line-height:1.5;
+  flex:1;-webkit-line-clamp:3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;
+}
+.bento-footer{margin-top:12px;display:flex;align-items:center;gap:12px}
+.bento-year{font-size:.72rem;color:var(--text-muted);font-family:var(--font-mono)}
+.bento-link{font-size:.72rem;color:var(--text-soft);text-decoration:none;opacity:.6;transition:opacity .2s}
+.bento-link:hover{opacity:1;text-decoration:underline}
+
+/* Size variants */
+.card-lg{grid-column:span 6}
+.card-md{grid-column:span 3}
+.card-sm{grid-column:span 2}
+.card-skill{grid-column:span 4}
+.card-full{grid-column:span 6}
+
+.card-lg .bento-cover{aspect-ratio:21/10}
+.card-md .bento-cover{aspect-ratio:4/3}
+.card-sm .bento-cover{aspect-ratio:4/3}
+
+/* Skill card */
+.card-skill{
+  grid-column:span 6;
+  background:linear-gradient(135deg,rgba(16,19,28,0.6),rgba(12,15,24,0.5));
+  border-color:rgba(255,255,255,0.04);
+}
+.card-skill:hover{transform:none;box-shadow:none;border-color:rgba(255,255,255,0.08)}
+.skill-section{margin-bottom:12px}
+.skill-section:last-child{margin-bottom:0}
+.skill-section-label{font-size:.68rem;color:var(--text-muted);font-family:var(--font-mono);margin-bottom:6px}
+.skill-section-tags{display:flex;flex-wrap:wrap;gap:4px}
+.skill-section-tag{padding:2px 10px;border-radius:4px;font-size:.68rem;background:rgba(255,255,255,0.03);color:var(--text-secondary);font-family:var(--font-mono);white-space:nowrap}
+
+/* =========== MODAL =========== */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .28s ease;
+}
+.modal-overlay.active{display:flex;opacity:1}
+.modal{
+  position:relative;
+  width:min(90vw,1060px);max-height:88vh;
+  background:rgba(14,17,24,0.98);border:1px solid var(--line-strong);
+  border-radius:var(--radius-xl);overflow:hidden;
+  transform:scale(0.92);transition:transform .28s ease;
+  display:flex;flex-direction:column;
+}
+.modal-overlay.active .modal{transform:scale(1)}
+.modal-close{
+  position:absolute;top:14px;right:14px;z-index:10;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:none;
+  color:var(--text);font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.modal-close:hover{background:rgba(255,255,255,0.12)}
+.modal-body{overflow-y:auto;padding:20px 28px 28px;flex:1}
+.modal-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.modal-img img{width:100%;border-radius:12px;display:block}
+.modal-img .gif-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.modal-img .gif-grid img{border-radius:8px}
+.modal-info{}
+.modal-info .title{font-family:var(--font-display);font-size:1.5rem;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.modal-info .meta{font-size:.78rem;color:var(--text-muted);margin-bottom:14px}
+.modal-info .desc{font-size:.92rem;color:var(--text-secondary);line-height:1.7;margin-bottom:16px}
+.modal-info .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.modal-info .tags span{padding:4px 12px;border-radius:6px;font-size:.72rem;background:rgba(255,255,255,0.04);color:var(--text-secondary);font-family:var(--font-mono)}
+.modal-info .list{margin-bottom:16px}
+.modal-info .list li{font-size:.84rem;color:var(--text-secondary);line-height:1.8;margin-left:16px}
+.modal-info .btns{display:flex;gap:10px;flex-wrap:wrap}
+.modal-info .btns a{padding:8px 18px;border-radius:8px;font-size:.78rem;text-decoration:none;border:1px solid rgba(255,255,255,0.1);color:var(--text);transition:all .2s}
+.modal-info .btns a:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2)}
+
+@media(max-width:900px){
+  .bento-grid{grid-template-columns:repeat(6,1fr);gap:12px}
+  .card-lg{grid-column:span 6}
+  .card-md{grid-column:span 3}
+  .card-sm{grid-column:span 2}
+  .card-skill{grid-column:span 6}
+  .card-full{grid-column:span 6}
+  .modal-layout{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .bento-grid{grid-template-columns:1fr;gap:14px}
+  .card-lg,.card-md,.card-sm,.card-skill,.card-full{grid-column:1}
+  .container{padding:24px 16px}
+  .modal{padding:0;width:100vw;max-height:100vh;border-radius:0}
+  .modal-body{padding:16px}
+  .modal-layout{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-intro">
+    <p class="intro-kicker">PORTFOLIO · 方案一</p>
+    <h1 class="intro-title">Bento Grid 沉浸式卡片</h1>
+  </div>
+
+  <!-- 技能云条 -->
+  <div class="skill-cloud">
+    <span class="skill-tag">Python · 3yr</span>
+    <span class="skill-tag">PyTorch</span>
+    <span class="skill-tag">YOLOv8m</span>
+    <span class="skill-tag">React 18</span>
+    <span class="skill-tag">TypeScript</span>
+    <span class="skill-tag">Django</span>
+    <span class="skill-tag">Docker</span>
+    <span class="skill-tag">PLC</span>
+    <span class="skill-tag">ROS</span>
+    <span class="skill-tag">OpenCV</span>
+    <span class="skill-tag">PaddleOCR</span>
+    <span class="skill-tag">Streamlit</span>
+    <span class="skill-tag">AWS</span>
+    <span class="skill-tag">CAN</span>
+    <span class="skill-tag">CREO</span>
+  </div>
+
+  <!-- Bento Grid -->
+  <div class="bento-grid">
+    <!-- Card 1: NoteFlow (lg) -->
+    <div class="bento-card card-lg" onclick="openModal('noteflow')">
+      <div class="bento-cover" style="aspect-ratio:21/10;background:linear-gradient(135deg,rgba(16,19,26,0.97),rgba(10,12,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+          <div style="width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04));display:flex;align-items:center;justify-content:center;font-size:2rem">📓</div>
+          <p style="font-family:var(--font-display);font-size:1.3rem;color:var(--text);letter-spacing:-.03em">NoteFlow</p>
+        </div>
+        <div class="bento-overlay"></div>
+      </div>
+      <div class="bento-body">
+        <div class="bento-tags"><span class="bento-tag">Chrome Ext</span><span class="bento-tag">React 18</span><span class="bento-tag">WXT</span></div>
+        <h3 class="bento-title">NoteFlow — Bilibili/YouTube/Podcast 批量导入 NotebookLM</h3>
+        <p class="bento-desc">一款基于 WXT + React + TypeScript 的 Chrome 扩展（MV3），支持从Bilibili、YouTube、播客等来源批量导入内容到 Google NotebookLM。</p>
+        <div class="bento-footer">
+          <span class="bento-year">2025</span>
+          <a class="bento-link">GitHub ↗</a>
+          <a class="bento-link">Chrome Web Store ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Receipt Digitizer (md) -->
+    <div class="bento-card card-md" onclick="openModal('receipt')">
+      <div class="bento-cover" style="aspect-ratio:4/3;background:linear-gradient(135deg,rgba(20,16,26,0.97),rgba(12,10,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted)">Receipt Auto Digitizer</p>
+        </div>
+        <div class="bento-overlay"></div>
+      </div>
+      <div class="bento-body">
+        <div class="bento-tags"><span class="bento-tag">YOLOv8</span><span class="bento-tag">OpenCV</span><span class="bento-tag">OCR</span></div>
+        <h3 class="bento-title">Receipt Auto Digitizer — 多票据自动识别</h3>
+        <p class="bento-desc">四阶段 CV 流水线：YOLOv8m → 透视校正 → ResNet34 → YOLOv5文字区域 → PaddleOCR，自动输出 CSV。</p>
+        <div class="bento-footer">
+          <span class="bento-year">2024</span>
+          <a class="bento-link">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: RAG QA (md) -->
+    <div class="bento-card card-md" onclick="openModal('rag')">
+      <div class="bento-cover" style="aspect-ratio:4/3;background:linear-gradient(135deg,rgba(18,22,30,0.97),rgba(10,12,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted)">RAG QA System</p>
+        </div>
+        <div class="bento-overlay"></div>
+      </div>
+      <div class="bento-body">
+        <div class="bento-tags"><span class="bento-tag">RAG</span><span class="bento-tag">DeepSeek</span><span class="bento-tag">Streamlit</span></div>
+        <h3 class="bento-title">RAG QA System — 本地文档智能问答</h3>
+        <p class="bento-desc">轻量 VectorStore (NumPy+JSON) + DeepSeek + ZhipuAI，上传本地文档即可自然语言问答。</p>
+        <div class="bento-footer">
+          <span class="bento-year">2024</span>
+          <a class="bento-link">GitHub ↗</a>
+          <a class="bento-link">在线体验 ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Furukawa (md) -->
+    <div class="bento-card card-md" onclick="openModal('furukawa')">
+      <div class="bento-cover" style="aspect-ratio:4/3;background:linear-gradient(135deg,rgba(22,20,26,0.97),rgba(14,12,18,0.99))">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <p style="font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted)">Industrial Control</p>
+        </div>
+        <div class="bento-overlay"></div>
+      </div>
+      <div class="bento-body">
+        <div class="bento-tags"><span class="bento-tag">PLC</span><span class="bento-tag">ROS</span><span class="bento-tag">YOLO</span></div>
+        <h3 class="bento-title">机械设备控制 · AI 功能开发</h3>
+        <p class="bento-desc">核心研发部门从事 PLC → ROS → AI 图像识别的完整控制层级开发。</p>
+        <div class="bento-footer">
+          <span class="bento-year">2025 — 至今</span>
+          <span style="font-size:.72rem;color:var(--text-muted)">古河机械金属</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skill panel (wide) -->
+    <div class="bento-card card-skill">
+      <div class="bento-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="skill-section">
+            <div class="skill-section-label">编程语言</div>
+            <div class="skill-section-tags"><span class="skill-section-tag">Python · 3yr</span><span class="skill-section-tag">C/C++ · 3yr</span><span class="skill-section-tag">TypeScript · 1yr</span></div>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">AI/ML</div>
+            <div class="skill-section-tags"><span class="skill-section-tag">PyTorch</span><span class="skill-section-tag">YOLOv8/5</span><span class="skill-section-tag">PaddleOCR</span></div>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">前端</div>
+            <div class="skill-section-tags"><span class="skill-section-tag">React 18</span><span class="skill-section-tag">TypeScript</span><span class="skill-section-tag">Tailwind</span><span class="skill-section-tag">WXT</span></div>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">DevOps</div>
+            <div class="skill-section-tags"><span class="skill-section-tag">Docker</span><span class="skill-section-tag">AWS</span><span class="skill-section-tag">Django</span><span class="skill-section-tag">Git</span></div>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">工业控制</div>
+            <div class="skill-section-tags"><span class="skill-section-tag">PLC</span><span class="skill-section-tag">ROS</span><span class="skill-section-tag">CAN</span><span class="skill-section-tag">EtherCAT</span></div>
+          </div>
+          <div class="skill-section">
+            <div class="skill-section-label">工具</div>
+            <div class="skill-section-tags"><span class="skill-section-tag">VS Code</span><span class="skill-section-tag">Vite</span><span class="skill-section-tag">Vitest</span><span class="skill-section-tag">Mintlify</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const projects = {
+  noteflow: {
+    title: 'NoteFlow — Bilibili/YouTube/Podcast 批量导入 NotebookLM',
+    meta: '2025 · Chrome 扩展 · 已上架 Chrome Web Store',
+    desc: '一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 Bilibili、YouTube、Apple Podcasts、小宇宙等多种来源批量导入内容到 Google NotebookLM。采用 Side Panel UI 设计，自动识别当前站点并匹配导入工具。',
+    tags: ['WXT', 'React 18', 'TypeScript', 'Tailwind CSS', 'Vite', 'Supabase'],
+    achievements: ['Bilibili 字幕/评论批量提取', 'YouTube 频道/播放列表导入', '播客（Apple/小宇宙）下载', 'Web 页面 Markdown 提取', 'AI 对话分享卡片', 'RSS 自动订阅'],
+    links: [
+      {text:'GitHub',url:'#'},{text:'Chrome Web Store',url:'#'},{text:'文档',url:'#'}
+    ],
+    images: null
+  },
+  receipt: {
+    title: 'Receipt Auto Digitizer — 端到端多票据自动识别系统',
+    meta: '2024 · 计算机视觉 · OCR',
+    desc: '输入包含多张票据的合成照片，经过 YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域检测 → PaddleOCR 文字识别的四阶段流水线，自动输出结构化 CSV 数据。',
+    tags: ['YOLOv8m', 'ResNet34', 'PaddleOCR', 'OpenCV', 'PyTorch'],
+    achievements: ['独立完成整条流水线架构设计', '基于 OpenCV 实现透视变换矫正', '训练 YOLOv8m 对关键字段检测', '端到端耗时优化至 3 秒以内'],
+    links: [{text:'GitHub',url:'#'}],
+    images: null
+  },
+  rag: {
+    title: 'RAG QA System — 本地文档智能问答系统',
+    meta: '2024 · RAG · 大语言模型',
+    desc: '基于 RAG 架构的本地文档 QA 系统。上传 .md/.txt/.pdf 文档，自动进行文本分割、向量化存储，并通过 ZhipuAI 嵌入模型 + DeepSeek API 实现自然语言问答。自研轻量 VectorStore（NumPy + JSON）。',
+    tags: ['DeepSeek API', 'ZhipuAI', 'NumPy', 'Streamlit', 'Python'],
+    achievements: ['从零实现 RAG 完整流水线', '自研轻量 VectorStore 无外部 DB 依赖', '增量索引构建', '4 种回答风格 + 检索可视化'],
+    links: [
+      {text:'GitHub',url:'#'},{text:'在线体验',url:'#'}
+    ],
+    images: null
+  },
+  furukawa: {
+    title: '机械设备控制 · AI 功能开发',
+    meta: '2025.04 — 至今 · 古河机械金属株式会社',
+    desc: '在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基本控制、ROS 自动化流程构建、YOLO 图像识别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计。',
+    tags: ['PLC', 'ROS', 'YOLO', 'Python', 'CAN', 'PID', 'CREO'],
+    achievements: ['覆盖 PLC → ROS → AI 图像识别的完整控制层级', '主导 YOLO·ROS 技术导入', '开发自动化工具将作业时间缩短 95%', '参与电气/油压回路设计、CREO 建模'],
+    links: [],
+    images: null
+  }
+}
+
+function openModal(id){
+  const p = projects[id]
+  if(!p) return
+  let html = `<div class="modal-layout">
+    <div class="modal-img">
+      <div style="width:100%;aspect-ratio:16/10;border-radius:12px;background:linear-gradient(135deg,rgba(16,19,26,0.95),rgba(10,12,18,0.98));display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.92rem">📸 演示图区域</div>
+    </div>
+    <div class="modal-info">
+      <h2 class="title">${p.title}</h2>
+      <p class="meta">${p.meta}</p>
+      <p class="desc">${p.desc}</p>
+      <div class="tags">${p.tags.map(t=>'<span>'+t+'</span>').join('')}</div>
+      <div class="list"><ul>${p.achievements.map(a=>'<li>'+a+'</li>').join('')}</ul></div>
+      <div class="btns">${p.links.map(l=>'<a href="'+l.url+'" target="_blank">'+l.text+' ↗</a>').join('')}</div>
+    </div>
+  </div>`
+  document.getElementById('modalBody').innerHTML = html
+  document.getElementById('modal').classList.add('active')
+}
+function closeModal(){document.getElementById('modal').classList.remove('active')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal()})
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()})
+</script>
+</body>
+</html>
