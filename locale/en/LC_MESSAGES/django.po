@@ -307,20 +307,8 @@ msgstr ""
 "productivity. A good engineer shouldn't just write code, but understand the "
 "relationship between people and technology."
 
-msgid "简历"
-msgstr "Resume"
-
-msgid "个人简历"
-msgstr "Resume"
-
-msgid "深度学习工程师 · AI 技术爱好者"
-msgstr "Deep Learning Engineer · AI Enthusiast"
-
 msgid "姓名"
 msgstr "Name"
-
-msgid "教育经历"
-msgstr "Education"
 
 msgid "完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心技术。"
 msgstr ""
@@ -563,9 +551,6 @@ msgstr ""
 "multi-account switching, target notebook selection, PDF aggregation, AI "
 "share cards, and more. 100% client-side — no data uploaded."
 
-msgid "专业技能"
-msgstr "Professional Skills"
-
 msgid "业务范围"
 msgstr "Scope of Work"
 
@@ -679,9 +664,6 @@ msgstr ""
 "built lightweight vector database with NumPy + JSON — no external vector DB "
 "dependency. Streamlit Web UI with chat interface, answer style selection, "
 "and Top-K retrieval visualization."
-
-msgid "基本信息"
-msgstr "Basic Info"
 
 msgid "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时"
 msgstr ""
@@ -879,9 +861,6 @@ msgstr ""
 "Self-built lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI "
 "for local document QA."
 
-msgid "项目经历"
-msgstr "Projects"
-
 msgid "Education Background"
 msgstr "Education Background"
 
@@ -982,3 +961,74 @@ msgstr ""
 
 msgid "Education"
 msgstr "Education"
+
+msgid "Resume"
+msgstr "Resume"
+
+msgid "Technical Skills"
+msgstr "Technical Skills"
+
+msgid "Programming Languages"
+msgstr "Programming Languages"
+
+msgid "AI / Machine Learning"
+msgstr "AI / Machine Learning"
+
+msgid "Frontend & Full-stack"
+msgstr "Frontend & Full-stack"
+
+msgid "Industrial Control / Hardware"
+msgstr "Industrial Control / Hardware"
+
+msgid "DevOps / Tools"
+msgstr "DevOps / Tools"
+
+msgid "PLC Sequence Control"
+msgstr "PLC Sequence Control"
+
+msgid "PLC Motion Control"
+msgstr "PLC Motion Control"
+
+msgid "ROS Automation"
+msgstr "ROS Automation"
+
+msgid "Circuit Design"
+msgstr "Circuit Design"
+
+msgid "Hydraulic Circuit Design"
+msgstr "Hydraulic Circuit Design"
+
+msgid "CREO 3D Modeling"
+msgstr "CREO 3D Modeling"
+
+msgid "Yamaha Co., Ltd. · Automotive Audio Development (Internship)"
+msgstr "Yamaha Co., Ltd. · Automotive Audio Development (Internship)"
+
+msgid "Chrome Extension"
+msgstr "Chrome Extension"
+
+msgid ""
+"A Chrome extension built with WXT + React 18 + TypeScript for batch "
+"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web"
+" Store."
+msgstr ""
+"A Chrome extension built with WXT + React 18 + TypeScript for batch "
+"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web"
+" Store."
+
+msgid ""
+"Four-stage CV pipeline: YOLOv8m + ResNet34 + PaddleOCR for multi-receipt "
+"auto recognition and structured CSV output."
+msgstr ""
+"Four-stage CV pipeline: YOLOv8m + ResNet34 + PaddleOCR for multi-receipt "
+"auto recognition and structured CSV output."
+
+msgid ""
+"Lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI for local "
+"document intelligent Q&A."
+msgstr ""
+"Lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI for local "
+"document intelligent Q&A."
+
+msgid "Fullstack Engineer · AI Enthusiast"
+msgstr "Fullstack Engineer · AI Enthusiast"

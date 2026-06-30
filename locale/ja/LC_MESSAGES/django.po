@@ -273,20 +273,8 @@ msgstr "継続的学習"
 msgid "技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只埋头写代码，更要理解人与技术的关系。"
 msgstr "技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只埋头写代码，更要理解人与技术的关系。"
 
-msgid "简历"
-msgstr "履歴書"
-
-msgid "个人简历"
-msgstr "履歴書"
-
-msgid "深度学习工程师 · AI 技术爱好者"
-msgstr "ディープラーニングエンジニア · AI 技術愛好家"
-
 msgid "姓名"
 msgstr "姓名"
-
-msgid "教育经历"
-msgstr "学歴"
 
 msgid "完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心技术。"
 msgstr "Andrew Ngのディープラーニング5コースを修了し、ニューラルネットワーク、CNN、RNN、アテンション機構などのコア技術を習得。"
@@ -519,9 +507,6 @@ msgstr ""
 "を採用し、現在のサイトを自動認識してインポートツールをマッチング。マルチアカウント切り替え、ターゲットノートブック選択、PDF集約、AI会話共有カードなどの高度な機能をサポート。100%"
 " クライアント側処理で、ユーザーデータを一切アップロードしません。"
 
-msgid "专业技能"
-msgstr "専門スキル"
-
 msgid "业务范围"
 msgstr "業務範囲"
 
@@ -604,9 +589,6 @@ msgstr ""
 "DeepSeek API を通じて自然言語でのQAを実現。NumPy + JSON "
 "による軽量ベクトルデータベースを自前で構築し、外部ベクトルDBに依存しません。Streamlit Web UI "
 "はチャット形式の対話、回答スタイル選択、Top-K 検索可視化などの機能を提供します。"
-
-msgid "基本信息"
-msgstr "基本信息"
 
 msgid "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时"
 msgstr "インクリメンタルインデックス構築を実装し、新規ファイルの変更部分のみを処理して起動時間を大幅短縮"
@@ -762,9 +744,6 @@ msgstr ""
 "軽量VectorStore（NumPy + JSON）を自社開発。DeepSeek + "
 "ZhipuAIを統合し、ローカルドキュメントのインテリジェントQAを実現。"
 
-msgid "项目经历"
-msgstr "プロジェクト経験"
-
 msgid "Education Background"
 msgstr "学歴背景"
 
@@ -856,3 +835,71 @@ msgstr ""
 
 msgid "Education"
 msgstr "学歴"
+
+msgid "Resume"
+msgstr "履歴書"
+
+msgid "Technical Skills"
+msgstr "技術スキル"
+
+msgid "Programming Languages"
+msgstr "プログラミング言語"
+
+msgid "AI / Machine Learning"
+msgstr "AI / 機械学習"
+
+msgid "Frontend & Full-stack"
+msgstr "フロントエンド＆フルスタック"
+
+msgid "Industrial Control / Hardware"
+msgstr "産業制御 / ハードウェア"
+
+msgid "DevOps / Tools"
+msgstr "DevOps / ツール"
+
+msgid "PLC Sequence Control"
+msgstr "PLCシーケンス制御"
+
+msgid "PLC Motion Control"
+msgstr "PLCモーション制御"
+
+msgid "ROS Automation"
+msgstr "ROS自動化"
+
+msgid "Circuit Design"
+msgstr "電気回路設計"
+
+msgid "Hydraulic Circuit Design"
+msgstr "油圧回路設計"
+
+msgid "CREO 3D Modeling"
+msgstr "CREO 3Dモデリング"
+
+msgid "Yamaha Co., Ltd. · Automotive Audio Development (Internship)"
+msgstr "Yamaha 株式会社 · 車載オーディオ開発（インターン）"
+
+msgid "Chrome Extension"
+msgstr "Chrome 拡張機能"
+
+msgid ""
+"A Chrome extension built with WXT + React 18 + TypeScript for batch "
+"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web"
+" Store."
+msgstr ""
+"WXT + React 18 + TypeScript で構築された Chrome 拡張機能。Bilibili/YouTube/ポッドキャストを "
+"NotebookLM に一括インポート。Chrome Web Store で公開中。"
+
+msgid ""
+"Four-stage CV pipeline: YOLOv8m + ResNet34 + PaddleOCR for multi-receipt "
+"auto recognition and structured CSV output."
+msgstr "4段階CVパイプライン：YOLOv8m + ResNet34 + PaddleOCR。複数領収書の自動認識と構造化CSV出力を実現。"
+
+msgid ""
+"Lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI for local "
+"document intelligent Q&A."
+msgstr ""
+"軽量VectorStore（NumPy + JSON）を自社開発。DeepSeek + ZhipuAI "
+"を統合し、ローカルドキュメントのインテリジェントQAを実現。"
+
+msgid "Fullstack Engineer · AI Enthusiast"
+msgstr "フルスタックエンジニア · AI 技術愛好家"
