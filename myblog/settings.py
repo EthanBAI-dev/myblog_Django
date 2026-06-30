@@ -164,24 +164,7 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
 
-# mdeditor 相关配置（已弃用，保留以兼容旧引用）
-MDEDITOR_CONFIGS = {
-    'default': {
-        'width': '100%',
-        'height': 500,
-        'toolbar': [
-            "undo", "redo", "|", "bold", "del", "italic", "quote",
-            "ucwords", "uppercase", "lowercase", "|", "h1", "h2", "h3",
-            "h5", "h6", "|", "list-ul", "list-ol", "hr", "|", "link",
-            "reference-link", "image", "code", "preformatted-text",
-            "code-block", "table", "datetime", "emoji", "html-entities",
-            "pagebreak", "goto-line", "|", "help", "info", "preview",
-            "watch", "fullscreen"
-        ],
-    }
-}
-
-# CKEditor5 配置（替代 mdeditor）
+# CKEditor5 配置
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
