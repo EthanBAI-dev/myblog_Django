@@ -36,7 +36,7 @@
       {% if homepage and homepage.hero_sub %}
         {{ homepage.hero_sub }}
       {% else %}
-        {% trans "全栈工程师 & AI 技术探索者 · 持续学习中" %}
+        {% trans "理工科博士 · AI 开发者 · 工具爱好者" %}
       {% endif %}
     </p>
     <div class="hero-actions">
@@ -54,10 +54,8 @@
     <p class="home-card-desc">
       {% if homepage and homepage.about_me %}
         {{ homepage.about_me|safe }}
-      {% elif blog_owner and blog_owner.desc %}
-        {{ blog_owner.desc|truncatechars:120 }}
       {% else %}
-        {% trans "一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。" %}
+        {% trans "理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用时，那种成就感是我持续学习和创作的最大动力。坚信 AI 将重塑一切，积极拥抱这个时代——每天都在用 AI 辅助开发。掌握中、英、日、蒙、德五种语言。" %}
       {% endif %}
     </p>
   </article>
@@ -66,50 +64,90 @@
   <article class="home-card">
     <div class="home-card-index">02 · Current Focus</div>
     <h2 class="home-card-title">{% trans "当下" %}</h2>
-    <p class="home-card-desc">
-      {% if homepage and homepage.current_work %}
-        {{ homepage.current_work|safe }}
-      {% else %}
-        {% trans "系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。" %}
-      {% endif %}
-    </p>
-  </article>
-
-  <!-- Skills -->
-  <article class="home-card">
-    <div class="home-card-index">03 · Toolkit</div>
-    <h2 class="home-card-title">{% trans "技能" %}</h2>
-    <div class="home-card-skills">
-      {% if homepage and homepage.get_skills_list %}
-        {% for skill in homepage.get_skills_list %}
-        <span class="skill-tag">{{ skill }}</span>
-        {% endfor %}
-      {% else %}
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">Django</span>
-        <span class="skill-tag">PyTorch</span>
-        <span class="skill-tag">TensorFlow</span>
-        <span class="skill-tag">NumPy</span>
-        <span class="skill-tag">Pandas</span>
-        <span class="skill-tag">Scikit-learn</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">HTML/CSS</span>
-        <span class="skill-tag">SQL</span>
-      {% endif %}
+    <div class="home-card-desc">
+      <div class="focus-item">
+        <span class="focus-icon">🦉</span>
+        <span><strong>{% trans "多邻国" %}</strong> — {% trans "连续学习 " %}<span class="focus-highlight">322</span>{% trans " 天" %}</span>
+      </div>
+      <div class="focus-item">
+        <span class="focus-icon">🌐</span>
+        <span><strong>{% trans "语言" %}</strong> — 中文 · English · 日本語 · ᠮᠣᠩᠭᠣᠯ · Deutsch</span>
+      </div>
+      <div class="focus-item">
+        <span class="focus-icon">💪</span>
+        <span><strong>{% trans "健身" %}</strong> — {% trans "每周 4 次，雷打不动" %}</span>
+      </div>
+      <div class="focus-item">
+        <span class="focus-icon">🤖</span>
+        <span><strong>Vibe Coding</strong> — {% trans "每天都在用 AI 写代码、造工具" %}</span>
+      </div>
     </div>
   </article>
 
-  <!-- Principles -->
-  <article class="home-card">
-    <div class="home-card-index">04 · Principle</div>
-    <h2 class="home-card-title">{% trans "热爱与秩序" %}</h2>
-    <p class="home-card-desc">
-      {% if homepage and homepage.hobbies %}
-        {{ homepage.hobbies|safe }}
-      {% else %}
-        {% trans "相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。" %}
-      {% endif %}
-    </p>
+  <!-- Skills (merged 03+04, full width) -->
+  <article class="home-card home-card-fullwidth">
+    <div class="home-card-index">03 · Toolkit</div>
+    <h2 class="home-card-title">{% trans "技能栈" %}</h2>
+    <div class="home-card-compact-skills">
+      <div class="sk-col">
+        <div class="sk-block">
+          <div class="sk-label">{% trans "编程语言" %}</div>
+          <div class="sk-tags">
+            <span class="skill-tag">Python · 3yr</span>
+            <span class="skill-tag">C/C++ · 3yr</span>
+            <span class="skill-tag">TypeScript · 1yr</span>
+          </div>
+        </div>
+        <div class="sk-block">
+          <div class="sk-label">AI / ML</div>
+          <div class="sk-tags">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">YOLOv8/5</span>
+            <span class="skill-tag">PaddleOCR</span>
+          </div>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-block">
+          <div class="sk-label">{% trans "前端" %}</div>
+          <div class="sk-tags">
+            <span class="skill-tag">React 18</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Tailwind</span>
+            <span class="skill-tag">WXT</span>
+          </div>
+        </div>
+        <div class="sk-block">
+          <div class="sk-label">DevOps</div>
+          <div class="sk-tags">
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">AWS</span>
+            <span class="skill-tag">Django</span>
+            <span class="skill-tag">Git</span>
+          </div>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-block">
+          <div class="sk-label">{% trans "工业控制" %}</div>
+          <div class="sk-tags">
+            <span class="skill-tag">PLC</span>
+            <span class="skill-tag">ROS</span>
+            <span class="skill-tag">CAN</span>
+            <span class="skill-tag">EtherCAT</span>
+          </div>
+        </div>
+        <div class="sk-block">
+          <div class="sk-label">{% trans "工具" %}</div>
+          <div class="sk-tags">
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Vite</span>
+            <span class="skill-tag">Vitest</span>
+            <span class="skill-tag">Mintlify</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </article>
 </section>
 

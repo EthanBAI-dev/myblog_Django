@@ -1,570 +1,48 @@
 # English translations for myblog.
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-01 06:55+0800\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Ethan BAI's Blog"
-msgstr "Ethan BAI's Blog"
-
-msgid "搜索..."
-msgstr "Search..."
-
-msgid "Home"
-msgstr "Home"
-
-msgid "Logbook"
-msgstr "Logbook"
-
-msgid "All Entries →"
-msgstr "All Entries →"
-
-msgid "Categories"
-msgstr "Categories"
-
-msgid "Tags"
-msgstr "Tags"
-
-msgid "Projects"
-msgstr "Projects"
-
-msgid "About"
-msgstr "About"
-
-msgid "CV"
-msgstr "CV"
-
-msgid "WARP TRANSIT · ETHAN BAI ·"
-msgstr "WARP TRANSIT · ETHAN BAI ·"
-
-msgid "「探索 · 创造 · 分享」"
-msgstr "「Explore · Create · Share」"
-
-msgid "全栈工程师 & AI 技术探索者 · 持续学习中"
-msgstr "Full-stack Engineer & AI Explorer · Always Learning"
-
+#: blog/templates/blog/about.html:4 blog/templates/blog/home.html:53
 msgid "关于"
 msgstr "About"
 
-msgid "一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。"
-msgstr ""
-"A tech enthusiast exploring AI and deep learning. Loves breaking down "
-"abstract concepts into runnable code and reusable thinking frameworks."
-
-msgid "当下"
-msgstr "Current Focus"
-
-msgid "系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。"
-msgstr ""
-"Systematically studying deep learning courses and papers, building a "
-"knowledge graph, and documenting experiments and thoughts through the blog."
-
-msgid "技能"
-msgstr "Skills"
-
-msgid "热爱与秩序"
-msgstr "Passion & Order"
-
-msgid "相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。"
-msgstr ""
-"Believes complex abilities come from long-term, compounding accumulation. "
-"Prefers clear structure, rigorous expression, and practically verifiable "
-"knowledge."
-
-msgid "近期写作"
-msgstr "Recent Writing"
-
-msgid "还没有文章，敬请期待。"
-msgstr "No articles yet. Stay tuned."
-
-msgid "All posts →"
-msgstr "All posts →"
-
-msgid "最新文章"
-msgstr "Latest Articles"
-
-msgid "查看更多"
-msgstr "View More"
-
-msgid "热门文章"
-msgstr "Popular Articles"
-
-msgid "阅读"
-msgstr "reads"
-
-msgid "文章归档"
-msgstr "Archives"
-
-msgid "年"
-msgstr " "
-
-msgid "月"
-msgstr ""
-
-msgid "篇"
-msgstr ""
-
-msgid "收起"
-msgstr "Collapse"
-
-msgid "分享深度学习与 AI 相关的学习笔记和技术思考。"
-msgstr "Sharing study notes and technical thoughts on deep learning and AI."
-
-msgid "博主头像"
-msgstr "Blogger Avatar"
-
-msgid "文章目录"
-msgstr "Table of Contents"
-
-msgid "← 上一篇"
-msgstr "← Previous Post"
-
-msgid "已经是最前一篇了"
-msgstr "This is the first post"
-
-msgid "下一篇 →"
-msgstr "Next Post →"
-
-msgid "已经是最后一篇了"
-msgstr "This is the last post"
-
-msgid "评论"
-msgstr "Comments"
-
-msgid "提交评论"
-msgstr "Submit Comment"
-
-msgid "全部评论"
-msgstr "All Comments"
-
-msgid "匿名游客"
-msgstr "Anonymous"
-
-msgid "还没有评论，欢迎留下第一条。"
-msgstr "No comments yet. Leave the first one!"
-
-msgid "次阅读"
-msgstr "views"
-
-msgid "预计阅读 %(time)s 分钟"
-msgstr "Est. reading time %(time)s min"
-
-msgid "博客"
-msgstr "Blog"
-
-msgid "写代码，写思考，也写一些真正有价值的记录。"
-msgstr "Writing code, writing thoughts, creating truly valuable records."
-
-msgid "这里是关于技术、项目、方法论与持续学习的个人笔记。"
-msgstr ""
-"Personal notes on technology, projects, methodologies, and continuous "
-"learning."
-
-msgid "阅读全文"
-msgstr "Read Full Article"
-
-msgid "还没有文章"
-msgstr "No articles yet"
-
-msgid "目前这里还没有内容，可以去后台发布第一篇文章。"
-msgstr ""
-"Nothing here yet. Go to the admin panel to publish your first article."
-
-msgid "浏览「%(name)s」分类下的所有文章"
-msgstr "Browse all articles under「%(name)s」"
-
+#: blog/templates/blog/about.html:16
 msgid "每一段经历，都是代码的一部分。"
 msgstr "Every experience is part of the code."
 
+#: blog/templates/blog/about.html:18
 msgid "从最初的好奇到如今的专注，这是一段关于成长、坚持与热爱的旅程。"
 msgstr ""
 "From initial curiosity to dedicated focus - a journey of growth, "
 "persistence, and passion."
 
-msgid "成长轨迹"
-msgstr "Growth Timeline"
+#: blog/templates/blog/about.html:30
+msgid "自我评价"
+msgstr ""
 
-msgid "深度学习专项学习"
-msgstr "Deep Learning Specialization"
+#: blog/templates/blog/about.html:33
+msgid "技术信念"
+msgstr "Technical Beliefs"
 
+#: blog/templates/blog/about.html:38
 msgid ""
-"系统性地学习 Andrew Ng 深度学习五门课程，涵盖神经网络基础、超参数调优、结构化机器学习、CNN、RNN "
-"与注意力机制等核心领域。完成所有课程的笔记整理与代码实践，构建个人 AI 知识体系。"
+"「真正的技术价值不在于掌握多少工具，而在于能否用合适的技术解决实际问题。」"
 msgstr ""
-"Systematically studied Andrew Ng's Deep Learning Specialization, covering "
-"neural networks, hyperparameter tuning, structured ML, CNN, RNN, and "
-"attention mechanisms. Completed all course notes and coding exercises, "
-"building a personal AI knowledge system."
+"「The true value of technology lies not in how many tools you master, but in "
+"whether you can solve real problems with the right technology.」"
 
-msgid "Web 开发与全栈探索"
-msgstr "Web Development & Full-Stack"
-
+#: blog/templates/blog/about.html:42
 msgid ""
-"深入学习 Django 框架，从后端 API 设计到前端模板渲染，掌握了完整的 Web "
-"开发流程。搭建个人博客系统，将学习过程中的思考与笔记沉淀为结构化的知识输出。"
-msgstr ""
-"Deep-dived into Django framework, from backend API design to frontend "
-"template rendering, mastering the full web development workflow. Built a "
-"personal blog system to transform learning into structured knowledge output."
-
-msgid "Python 与数据科学入门"
-msgstr "Python & Data Science"
-
-msgid ""
-"从 Python 基础语法开始，逐步深入到 NumPy、Pandas、Matplotlib 等数据科学生态工具。建立扎实的编程基础，为后续的 AI "
-"学习奠定了坚实的技术根基。"
-msgstr ""
-"Started with Python basics, then progressed to NumPy, Pandas, Matplotlib and"
-" other data science tools. Built a solid programming foundation for future "
-"AI learning."
-
-msgid "更早之前"
-msgstr "Earlier Days"
-
-msgid "对技术的原始好奇"
-msgstr "Original Curiosity for Technology"
-
-msgid ""
-"对计算机科学的兴趣始于对\"机器如何思考\"这一问题的好奇。从第一行 Hello World 到如今能够训练神经网络模型，每一步都是对未知世界的探索。"
-msgstr ""
-"My interest in computer science began with wondering 'how machines think.' "
-"From the first Hello World to training neural networks, every step has been "
-"an exploration of the unknown."
-
-msgid "关于坚持"
-msgstr "On Persistence"
-
-msgid "\"学习 AI 不是一场短跑，而是一场没有终点的马拉松。重要的是每天都比昨天多理解一点点。\""
-msgstr ""
-"\"Learning AI is not a sprint, but a marathon without a finish line. What "
-"matters is understanding a little more than yesterday.\""
-
-msgid ""
-"坚持做深度学习笔记整理这件事，已经成为了我日常生活的一部分。起初只是为了记录课程中的关键概念，但随着笔记越积越多，我发现这个过程本身比学习课程更有价值。写笔记不是简单的摘抄，而是强迫自己用最清晰的语言重新组织知识，在反复的推敲和修改中，很多曾经模糊的概念突然变得清晰起来。"
-msgstr ""
-"Keeping deep learning notes has become part of my daily routine. Initially "
-"just for recording course concepts, I found the process itself more valuable"
-" than the courses. Note-taking isn't copying - it forces me to reorganize "
-"knowledge in the clearest language, and through repeated refinement, many "
-"fuzzy concepts suddenly become clear."
-
-msgid ""
-"在这个过程中，我深刻体会到：真正的学习不是\"听过\"或\"看过\"，而是能够用自己的语言重新表达，并且能够将不同领域的知识连接起来。深度学习的美妙之处在于，它不是一个孤立的学科——它连接着数学、统计学、计算机科学和认知科学，每一次学习都像是在拼图中加入新的一块。"
-msgstr ""
-"Through this process, I deeply realized: real learning isn't 'hearing' or "
-"'seeing' - it's being able to re-express in your own words and connect "
-"knowledge across domains. Deep learning's beauty lies in connecting "
-"mathematics, statistics, computer science, and cognitive science - each "
-"piece of learning adds a new tile to the mosaic."
-
-msgid ""
-"最让我感到满足的时刻，不是完成某门课程，也不是跑通了某个模型，而是在某个深夜写笔记时，忽然发现自己在几个月前记下的疑问，如今已经有了自己的答案。这种\"过去和现在的自己对话\"的感觉，是自学路上最珍贵的体验。"
-msgstr ""
-"The most satisfying moments aren't finishing courses or running models, but "
-"suddenly finding answers to questions I wrote months ago during late-night "
-"note sessions. This 'dialogue between past and present self' is the most "
-"precious experience on the self-learning journey."
-
-msgid "不止代码"
-msgstr "Beyond Code"
-
-msgid "阅读技术论文"
-msgstr "Reading Research Papers"
-
-msgid ""
-"喜欢在 ArXiv 上浏览最新的 AI 论文，尤其关注 CV 和 NLP 领域的前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
-msgstr ""
-"I enjoy browsing the latest AI papers on ArXiv, especially CV and NLP "
-"advances. Though many papers are challenging, understanding each new idea is"
-" thrilling."
-
-msgid "开源社区"
-msgstr "Open Source Community"
-
-msgid "关注 GitHub 上优秀的开源项目，学习优秀工程师的代码风格和架构设计。希望有一天自己的项目也能被别人 Star。"
-msgstr ""
-"I follow great open-source projects on GitHub, learning from excellent "
-"engineers' code style and architecture. Hope my projects will be starred "
-"someday."
-
-msgid "写作与表达"
-msgstr "Writing & Expression"
-
-msgid "相信清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。"
-msgstr ""
-"I believe clear writing is the reflection of clear thinking. Whether "
-"technical notes or personal insights, I strive to convey complex ideas with "
-"concise, precise language."
-
-msgid "持续学习"
-msgstr "Continuous Learning"
-
-msgid "技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只埋头写代码，更要理解人与技术的关系。"
-msgstr ""
-"Beyond technology, I follow product design, cognitive science, and personal "
-"productivity. A good engineer shouldn't just write code, but understand the "
-"relationship between people and technology."
-
-msgid "姓名"
-msgstr "Name"
-
-msgid "完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心技术。"
-msgstr ""
-"Completed Andrew Ng's Deep Learning Specialization, mastering neural "
-"networks, CNN, RNN, and attention mechanisms."
-
-msgid ""
-"热爱深度学习与人工智能技术，具备扎实的数学基础和编程能力。善于将复杂的 AI 概念转化为清晰易懂的文档和笔记。注重代码质量和工程实践，持续学习前沿技术。"
-msgstr ""
-"Passionate about deep learning and AI, with solid mathematical foundations "
-"and programming skills. Skilled at translating complex AI concepts into "
-"clear documentation and notes. Focused on code quality and engineering "
-"practices, continuously learning cutting-edge technologies."
-
-msgid "我的作品"
-msgstr "My Portfolio"
-
-msgid "深度学习与人工智能相关的项目、笔记和探索。"
-msgstr "Projects, notes, and explorations in deep learning and AI."
-
-msgid "项目"
-msgstr "Projects"
-
-msgid "深度学习专项课程笔记"
-msgstr "Deep Learning Specialization Notes"
-
-msgid ""
-"Andrew Ng "
-"深度学习五门课程（神经网络与深度学习、改善深度神经网络、结构化机器学习项目、卷积神经网络、序列模型）的完整中文学习笔记，涵盖所有关键概念、数学推导和代码实现要点。"
-msgstr ""
-"Complete study notes for Andrew Ng's Deep Learning Specialization (5 "
-"courses), covering all key concepts, mathematical derivations, and "
-"implementation details."
-
-msgid "技术栈"
-msgstr "Tech Stack"
-
-msgid "关于我"
-msgstr "About Me"
-
-msgid "搜索结果"
-msgstr "Search Results"
-
-msgid "关于「<strong>%(q)s</strong>」的搜索结果，共 %(count)s 篇"
-msgstr "About <strong>%(q)s</strong> - %(count)s result(s) found"
-
-msgid "请输入搜索关键词"
-msgstr "Please enter a search keyword"
-
-msgid "未找到相关文章"
-msgstr "No articles found"
-
-msgid "尝试更换关键词，或浏览全部文章。"
-msgstr "Try different keywords or browse all articles."
-
-msgid "搜索：%(q)s"
-msgstr "Search: %(q)s"
-
-msgid "注册"
-msgstr "Register"
-
-msgid "博客注册"
-msgstr "Blog Registration"
-
-msgid "创建你的账号"
-msgstr "Create Your Account"
-
-msgid "已有账号？"
-msgstr "Already have an account?"
-
-msgid "立即登录"
-msgstr "Log In Now"
-
-msgid "注册成功"
-msgstr "Registration Success"
-
-msgid "注册成功！"
-msgstr "Registration Successful!"
-
-msgid "激活邮件已发送至你的邮箱，请查收"
-msgstr "An activation email has been sent to your email address."
-
-msgid "下一步操作"
-msgstr "Next Steps"
-
-msgid "1. 前往邮箱查收激活邮件（主题：博客注册激活链接）"
-msgstr "1. Check your email inbox for the activation email"
-
-msgid "2. 点击邮件中的链接完成账号激活"
-msgstr "2. Click the activation link in the email"
-
-msgid "取消"
-msgstr "Cancel"
-
-msgid "保存修改"
-msgstr "Save Changes"
-
-msgid "当前：%(value)s"
-msgstr "Current: %(value)s"
-
-msgid "请输入%(label)s"
-msgstr "Please enter %(label)s"
-
-msgid "博客登录"
-msgstr "Blog Login"
-
-msgid "欢迎回来"
-msgstr "Welcome Back"
-
-msgid "忘记密码？"
-msgstr "Forgot Password?"
-
-msgid "注册账号"
-msgstr "Register Account"
-
-msgid "登 录"
-msgstr "Log In"
-
-msgid "回到首页"
-msgstr "Back to Home"
-
-msgid "提示：请检查邮箱的收件箱和垃圾邮件文件夹，或"
-msgstr "Tip: Please check your inbox and spam folder, or"
-
-msgid "通过忘记密码重新激活"
-msgstr "reactivate via Forgot Password"
-
-msgid "忘记密码"
-msgstr "Forgot Password"
-
-msgid "找回密码"
-msgstr "Reset Password"
-
-msgid "输入注册邮箱，我们将发送重置链接"
-msgstr "Enter your registered email to receive a reset link"
-
-msgid "发送重置链接"
-msgstr "Send Reset Link"
-
-msgid "返回登录"
-msgstr "Back to Login"
-
-msgid "重置密码"
-msgstr "Reset Password"
-
-msgid "请输入你的新密码"
-msgstr "Enter Your New Password"
-
-msgid "确 认 修 改"
-msgstr "Confirm Changes"
-
-msgid "个人中心"
-msgstr "Dashboard"
-
-msgid "退出登录"
-msgstr "Logout"
-
-msgid "内容管理"
-msgstr "Content Management"
-
-msgid "写文章"
-msgstr "Write Article"
-
-msgid "草稿箱"
-msgstr "Drafts"
-
-msgid "站长管理"
-msgstr "Admin Panel"
-
-msgid "评论管理"
-msgstr "Comment Management"
-
-msgid "账号信息"
-msgstr "Account Info"
-
-msgid "修改信息"
-msgstr "Edit Info"
-
-msgid "暂未设置个性签名"
-msgstr "No bio yet"
-
-msgid "暂未填写个人简介"
-msgstr "No profile description yet"
-
-msgid "编辑资料"
-msgstr "Edit Profile"
-
-msgid "登录"
-msgstr "Log In"
-
-msgid "头像"
-msgstr "Avatar"
-
-msgid "暂未设置"
-msgstr "Not set"
-
-msgid "未设置"
-msgstr "Not set"
-
-msgid "男"
-msgstr "Male"
-
-msgid "女"
-msgstr "Female"
-
-msgid ""
-"2015 "
-"年从大连海事大学船舶电气工程专业毕业后，赴日留学并在东京海洋大学完成了硕士与博士课程。十年的学术训练不仅奠定了扎实的工程基础，也培养了跨文化环境下独立研究的能力。研究兴趣涉及海洋科技、自动化控制与人工智能的交叉领域。"
-msgstr ""
-"After graduating from Dalian Maritime University in 2015, I went to Japan "
-"and completed my Master's and PhD at Tokyo University of Marine Science and "
-"Technology. A decade of academic training laid a solid engineering "
-"foundation and cultivated the ability to conduct independent research. My "
-"research interests span marine technology, automation control, and AI."
-
-msgid "AI / 机器学习"
-msgstr "AI / Machine Learning"
-
-msgid "Bilibili/YouTube/Podcast 批量导入 NotebookLM"
-msgstr "Batch Import Bilibili/YouTube/Podcast to NotebookLM"
-
-msgid "Chrome 扩展"
-msgstr "Chrome Extension"
-
-msgid "GitHub"
-msgstr "GitHub"
-
-msgid "RAG · 大语言模型"
-msgstr "RAG · Large Language Models"
-
-msgid ""
-"一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 "
-"Bilibili、YouTube、Apple Podcasts、小宇宙、Web 页面、AI 对话等多种来源批量导入内容到 Google "
-"NotebookLM。采用 Side Panel UI 设计，自动识别当前站点并匹配导入工具，支持多账号切换、目标笔记本选择、PDF 聚合、AI "
-"对话分享卡片等高级功能。100% 客户端处理，不上传任何用户数据。"
-msgstr ""
-"A Chrome extension (Manifest V3) built with WXT + React + TypeScript that "
-"batch-imports content from Bilibili, YouTube, Apple Podcasts, Xiaoyuzhou FM,"
-" web pages, and AI chats into Google NotebookLM. Features Side Panel UI, "
-"multi-account switching, target notebook selection, PDF aggregation, AI "
-"share cards, and more. 100% client-side — no data uploaded."
-
-msgid "业务范围"
-msgstr "Scope of Work"
-
-msgid "个人贡献"
-msgstr "My Contribution"
-
-msgid "主导新技術（YOLO·ROS）导入，推动产品智能化升级"
-msgstr ""
-"Led the introduction of new technologies (YOLO·ROS) to drive product "
-"intelligence upgrades"
-
-msgid ""
-"从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome "
-"扩展开发，我具备跨越多层技术栈的实践能力。在机械设备制造商的核心研发部门，我负责产品搭载软件的全栈开发，同时主导新技术（YOLO·ROS）的导入与推广——从技术选型、可行性验证到落地部署，全程推动产品智能化升级。"
+"从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome 扩展开发，我具备跨越多"
+"层技术栈的实践能力。在机械设备制造商的核心研发部门，我负责产品搭载软件的全栈"
+"开发，同时主导新技术（YOLO·ROS）的导入与推广——从技术选型、可行性验证到落地部"
+"署，全程推动产品智能化升级。"
 msgstr ""
 "From PLC-level control to AI image recognition to full-stack web and Chrome "
 "extension development, I have practical experience spanning multiple "
@@ -572,130 +50,17 @@ msgstr ""
 "stack development of onboard software while leading the introduction of new "
 "technologies (YOLO·ROS) — from technology selection to deployment."
 
-msgid "从零实现 RAG 完整流水线：文档分割 → 向量化 → 检索 → LLM 生成"
-msgstr ""
-"Implemented complete RAG pipeline from scratch: chunking → vectorization → "
-"retrieval → LLM generation"
-
-msgid "关注 GitHub 优秀开源项目，学习代码风格与架构设计。将自己的项目也开源在 GitHub 上，希望为社区贡献价值。"
-msgstr ""
-"I follow great open-source projects on GitHub, learning from excellent code "
-"styles and architectures. I also open-source my own projects, hoping to "
-"contribute value to the community."
-
-msgid "关注产品设计、认知科学和个人效率提升方法。不同领域的知识交叉往往能带来意想不到的启发。"
-msgstr ""
-"I follow product design, cognitive science, and personal productivity "
-"methods. Cross-pollination between different fields often brings unexpected "
-"insights."
-
-msgid "兴趣与关注"
-msgstr "Interests & Focus"
-
-msgid "前端开发"
-msgstr "Frontend Development"
-
+#: blog/templates/blog/about.html:45
+#, fuzzy, python-format
+#| msgid ""
+#| "我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬"
+#| "件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%），大幅提升团队工作效"
+#| "率。这个经历让我深刻理解：好的工具不在于技术复杂度，而在于能否精准命中业务"
+#| "痛点。"
 msgid ""
-"博士课程修了后，加入古河机械金属株式会社（古河ロックドリル），在开发设计部从事产品搭载软件的全栈开发。从 PLC 底层控制到 AI "
-"图像识别，覆盖了工业自动化系统的完整技术栈。"
-msgstr ""
-"After completing my PhD, I joined Furukawa Rock Drill in the R&D Department,"
-" doing full-stack development of onboard software. From PLC-level control to"
-" AI image recognition, covering the complete technology stack of industrial "
-"automation systems."
-
-msgid "参与 Keyence 公司技术实习，了解工厂自动化与检测设备的前沿技术。"
-msgstr ""
-"Participated in a technical internship at Keyence, learning about factory "
-"automation and cutting-edge inspection equipment."
-
-msgid "参与电气 / 油压回路设计、CREO 3D 建模，实现软硬件协同开发"
-msgstr ""
-"Participated in electrical/hydraulic circuit design and CREO 3D modeling for"
-" software-hardware co-development"
-
-msgid "参与车载音响系统的开发实习，了解嵌入式音频处理与车载电子系统架构。"
-msgstr ""
-"Participated in an automotive audio system development internship, learning "
-"about embedded audio processing and vehicle electronics."
-
-msgid "古河机械金属株式会社 · 正社員"
-msgstr "Furukawa Rock Drill · Full-time Employee"
-
-msgid "后端 / DevOps"
-msgstr "Backend / DevOps"
-
-msgid ""
-"在业余时间，我通过个人项目持续拓宽技术边界——从计算机视觉流水线到 RAG 智能问答系统，再到已上架 Chrome Web Store "
-"的浏览器扩展。这些项目既是学习驱动，也是对「技术如何改善日常生活」的持续探索。"
-msgstr ""
-"In my spare time, I continuously expand my technical boundaries through "
-"personal projects — from computer vision pipelines to RAG QA systems to "
-"Chrome extensions published on the Chrome Web Store. These projects are both"
-" learning-driven and a continuous exploration of how technology can improve "
-"daily life."
-
-msgid ""
-"在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO"
-" 图像识别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，从软硬件两端推动产品升级。"
-msgstr ""
-"Working in the core R&D department of a major machinery manufacturer, doing "
-"full-stack development of onboard software. Covers multiple control layers: "
-"PLC sequence/motion control, ROS automation pipelines, and YOLO image "
-"recognition. Also involved in electrical/hydraulic circuit design and CREO "
-"mechanical design."
-
-msgid "在线体验"
-msgstr "Live Demo"
-
-msgid "基于 OpenCV 实现透视变换矫正，支持任意拍摄角度的票据规整"
-msgstr ""
-"Implemented perspective correction with OpenCV for arbitrary shooting angles"
-
-msgid ""
-"基于 RAG（检索增强生成）架构的本地文档 QA 系统。上传 .md / .txt / .pdf "
-"格式的本地手册或文档，系统自动进行文本分割、向量化存储，并通过 ZhipuAI 嵌入模型 + DeepSeek API 实现自然语言问答。采用 "
-"NumPy + JSON 自建轻量向量数据库，无需外部向量数据库依赖。Streamlit Web UI 提供聊天式交互、回答风格选择、Top-K "
-"检索可视化等功能。"
-msgstr ""
-"A RAG-based local document QA system. Upload .md/.txt/.pdf manuals, and the "
-"system automatically performs text chunking, vectorization, and enables "
-"natural language Q&A via ZhipuAI embeddings + DeepSeek API. Uses a self-"
-"built lightweight vector database with NumPy + JSON — no external vector DB "
-"dependency. Streamlit Web UI with chat interface, answer style selection, "
-"and Top-K retrieval visualization."
-
-msgid "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时"
-msgstr ""
-"Implemented incremental indexing — only processes changed files, "
-"significantly reducing startup time"
-
-msgid "工业控制 / 硬件"
-msgstr "Industrial Control / Hardware"
-
-msgid "工业控制系统"
-msgstr "Industrial Control System"
-
-msgid "常浏览 ArXiv 上的 AI 论文，关注计算机视觉与 NLP 前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
-msgstr ""
-"I frequently browse AI papers on ArXiv, following the latest advances in CV "
-"and NLP. Though many papers are challenging, understanding each new idea is "
-"exciting."
-
-msgid "开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%）"
-msgstr ""
-"Developed a Python automation tool that reduced hardware ID setup time from "
-"20 min to 1 min (95% reduction)"
-
-msgid "开发工具"
-msgstr "Development Tools"
-
-msgid "开发设计部 · 机械设备控制 / AI 功能开发 · 正社員"
-msgstr "R&D Dept. · Machinery Control / AI Development · Full-time"
-
-msgid ""
-"我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 "
-"95%），大幅提升团队工作效率。这个经历让我深刻理解：好的工具不在于技术复杂度，而在于能否精准命中业务痛点。"
+"我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬件 "
+"ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%%），大幅提升团队工作效率。这"
+"个经历让我深刻理解：好的工具不在于技术复杂度，而在于能否精准命中业务痛点。"
 msgstr ""
 "I excel at identifying process pain points and solving them with technical "
 "solutions. I developed a Python automation tool that reduced hardware ID "
@@ -703,319 +68,749 @@ msgstr ""
 "taught me that good tools aren't about technical complexity but about "
 "precisely hitting business pain points."
 
-msgid "技术之外，持续关注 AI 前沿论文、开源社区与产品设计。相信好的工程师不仅要能写代码，更要理解技术与人之间的关系。"
+#: blog/templates/blog/about.html:48
+msgid ""
+"在业余时间，我通过个人项目持续拓宽技术边界——从计算机视觉流水线到 RAG 智能问答"
+"系统，再到已上架 Chrome Web Store 的浏览器扩展。这些项目既是学习驱动，也是对"
+"「技术如何改善日常生活」的持续探索。"
+msgstr ""
+"In my spare time, I continuously expand my technical boundaries through "
+"personal projects — from computer vision pipelines to RAG QA systems to "
+"Chrome extensions published on the Chrome Web Store. These projects are both "
+"learning-driven and a continuous exploration of how technology can improve "
+"daily life."
+
+#: blog/templates/blog/about.html:61
+msgid "不止代码"
+msgstr "Beyond Code"
+
+#: blog/templates/blog/about.html:64
+msgid "兴趣与关注"
+msgstr "Interests & Focus"
+
+#: blog/templates/blog/about.html:68
+msgid ""
+"技术之外，持续关注 AI 前沿论文、开源社区与产品设计。相信好的工程师不仅要能写"
+"代码，更要理解技术与人之间的关系。"
 msgstr ""
 "Beyond technology, I follow AI papers, open source communities, and product "
 "design. I believe a good engineer should not just write code, but also "
 "understand the relationship between technology and people."
 
-msgid "技术信念"
-msgstr "Technical Beliefs"
+#: blog/templates/blog/about.html:73
+msgid "阅读技术论文"
+msgstr "Reading Research Papers"
 
-msgid "教育"
-msgstr "Education"
-
-msgid "教育背景"
-msgstr "Education Background"
-
-msgid "整合多模型推理管线，端到端耗时优化至 3 秒以内"
+#: blog/templates/blog/about.html:74
+msgid ""
+"常浏览 ArXiv 上的 AI 论文，关注计算机视觉与 NLP 前沿进展。虽然很多论文读起来"
+"吃力，但每理解一个新 idea 都让人兴奋。"
 msgstr ""
-"Integrated multi-model inference pipeline with end-to-end latency under 3 "
-"seconds"
+"I frequently browse AI papers on ArXiv, following the latest advances in CV "
+"and NLP. Though many papers are challenging, understanding each new idea is "
+"exciting."
 
-msgid "文档"
-msgstr "Docs"
+#: blog/templates/blog/about.html:77
+msgid "开源社区"
+msgstr "Open Source Community"
 
-msgid "本地文档智能问答系统"
-msgstr "Local Document QA System"
-
-msgid "机械设备控制 · AI 功能开发"
-msgstr "Machinery Control · AI Development"
-
-msgid "核心特性"
-msgstr "Core Features"
-
-msgid "求学之路"
-msgstr "Academic Journey"
-
-msgid "海洋技术研究科 应用环境系统学专攻 —— 博士课程修了。研究方向涉及 AI 与自动化控制技术的交叉应用。"
+#: blog/templates/blog/about.html:78
+msgid ""
+"关注 GitHub 优秀开源项目，学习代码风格与架构设计。将自己的项目也开源在 "
+"GitHub 上，希望为社区贡献价值。"
 msgstr ""
-"Doctoral Program in Applied Environmental Systems. Research focused on "
-"cross-application of AI and automation control."
+"I follow great open-source projects on GitHub, learning from excellent code "
+"styles and architectures. I also open-source my own projects, hoping to "
+"contribute value to the community."
 
-msgid "海洋技术研究科 海运物流学专攻 —— 修士课程修了。聚焦自动化控制与信息系统研究。"
-msgstr ""
-"Master's Program in Maritime Logistics. Focused on automation control and "
-"information systems."
+#: blog/templates/blog/about.html:81
+msgid "写作与表达"
+msgstr "Writing & Expression"
 
-msgid "清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。"
+#: blog/templates/blog/about.html:82
+msgid ""
+"清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准"
+"确的语言传达复杂的思想。"
 msgstr ""
 "I believe clear writing reflects clear thinking. Whether technical notes or "
 "personal insights, I strive to express complex ideas in concise, precise "
 "language."
 
-msgid "独立完成整条流水线的架构设计与代码实现"
-msgstr ""
-"Independently designed and implemented the entire pipeline architecture"
-
-msgid "突出成果"
-msgstr "Key Achievements"
-
-msgid "端到端多票据自动识别系统"
-msgstr "End-to-End Multi-Receipt Recognition System"
-
-msgid "编程语言"
-msgstr "Programming Languages"
-
-msgid "职业轨迹"
-msgstr "Career Path"
-
-msgid "自研轻量级 VectorStore（基于 NumPy 计算余弦相似度 + JSON 持久化），无外部 DB 依赖"
-msgstr ""
-"Built a lightweight VectorStore using NumPy cosine similarity + JSON "
-"persistence, zero external DB dependency"
-
-msgid "至今"
-msgstr "Present"
-
-msgid "船舶电气工程学科 船舶电子电气工程专攻 —— 学士课程修了。系统学习了电气工程、自动控制与嵌入式系统等核心课程。"
-msgstr ""
-"Bachelor's in Marine Electronic and Electrical Engineering. Systematically "
-"studied electrical engineering, automation control, and embedded systems."
-
-msgid "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力"
-msgstr ""
-"Full-stack control layer development: PLC → ROS → AI image recognition"
-
-msgid "计算机视觉 · OCR"
-msgstr "Computer Vision · OCR"
-
-msgid "训练 YOLOv8m 对 4 类关键字段（日期、店名、电话、金额）进行检测"
-msgstr ""
-"Trained YOLOv8m to detect 4 key field types (date, store name, phone, "
-"amount)"
-
-msgid "设计 4 种回答风格（概要/学习指南/博客/自定义）+ 检索结果可视化"
-msgstr ""
-"Designed 4 answer styles (summary/guide/blog/custom) + retrieval result "
-"visualization"
-
+#: blog/templates/blog/about.html:85
 msgid "跨领域学习"
 msgstr "Cross-Disciplinary Learning"
 
+#: blog/templates/blog/about.html:86
 msgid ""
-"输入包含多张票据的合成照片，经过 YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 "
-"文字区域检测 → PaddleOCR 文字识别的四阶段流水线，自动输出结构化 CSV 数据。解决了日常生活中多张票据同时拍摄后手动录入效率低下的痛点。"
+"关注产品设计、认知科学和个人效率提升方法。不同领域的知识交叉往往能带来意想不"
+"到的启发。"
 msgstr ""
-"A four-stage pipeline: YOLOv8m object detection → perspective correction → "
-"ResNet34 orientation classification → YOLOv5/YOLOv9 text region detection → "
-"PaddleOCR text recognition. Automatically outputs structured CSV data from "
-"composite photos of multiple receipts, solving the pain point of manual data"
-" entry."
+"I follow product design, cognitive science, and personal productivity "
+"methods. Cross-pollination between different fields often brings unexpected "
+"insights."
 
-msgid "「真正的技术价值不在于掌握多少工具，而在于能否用合适的技术解决实际问题。」"
+#: blog/templates/blog/base.html:9
+msgid "Ethan BAI's Blog"
+msgstr "Ethan BAI's Blog"
+
+#: blog/templates/blog/base.html:46
+msgid "搜索..."
+msgstr "Search..."
+
+#: blog/templates/blog/base.html:56
+msgid "Home"
+msgstr "Home"
+
+#: blog/templates/blog/base.html:60
+msgid "Logbook"
+msgstr "Logbook"
+
+#: blog/templates/blog/base.html:69
+msgid "All Entries →"
+msgstr "All Entries →"
+
+#: blog/templates/blog/base.html:73
+msgid "Categories"
+msgstr "Categories"
+
+#: blog/templates/blog/base.html:83
+msgid "Tags"
+msgstr "Tags"
+
+#: blog/templates/blog/base.html:94 blog/templates/blog/portfolio.html:4
+#: blog/templates/blog/resume.html:199
+msgid "Projects"
+msgstr "Projects"
+
+#: blog/templates/blog/base.html:95
+msgid "About"
+msgstr "About"
+
+#: blog/templates/blog/base.html:99
+msgid "CV"
+msgstr "CV"
+
+#: blog/templates/blog/base.html:139
+msgid "WARP TRANSIT · ETHAN BAI ·"
+msgstr "WARP TRANSIT · ETHAN BAI ·"
+
+#: blog/templates/blog/home.html:32
+msgid "「探索 · 创造 · 分享」"
+msgstr "「Explore · Create · Share」"
+
+#: blog/templates/blog/home.html:39
+msgid "理工科博士 · AI 开发者 · 工具爱好者"
+msgstr "PhD in Engineering · AI Developer · Tool Builder"
+
+#: blog/templates/blog/home.html:58
+msgid ""
+"理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用时，那"
+"种成就感是我持续学习和创作的最大动力。坚信 AI 将重塑一切，积极拥抱这个时代——"
+"每天都在用 AI 辅助开发。掌握中、英、日、蒙、德五种语言。"
 msgstr ""
-"「The true value of technology lies not in how many tools you master, but in "
-"whether you can solve real problems with the right technology.」"
+"PhD in Engineering, passionate about AI and software development. The greatest "
+"motivation for me is knowing that tools I build are actually being used by others. "
+"I believe AI will transform everything and I embrace this era—using AI every day "
+"to build better tools. I speak five languages: Chinese, English, Japanese, Mongolian, and German."
 
-msgid "Chrome扩展"
+#: blog/templates/blog/home.html:66
+msgid "当下"
+msgstr "Current Focus"
+
+#: blog/templates/blog/home.html:70
+msgid "多邻国"
+msgstr "Duolingo"
+
+#: blog/templates/blog/home.html:70
+msgid "连续学习 "
+msgstr "Streak: "
+
+#: blog/templates/blog/home.html:70
+msgid " 天"
+msgstr " days"
+
+#: blog/templates/blog/home.html:74
+#, fuzzy
+#| msgid "编程语言"
+msgid "语言"
+msgstr "Languages"
+
+#: blog/templates/blog/home.html:78
+msgid "健身"
+msgstr "Workout"
+
+#: blog/templates/blog/home.html:78
+msgid "每周 4 次，雷打不动"
+msgstr "4 times a week, no excuses"
+
+#: blog/templates/blog/home.html:82
+msgid "每天都在用 AI 写代码、造工具"
+msgstr "Coding with AI every day, building tools"
+
+#: blog/templates/blog/home.html:90
+#, fuzzy
+#| msgid "技能"
+msgid "技能栈"
+msgstr "Skills"
+
+#: blog/templates/blog/home.html:94 blog/templates/blog/portfolio.html:719
+#: blog/templates/blog/portfolio.html:780
+msgid "编程语言"
+msgstr "Programming Languages"
+
+#: blog/templates/blog/home.html:112 blog/templates/blog/portfolio.html:735
+#: blog/templates/blog/portfolio.html:796
+#, fuzzy
+#| msgid "前端开发"
+msgid "前端"
+msgstr "Frontend Development"
+
+#: blog/templates/blog/home.html:132 blog/templates/blog/portfolio.html:595
+#: blog/templates/blog/portfolio.html:702
+#: blog/templates/blog/portfolio.html:753
+#: blog/templates/blog/portfolio.html:809
+#, fuzzy
+#| msgid "工业控制系统"
+msgid "工业控制"
+msgstr "Industrial Control System"
+
+#: blog/templates/blog/home.html:141 blog/templates/blog/portfolio.html:762
+#: blog/templates/blog/portfolio.html:815
+#, fuzzy
+#| msgid "开发工具"
+msgid "工具"
+msgstr "Development Tools"
+
+#: blog/templates/blog/home.html:158 blog/templates/blog/home.html:175
+msgid "近期写作"
+msgstr "Recent Writing"
+
+#: blog/templates/blog/home.html:159
+msgid "All posts →"
+msgstr "All posts →"
+
+#: blog/templates/blog/home.html:178
+msgid "还没有文章，敬请期待。"
+msgstr "No articles yet. Stay tuned."
+
+#: blog/templates/blog/portfolio.html:585
+msgid "我的作品"
+msgstr "My Portfolio"
+
+#: blog/templates/blog/portfolio.html:586
+msgid "深度学习与人工智能相关的项目、笔记和探索。"
+msgstr "Projects, notes, and explorations in deep learning and AI."
+
+#: blog/templates/blog/portfolio.html:591
+#, fuzzy
+#| msgid "全部评论"
+msgid "全部"
+msgstr "All Comments"
+
+#: blog/templates/blog/portfolio.html:592
+msgid "Chrome 扩展"
 msgstr "Chrome Extension"
 
-msgid "DevOps / 工具"
-msgstr "DevOps / Tools"
-
-msgid ""
-"从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome "
-"扩展开发，具备跨越多层技术栈的实践能力。在机械设备制造商的核心研发部门负责产品搭载软件的全栈开发，同时主导新技术的导入与推广。善于识别业务流程中的痛点并运用技术手段解决——曾开发"
-" Python 自动化工具将作业时间缩短 95%。持续保持对前沿技术的关注与学习，相信真正的技术价值在于解决实际问题。"
+#: blog/templates/blog/portfolio.html:593
+msgid "CV / OCR"
 msgstr ""
-"From PLC-level control to AI image recognition to full-stack web and Chrome "
-"extension development, I have practical experience spanning multiple "
-"technology layers. In the core R&D department of a machinery manufacturer, I"
-" am responsible for full-stack development of onboard software while leading"
-" new technology adoption. I excel at identifying process pain points — I "
-"once developed an automation tool that reduced task time by 95%. I believe "
-"true technical value lies in solving real-world problems."
 
-msgid "前端及全栈"
-msgstr "Frontend & Full-Stack"
+#: blog/templates/blog/portfolio.html:594
+msgid "RAG / LLM"
+msgstr ""
 
-msgid "四阶段 CV 流水线：YOLOv8m + ResNet34 + PaddleOCR，实现多票据自动识别与结构化 CSV 输出。"
+#: blog/templates/blog/portfolio.html:617
+#: blog/templates/blog/portfolio.html:838
+#, fuzzy
+#| msgid "Bilibili/YouTube/Podcast 批量导入 NotebookLM"
+msgid "批量导入 NotebookLM"
+msgstr "Batch Import Bilibili/YouTube/Podcast to NotebookLM"
+
+#: blog/templates/blog/portfolio.html:618
+#, fuzzy
+#| msgid ""
+#| "基于 WXT + React 18 + TypeScript 的 Chrome 扩展，支持 Bilibili/YouTube/"
+#| "Podcast 批量导入 NotebookLM。已上架 Chrome Web Store。"
+msgid ""
+"WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3），支持 Bilibili/YouTube/"
+"播客批量导入。"
+msgstr ""
+"A Chrome extension built with WXT + React 18 + TypeScript that batch-imports "
+"Bilibili/YouTube/Podcast content into NotebookLM. Published on Chrome Web "
+"Store."
+
+#: blog/templates/blog/portfolio.html:649
+#, fuzzy
+#| msgid ""
+#| "四阶段 CV 流水线：YOLOv8m + ResNet34 + PaddleOCR，实现多票据自动识别与结构"
+#| "化 CSV 输出。"
+msgid "四阶段 CV 流水线：YOLOv8m → 透视校正 → PaddleOCR，自动输出结构化 CSV。"
 msgstr ""
 "A four-stage CV pipeline: YOLOv8m + ResNet34 + PaddleOCR for multi-receipt "
 "recognition and structured CSV output."
 
+#: blog/templates/blog/portfolio.html:678
+#, fuzzy
+#| msgid ""
+#| "自研轻量 VectorStore（NumPy + JSON），整合 DeepSeek + ZhipuAI，实现本地文"
+#| "档智能问答。"
 msgid ""
-"基于 WXT + React 18 + TypeScript 的 Chrome 扩展，支持 Bilibili/YouTube/Podcast 批量导入 "
-"NotebookLM。已上架 Chrome Web Store。"
-msgstr ""
-"A Chrome extension built with WXT + React 18 + TypeScript that batch-imports"
-" Bilibili/YouTube/Podcast content into NotebookLM. Published on Chrome Web "
-"Store."
-
-msgid "株式会社 · 车载音响开发（实习）"
-msgstr "Co., Ltd. · Automotive Audio Development (Intern)"
-
-msgid "自研轻量 VectorStore（NumPy + JSON），整合 DeepSeek + ZhipuAI，实现本地文档智能问答。"
+"轻量 VectorStore + DeepSeek + ZhipuAI 实现本地文档智能问答。Streamlit Web "
+"UI。"
 msgstr ""
 "Self-built lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI "
 "for local document QA."
 
-msgid "Education Background"
-msgstr "Education Background"
+#: blog/templates/blog/portfolio.html:683
+#: blog/templates/blog/portfolio.html:892
+msgid "在线体验"
+msgstr "Live Demo"
 
-msgid "Tokyo Univ. of Marine Science and Technology · PhD"
-msgstr "Tokyo Univ. of Marine Science and Technology · PhD"
+#: blog/templates/blog/portfolio.html:707
+#, fuzzy
+#| msgid "机械设备控制 · AI 功能开发"
+msgid "机械设备控制 · AI 开发"
+msgstr "Machinery Control · AI Development"
 
-msgid "Doctoral Program in Applied Environmental Systems, Graduated"
-msgstr "Doctoral Program in Applied Environmental Systems, Graduated"
+#: blog/templates/blog/portfolio.html:708
+msgid "PLC → ROS → YOLO 完整控制层级开发。主导新技術导入并开发自动化工具。"
+msgstr ""
 
-msgid "Tokyo Univ. of Marine Science and Technology · Master"
-msgstr "Tokyo Univ. of Marine Science and Technology · Master"
-
-msgid "Master's Program in Maritime Logistics, Graduated"
-msgstr "Master's Program in Maritime Logistics, Graduated"
-
-msgid "Dalian Maritime University · Bachelor"
-msgstr "Dalian Maritime University · Bachelor"
-
-msgid "Bachelor's in Marine Electronic and Electrical Engineering, Graduated"
-msgstr "Bachelor's in Marine Electronic and Electrical Engineering, Graduated"
-
-msgid "Certifications & Languages"
-msgstr "Certifications & Languages"
-
-msgid "Tamakage Skills Certificate"
-msgstr "Tamakage Skills Certificate"
-
-msgid "Standard Class 1 Driver's License"
-msgstr "Standard Class 1 Driver's License"
-
-msgid "About Me"
-msgstr "About Me"
-
-msgid "Basic Info"
-msgstr "Basic Info"
-
-msgid "Name"
-msgstr "Name"
-
-msgid "Wenbin BAI (Ethan BAI)"
-msgstr "Wenbin BAI (Ethan BAI)"
-
-msgid "Location"
-msgstr "Location"
-
-msgid "Gunma, Japan"
-msgstr "Gunma, Japan"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Employment"
-msgstr "Employment"
-
-msgid "Present"
+#: blog/templates/blog/portfolio.html:710
+#: blog/templates/blog/portfolio.html:897
+msgid "至今"
 msgstr "Present"
 
-msgid "Furukawa Rock Drill Co., Ltd."
-msgstr "Furukawa Rock Drill Co., Ltd."
-
-msgid "R&D Dept. · Machinery Control / AI Development · Full-time"
-msgstr "R&D Dept. · Machinery Control / AI Development · Full-time"
-
-msgid "Internships"
-msgstr "Internships"
-
-msgid "Yamaha Co., Ltd. · Automotive Audio Development"
-msgstr "Yamaha Co., Ltd. · Automotive Audio Development"
-
-msgid "Keyence Co., Ltd. · Technical Internship"
-msgstr "Keyence Co., Ltd. · Technical Internship"
-
-msgid "Self Evaluation"
-msgstr "Self Evaluation"
-
-msgid ""
-"From PLC-level control to AI image recognition, to full-stack web and Chrome"
-" extension development — I possess hands-on experience across multiple "
-"layers of the technology stack. At a major machinery manufacturer's core R&D"
-" department, I lead full-stack development of product-embedded software "
-"while driving the introduction and adoption of new technologies. I excel at "
-"identifying pain points in business workflows and solving them with "
-"technology — once developing an automation tool that reduced hardware "
-"configuration time from 20 minutes to 1 minute (a 95% reduction). I "
-"continuously follow cutting-edge technologies and believe the true value of "
-"technology lies in solving real-world problems."
+#: blog/templates/blog/portfolio.html:778
+msgid "专业技能"
 msgstr ""
-"From PLC-level control to AI image recognition, to full-stack web and Chrome"
-" extension development — I possess hands-on experience across multiple "
-"layers of the technology stack. At a major machinery manufacturer's core R&D"
-" department, I lead full-stack development of product-embedded software "
-"while driving the introduction and adoption of new technologies. I excel at "
-"identifying pain points in business workflows and solving them with "
-"technology — once developing an automation tool that reduced hardware "
-"configuration time from 20 minutes to 1 minute (a 95% reduction). I "
-"continuously follow cutting-edge technologies and believe the true value of "
-"technology lies in solving real-world problems."
 
-msgid "Education"
-msgstr "Education"
+#: blog/templates/blog/portfolio.html:789
+msgid "AI / 机器学习"
+msgstr "AI / Machine Learning"
 
+#: blog/templates/blog/portfolio.html:803
+#, fuzzy
+#| msgid "后端 / DevOps"
+msgid "后端/DevOps"
+msgstr "Backend / DevOps"
+
+#: blog/templates/blog/portfolio.html:839
+#, fuzzy
+#| msgid "Chrome扩展"
+msgid "扩展"
+msgstr "Chrome Extension"
+
+#: blog/templates/blog/portfolio.html:839
+msgid "已上架 Chrome Web Store"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:840
+#, fuzzy
+#| msgid ""
+#| "基于 WXT + React 18 + TypeScript 的 Chrome 扩展，支持 Bilibili/YouTube/"
+#| "Podcast 批量导入 NotebookLM。已上架 Chrome Web Store。"
+msgid ""
+"一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 "
+"Bilibili、YouTube、Apple Podcasts、小宇宙等多种来源批量导入内容到 Google "
+"NotebookLM。"
+msgstr ""
+"A Chrome extension built with WXT + React 18 + TypeScript that batch-imports "
+"Bilibili/YouTube/Podcast content into NotebookLM. Published on Chrome Web "
+"Store."
+
+#: blog/templates/blog/portfolio.html:844
+msgid "Bilibili 字幕批量提取"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:845
+msgid "YouTube 播放列表导入"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:846
+msgid "播客自动下载"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:847
+msgid "Web 页面提取"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:848
+msgid "AI 对话分享卡片"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:849
+msgid "RSS 订阅"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:854
+msgid "文档"
+msgstr "Docs"
+
+#: blog/templates/blog/portfolio.html:858
+#, fuzzy
+#| msgid "端到端多票据自动识别系统"
+msgid "多票据自动识别"
+msgstr "End-to-End Multi-Receipt Recognition System"
+
+#: blog/templates/blog/portfolio.html:859
+#, fuzzy
+#| msgid "计算机视觉 · OCR"
+msgid "计算机视觉"
+msgstr "Computer Vision · OCR"
+
+#: blog/templates/blog/portfolio.html:860
+#, fuzzy
+#| msgid ""
+#| "输入包含多张票据的合成照片，经过 YOLOv8m 物体检测 → 透视变换矫正 → "
+#| "ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域检测 → PaddleOCR 文字识别的四阶"
+#| "段流水线，自动输出结构化 CSV 数据。解决了日常生活中多张票据同时拍摄后手动"
+#| "录入效率低下的痛点。"
+msgid ""
+"YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域"
+"检测 → PaddleOCR 文字识别，自动输出结构化 CSV。"
+msgstr ""
+"A four-stage pipeline: YOLOv8m object detection → perspective correction → "
+"ResNet34 orientation classification → YOLOv5/YOLOv9 text region detection → "
+"PaddleOCR text recognition. Automatically outputs structured CSV data from "
+"composite photos of multiple receipts, solving the pain point of manual data "
+"entry."
+
+#: blog/templates/blog/portfolio.html:864
+#, fuzzy
+#| msgid "独立完成整条流水线的架构设计与代码实现"
+msgid "独立完成整条流水线架构设计"
+msgstr ""
+"Independently designed and implemented the entire pipeline architecture"
+
+#: blog/templates/blog/portfolio.html:865
+msgid "基于 OpenCV 透视变换矫正"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:866
+msgid "训练 YOLOv8m 关键字段检测"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:867
+msgid "端到端耗时 3 秒以内"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:874
+#, fuzzy
+#| msgid "本地文档智能问答系统"
+msgid "本地文档智能问答"
+msgstr "Local Document QA System"
+
+#: blog/templates/blog/portfolio.html:876
+msgid ""
+"基于 RAG 架构的本地文档 QA 系统。上传文档后自动分割、向量化，通过 ZhipuAI 嵌"
+"入 + DeepSeek API 实现自然语言问答。自研 NumPy+JSON 轻量 VectorStore。"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:885
+msgid "从零实现 RAG 完整流水线"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:886
+msgid "自研轻量 VectorStore"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:887
+msgid "增量索引构建"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:888
+msgid "4 种回答风格 + 检索可视化"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:896
+msgid "机械设备控制 · AI 功能开发"
+msgstr "Machinery Control · AI Development"
+
+#: blog/templates/blog/portfolio.html:897
+#, fuzzy
+#| msgid "古河机械金属株式会社 · 正社員"
+msgid "古河机械金属株式会社"
+msgstr "Furukawa Rock Drill · Full-time Employee"
+
+#: blog/templates/blog/portfolio.html:898
+#, fuzzy
+#| msgid ""
+#| "在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基"
+#| "本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO 图像识"
+#| "别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，"
+#| "从软硬件两端推动产品升级。"
+msgid ""
+"核心研发部门从事产品搭载软件的全栈开发。PLC 基本控制、ROS 自动化流程构建、"
+"YOLO 图像识别算法实现等多个控制层级。"
+msgstr ""
+"Working in the core R&D department of a major machinery manufacturer, doing "
+"full-stack development of onboard software. Covers multiple control layers: "
+"PLC sequence/motion control, ROS automation pipelines, and YOLO image "
+"recognition. Also involved in electrical/hydraulic circuit design and CREO "
+"mechanical design."
+
+#: blog/templates/blog/portfolio.html:902
+#, fuzzy
+#| msgid "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力"
+msgid "覆盖 PLC→ROS→AI 完整控制层级"
+msgstr "Full-stack control layer development: PLC → ROS → AI image recognition"
+
+#: blog/templates/blog/portfolio.html:903
+msgid "主导 YOLO/ROS 技术导入"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:904
+#, python-format
+msgid "开发自动化工具缩短 95%% 作业时间"
+msgstr ""
+
+#: blog/templates/blog/portfolio.html:905
+msgid "参与电气/油压回路设计"
+msgstr ""
+
+#: blog/templates/blog/post_detail.html:14
+msgid "文章目录"
+msgstr "Table of Contents"
+
+#: blog/templates/blog/post_detail.html:29
+msgid "次阅读"
+msgstr "views"
+
+#: blog/templates/blog/post_detail.html:62
+#: blog/templates/blog/post_detail.html:67
+msgid "← 上一篇"
+msgstr "← Previous Post"
+
+#: blog/templates/blog/post_detail.html:68
+msgid "已经是最前一篇了"
+msgstr "This is the first post"
+
+#: blog/templates/blog/post_detail.html:74
+#: blog/templates/blog/post_detail.html:79
+msgid "下一篇 →"
+msgstr "Next Post →"
+
+#: blog/templates/blog/post_detail.html:80
+msgid "已经是最后一篇了"
+msgstr "This is the last post"
+
+#: blog/templates/blog/post_detail.html:88
+msgid "评论"
+msgstr "Comments"
+
+#: blog/templates/blog/post_detail.html:112
+msgid "全部评论"
+msgstr "All Comments"
+
+#: blog/templates/blog/post_detail.html:126
+msgid "还没有评论，欢迎留下第一条。"
+msgstr "No comments yet. Leave the first one!"
+
+#: blog/templates/blog/post_list.html:5 users/templates/users/base.html:7
+#: users/templates/users/base_profile.html:7
+#: users/templates/users/forget_pwd.html:4 users/templates/users/login.html:4
+#: users/templates/users/register.html:4
+#: users/templates/users/register_success.html:4
+#: users/templates/users/reset_pwd.html:4
+#: users/templates/users/user_profile.html:7
+#: users/templates/users/user_profile.html:18
+msgid "博客"
+msgstr "Blog"
+
+#: blog/templates/blog/post_list.html:13
+#, python-format
+msgid "浏览「%(name)s」分类下的所有文章"
+msgstr "Browse all articles under「%(name)s」"
+
+#: blog/templates/blog/post_list.html:40 blog/templates/blog/search.html:36
+#, python-format
+msgid "预计阅读 %(time)s 分钟"
+msgstr "Est. reading time %(time)s min"
+
+#: blog/templates/blog/post_list.html:58 blog/templates/blog/search.html:52
+msgid "阅读全文"
+msgstr "Read Full Article"
+
+#: blog/templates/blog/post_list.html:64
+msgid "还没有文章"
+msgstr "No articles yet"
+
+#: blog/templates/blog/post_list.html:65
+msgid "目前这里还没有内容，可以去后台发布第一篇文章。"
+msgstr "Nothing here yet. Go to the admin panel to publish your first article."
+
+#: blog/templates/blog/post_list.html:78 blog/templates/blog/search.html:69
+#: blog/templates/blog/search.html:72
+#, fuzzy
+#| msgid "← 上一篇"
+msgid "← 上一页"
+msgstr "← Previous Post"
+
+#: blog/templates/blog/post_list.html:94 blog/templates/blog/search.html:85
+#: blog/templates/blog/search.html:88
+msgid "下一页 →"
+msgstr ""
+
+#: blog/templates/blog/resume.html:4 blog/templates/blog/resume.html:12
 msgid "Resume"
 msgstr "Resume"
 
-msgid "Technical Skills"
-msgstr "Technical Skills"
+#: blog/templates/blog/resume.html:13
+msgid "Fullstack Engineer · AI Enthusiast"
+msgstr "Fullstack Engineer · AI Enthusiast"
 
-msgid "Programming Languages"
-msgstr "Programming Languages"
+#: blog/templates/blog/resume.html:24
+msgid "Basic Info"
+msgstr "Basic Info"
 
-msgid "AI / Machine Learning"
-msgstr "AI / Machine Learning"
+#: blog/templates/blog/resume.html:28
+msgid "Name"
+msgstr "Name"
 
-msgid "Frontend & Full-stack"
-msgstr "Frontend & Full-stack"
+#: blog/templates/blog/resume.html:29
+msgid "Wenbin BAI (Ethan BAI)"
+msgstr "Wenbin BAI (Ethan BAI)"
 
-msgid "Industrial Control / Hardware"
-msgstr "Industrial Control / Hardware"
+#: blog/templates/blog/resume.html:32
+msgid "Location"
+msgstr "Location"
 
-msgid "DevOps / Tools"
-msgstr "DevOps / Tools"
+#: blog/templates/blog/resume.html:33
+msgid "Gunma, Japan"
+msgstr "Gunma, Japan"
 
-msgid "PLC Sequence Control"
-msgstr "PLC Sequence Control"
+#: blog/templates/blog/resume.html:36
+msgid "Email"
+msgstr "Email"
 
-msgid "PLC Motion Control"
-msgstr "PLC Motion Control"
+#: blog/templates/blog/resume.html:53
+msgid "Employment"
+msgstr "Employment"
 
-msgid "ROS Automation"
-msgstr "ROS Automation"
+#: blog/templates/blog/resume.html:57
+msgid "Present"
+msgstr "Present"
 
-msgid "Circuit Design"
-msgstr "Circuit Design"
+#: blog/templates/blog/resume.html:58
+msgid "Furukawa Rock Drill Co., Ltd."
+msgstr "Furukawa Rock Drill Co., Ltd."
 
-msgid "Hydraulic Circuit Design"
-msgstr "Hydraulic Circuit Design"
+#: blog/templates/blog/resume.html:59
+msgid "R&D Dept. · Machinery Control / AI Development · Full-time"
+msgstr "R&D Dept. · Machinery Control / AI Development · Full-time"
 
-msgid "CREO 3D Modeling"
-msgstr "CREO 3D Modeling"
-
+#: blog/templates/blog/resume.html:63
 msgid "Yamaha Co., Ltd. · Automotive Audio Development (Internship)"
 msgstr "Yamaha Co., Ltd. · Automotive Audio Development (Internship)"
 
+#: blog/templates/blog/resume.html:67
+msgid "Keyence Co., Ltd. · Technical Internship"
+msgstr "Keyence Co., Ltd. · Technical Internship"
+
+#: blog/templates/blog/resume.html:79
+msgid "Education"
+msgstr "Education"
+
+#: blog/templates/blog/resume.html:84
+msgid "Tokyo Univ. of Marine Science and Technology · PhD"
+msgstr "Tokyo Univ. of Marine Science and Technology · PhD"
+
+#: blog/templates/blog/resume.html:85
+msgid "Doctoral Program in Applied Environmental Systems, Graduated"
+msgstr "Doctoral Program in Applied Environmental Systems, Graduated"
+
+#: blog/templates/blog/resume.html:89
+msgid "Tokyo Univ. of Marine Science and Technology · Master"
+msgstr "Tokyo Univ. of Marine Science and Technology · Master"
+
+#: blog/templates/blog/resume.html:90
+msgid "Master's Program in Maritime Logistics, Graduated"
+msgstr "Master's Program in Maritime Logistics, Graduated"
+
+#: blog/templates/blog/resume.html:94
+msgid "Dalian Maritime University · Bachelor"
+msgstr "Dalian Maritime University · Bachelor"
+
+#: blog/templates/blog/resume.html:95
+msgid "Bachelor's in Marine Electronic and Electrical Engineering, Graduated"
+msgstr "Bachelor's in Marine Electronic and Electrical Engineering, Graduated"
+
+#: blog/templates/blog/resume.html:107
+msgid "Technical Skills"
+msgstr "Technical Skills"
+
+#: blog/templates/blog/resume.html:111
+msgid "Programming Languages"
+msgstr "Programming Languages"
+
+#: blog/templates/blog/resume.html:121
+msgid "AI / Machine Learning"
+msgstr "AI / Machine Learning"
+
+#: blog/templates/blog/resume.html:135
+msgid "Frontend & Full-stack"
+msgstr "Frontend & Full-stack"
+
+#: blog/templates/blog/resume.html:148
+msgid "Industrial Control / Hardware"
+msgstr "Industrial Control / Hardware"
+
+#: blog/templates/blog/resume.html:150
+msgid "PLC Sequence Control"
+msgstr "PLC Sequence Control"
+
+#: blog/templates/blog/resume.html:151
+msgid "PLC Motion Control"
+msgstr "PLC Motion Control"
+
+#: blog/templates/blog/resume.html:152
+msgid "ROS Automation"
+msgstr "ROS Automation"
+
+#: blog/templates/blog/resume.html:156
+msgid "Circuit Design"
+msgstr "Circuit Design"
+
+#: blog/templates/blog/resume.html:157
+msgid "Hydraulic Circuit Design"
+msgstr "Hydraulic Circuit Design"
+
+#: blog/templates/blog/resume.html:158
+msgid "CREO 3D Modeling"
+msgstr "CREO 3D Modeling"
+
+#: blog/templates/blog/resume.html:163
+msgid "DevOps / Tools"
+msgstr "DevOps / Tools"
+
+#: blog/templates/blog/resume.html:182
+msgid "Certifications & Languages"
+msgstr "Certifications & Languages"
+
+#: blog/templates/blog/resume.html:187
+msgid "Tamakage Skills Certificate"
+msgstr "Tamakage Skills Certificate"
+
+#: blog/templates/blog/resume.html:188
+msgid "Standard Class 1 Driver's License"
+msgstr "Standard Class 1 Driver's License"
+
+#: blog/templates/blog/resume.html:204
 msgid "Chrome Extension"
 msgstr "Chrome Extension"
 
+#: blog/templates/blog/resume.html:205
 msgid ""
 "A Chrome extension built with WXT + React 18 + TypeScript for batch "
-"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web"
-" Store."
+"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web "
+"Store."
 msgstr ""
 "A Chrome extension built with WXT + React 18 + TypeScript for batch "
-"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web"
-" Store."
+"importing Bilibili/YouTube/Podcasts into NotebookLM. Published on Chrome Web "
+"Store."
 
+#: blog/templates/blog/resume.html:210
 msgid ""
 "Four-stage CV pipeline: YOLOv8m + ResNet34 + PaddleOCR for multi-receipt "
 "auto recognition and structured CSV output."
@@ -1023,6 +818,7 @@ msgstr ""
 "Four-stage CV pipeline: YOLOv8m + ResNet34 + PaddleOCR for multi-receipt "
 "auto recognition and structured CSV output."
 
+#: blog/templates/blog/resume.html:215
 msgid ""
 "Lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI for local "
 "document intelligent Q&A."
@@ -1030,5 +826,793 @@ msgstr ""
 "Lightweight VectorStore (NumPy + JSON) with DeepSeek + ZhipuAI for local "
 "document intelligent Q&A."
 
-msgid "Fullstack Engineer · AI Enthusiast"
-msgstr "Fullstack Engineer · AI Enthusiast"
+#: blog/templates/blog/resume.html:227
+msgid "Self Evaluation"
+msgstr "Self Evaluation"
+
+#: blog/templates/blog/resume.html:230
+#, fuzzy, python-format
+#| msgid ""
+#| "From PLC-level control to AI image recognition, to full-stack web and "
+#| "Chrome extension development — I possess hands-on experience across "
+#| "multiple layers of the technology stack. At a major machinery "
+#| "manufacturer's core R&D department, I lead full-stack development of "
+#| "product-embedded software while driving the introduction and adoption of "
+#| "new technologies. I excel at identifying pain points in business "
+#| "workflows and solving them with technology — once developing an "
+#| "automation tool that reduced hardware configuration time from 20 minutes "
+#| "to 1 minute (a 95% reduction). I continuously follow cutting-edge "
+#| "technologies and believe the true value of technology lies in solving "
+#| "real-world problems."
+msgid ""
+"From PLC-level control to AI image recognition, to full-stack web and Chrome "
+"extension development — I possess hands-on experience across multiple layers "
+"of the technology stack. At a major machinery manufacturer's core R&D "
+"department, I lead full-stack development of product-embedded software while "
+"driving the introduction and adoption of new technologies. I excel at "
+"identifying pain points in business workflows and solving them with "
+"technology — once developing an automation tool that reduced hardware "
+"configuration time from 20 minutes to 1 minute (a 95%% reduction). I "
+"continuously follow cutting-edge technologies and believe the true value of "
+"technology lies in solving real-world problems."
+msgstr ""
+"From PLC-level control to AI image recognition, to full-stack web and Chrome "
+"extension development — I possess hands-on experience across multiple layers "
+"of the technology stack. At a major machinery manufacturer's core R&D "
+"department, I lead full-stack development of product-embedded software while "
+"driving the introduction and adoption of new technologies. I excel at "
+"identifying pain points in business workflows and solving them with "
+"technology — once developing an automation tool that reduced hardware "
+"configuration time from 20 minutes to 1 minute (a 95% reduction). I "
+"continuously follow cutting-edge technologies and believe the true value of "
+"technology lies in solving real-world problems."
+
+#: blog/templates/blog/search.html:4
+#, python-format
+msgid "搜索：%(q)s"
+msgstr "Search: %(q)s"
+
+#: blog/templates/blog/search.html:9
+msgid "搜索结果"
+msgstr "Search Results"
+
+#: blog/templates/blog/search.html:12
+#, python-format
+msgid "关于「<strong>%(q)s</strong>」的搜索结果，共 %(count)s 篇"
+msgstr "About <strong>%(q)s</strong> - %(count)s result(s) found"
+
+#: blog/templates/blog/search.html:14
+msgid "请输入搜索关键词"
+msgstr "Please enter a search keyword"
+
+#: blog/templates/blog/search.html:58
+msgid "未找到相关文章"
+msgstr "No articles found"
+
+#: blog/templates/blog/search.html:59
+msgid "尝试更换关键词，或浏览全部文章。"
+msgstr "Try different keywords or browse all articles."
+
+#: blog/templates/blog/sidebar.html:8
+msgid "博主头像"
+msgstr "Blogger Avatar"
+
+#: blog/templates/blog/sidebar.html:25
+msgid "分享深度学习与 AI 相关的学习笔记和技术思考。"
+msgstr "Sharing study notes and technical thoughts on deep learning and AI."
+
+#: blog/templates/blog/sidebar.html:34
+msgid "最新文章"
+msgstr "Latest Articles"
+
+#: blog/templates/blog/sidebar.html:46 blog/templates/blog/sidebar.html:68
+#: blog/templates/blog/sidebar.html:90 blog/templates/blog/sidebar.html:110
+msgid "查看更多"
+msgstr "View More"
+
+#: blog/templates/blog/sidebar.html:56
+msgid "热门文章"
+msgstr "Popular Articles"
+
+#: blog/templates/blog/sidebar.html:62
+msgid "阅读"
+msgstr "reads"
+
+#: blog/templates/blog/sidebar.html:78
+msgid "文章归档"
+msgstr "Archives"
+
+#: blog/templates/blog/sidebar.html:83
+msgid "年"
+msgstr " "
+
+#: blog/templates/blog/sidebar.html:83
+msgid "月"
+msgstr ""
+
+#: blog/templates/blog/sidebar.html:84
+msgid "篇"
+msgstr ""
+
+#: blog/templates/blog/sidebar.html:118
+msgid "收起"
+msgstr "Collapse"
+
+#: users/templates/users/base_profile.html:7
+#: users/templates/users/user_profile.html:7
+#: users/templates/users/user_profile.html:68
+msgid "个人中心"
+msgstr "Dashboard"
+
+#: users/templates/users/base_profile.html:45
+#: users/templates/users/login.html:4
+#: users/templates/users/user_profile.html:54
+msgid "登录"
+msgstr "Log In"
+
+#: users/templates/users/base_profile.html:46
+#: users/templates/users/register.html:4
+#: users/templates/users/user_profile.html:55
+msgid "注册"
+msgstr "Register"
+
+#: users/templates/users/base_profile.html:65
+#: users/templates/users/profile_detail.html:31
+#: users/templates/users/user_profile.html:70
+#: users/templates/users/user_profile.html:133
+msgid "个人信息"
+msgstr ""
+
+#: users/templates/users/base_profile.html:71
+#: users/templates/users/editor_users.html:6
+#: users/templates/users/editor_users.html:12
+msgid "编辑资料"
+msgstr "Edit Profile"
+
+#: users/templates/users/base_profile.html:99
+msgid "草稿箱"
+msgstr "Drafts"
+
+#: users/templates/users/base_profile.html:112
+msgid "站长管理"
+msgstr "Admin Panel"
+
+#: users/templates/users/base_profile.html:140
+#: users/templates/users/profile_detail.html:6
+#: users/templates/users/user_profile.html:106
+msgid "账号信息"
+msgstr "Account Info"
+
+#: users/templates/users/editor_users.html:46
+#, python-format
+msgid "请输入%(label)s"
+msgstr "Please enter %(label)s"
+
+#: users/templates/users/editor_users.html:59
+msgid "取消"
+msgstr "Cancel"
+
+#: users/templates/users/editor_users.html:62
+msgid "保存修改"
+msgstr "Save Changes"
+
+#: users/templates/users/forget_pwd.html:4
+msgid "忘记密码"
+msgstr "Forgot Password"
+
+#: users/templates/users/forget_pwd.html:31
+msgid "返回登录"
+msgstr "Back to Login"
+
+#: users/templates/users/login.html:19
+msgid "提示：请检查邮箱的收件箱和垃圾邮件文件夹，或"
+msgstr "Tip: Please check your inbox and spam folder, or"
+
+#: users/templates/users/login.html:20
+#: users/templates/users/register_success.html:43
+msgid "通过忘记密码重新激活"
+msgstr "reactivate via Forgot Password"
+
+#: users/templates/users/login.html:56
+msgid "回到首页"
+msgstr "Back to Home"
+
+#: users/templates/users/profile_detail.html:15
+#: users/templates/users/user_profile.html:28
+#: users/templates/users/user_profile.html:117
+msgid "头像"
+msgstr "Avatar"
+
+#: users/templates/users/profile_detail.html:21
+#: users/templates/users/user_profile.html:123
+msgid "暂未设置个性签名"
+msgstr "No bio yet"
+
+#: users/templates/users/profile_detail.html:25
+msgid "修改信息"
+msgstr "Edit Info"
+
+#: users/templates/users/profile_detail.html:34
+#: users/templates/users/user_profile.html:136
+msgid "邮箱"
+msgstr ""
+
+#: users/templates/users/profile_detail.html:44
+#: users/templates/users/user_profile.html:146
+msgid "性别"
+msgstr ""
+
+#: users/templates/users/profile_detail.html:46
+#: users/templates/users/user_profile.html:148
+msgid "男"
+msgstr "Male"
+
+#: users/templates/users/profile_detail.html:46
+#: users/templates/users/user_profile.html:148
+msgid "女"
+msgstr "Female"
+
+#: users/templates/users/profile_detail.html:46
+#: users/templates/users/user_profile.html:148
+#: users/templates/users/user_profile.html:154
+#: users/templates/users/user_profile.html:160
+msgid "未设置"
+msgstr "Not set"
+
+#: users/templates/users/profile_detail.html:62
+#: users/templates/users/user_profile.html:164
+msgid "简介"
+msgstr ""
+
+#: users/templates/users/profile_detail.html:64
+#: users/templates/users/user_profile.html:166
+msgid "暂未填写个人简介"
+msgstr "No profile description yet"
+
+#: users/templates/users/register.html:27
+msgid "已有账号？"
+msgstr "Already have an account?"
+
+#: users/templates/users/register.html:28
+msgid "立即登录"
+msgstr "Log In Now"
+
+#: users/templates/users/register.html:32
+#, fuzzy
+#| msgid "注册"
+msgid "注 册"
+msgstr "Register"
+
+#: users/templates/users/register_success.html:4
+msgid "注册成功"
+msgstr "Registration Success"
+
+#: users/templates/users/register_success.html:18
+msgid "注册成功！"
+msgstr "Registration Successful!"
+
+#: users/templates/users/register_success.html:19
+msgid "激活邮件已发送至你的邮箱，请查收"
+msgstr "An activation email has been sent to your email address."
+
+#: users/templates/users/register_success.html:27
+msgid "下一步操作"
+msgstr "Next Steps"
+
+#: users/templates/users/register_success.html:30
+msgid "1. 前往邮箱查收激活邮件（主题：博客注册激活链接）"
+msgstr "1. Check your email inbox for the activation email"
+
+#: users/templates/users/register_success.html:31
+msgid "2. 点击邮件中的链接完成账号激活"
+msgstr "2. Click the activation link in the email"
+
+#: users/templates/users/register_success.html:32
+msgid ""
+"3. 如未收到，请检查<span class=\"font-semibold\">垃圾邮件/垃圾桶</span>文件夹"
+msgstr ""
+
+#: users/templates/users/register_success.html:39
+msgid "前往登录"
+msgstr ""
+
+#: users/templates/users/register_success.html:42
+msgid "未收到邮件？"
+msgstr ""
+
+#: users/templates/users/reset_pwd.html:4
+#: users/templates/users/reset_pwd.html:8
+msgid "重置密码"
+msgstr "Reset Password"
+
+#: users/templates/users/reset_pwd.html:9
+msgid "请输入你的新密码"
+msgstr "Enter Your New Password"
+
+#: users/templates/users/reset_pwd.html:27
+msgid "确 认 修 改"
+msgstr "Confirm Changes"
+
+#: users/templates/users/user_profile.html:75
+msgid "内容管理"
+msgstr "Content Management"
+
+#: users/templates/users/user_profile.html:140
+msgid "昵称"
+msgstr ""
+
+#: users/templates/users/user_profile.html:142
+msgid "暂未设置"
+msgstr "Not set"
+
+#: users/templates/users/user_profile.html:152
+msgid "生日"
+msgstr ""
+
+#: users/templates/users/user_profile.html:158
+msgid "地址"
+msgstr ""
+
+#~ msgid "全栈工程师 & AI 技术探索者 · 持续学习中"
+#~ msgstr "Full-stack Engineer & AI Explorer · Always Learning"
+
+#~ msgid ""
+#~ "一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代"
+#~ "码与可复用的思考框架。"
+#~ msgstr ""
+#~ "A tech enthusiast exploring AI and deep learning. Loves breaking down "
+#~ "abstract concepts into runnable code and reusable thinking frameworks."
+
+#~ msgid ""
+#~ "系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记"
+#~ "录实验、思考与迭代过程。"
+#~ msgstr ""
+#~ "Systematically studying deep learning courses and papers, building a "
+#~ "knowledge graph, and documenting experiments and thoughts through the "
+#~ "blog."
+
+#~ msgid "热爱与秩序"
+#~ msgstr "Passion & Order"
+
+#~ msgid ""
+#~ "相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那"
+#~ "些真正能被实践验证的知识。"
+#~ msgstr ""
+#~ "Believes complex abilities come from long-term, compounding accumulation. "
+#~ "Prefers clear structure, rigorous expression, and practically verifiable "
+#~ "knowledge."
+
+#~ msgid "提交评论"
+#~ msgstr "Submit Comment"
+
+#~ msgid "匿名游客"
+#~ msgstr "Anonymous"
+
+#~ msgid "写代码，写思考，也写一些真正有价值的记录。"
+#~ msgstr "Writing code, writing thoughts, creating truly valuable records."
+
+#~ msgid "这里是关于技术、项目、方法论与持续学习的个人笔记。"
+#~ msgstr ""
+#~ "Personal notes on technology, projects, methodologies, and continuous "
+#~ "learning."
+
+#~ msgid "成长轨迹"
+#~ msgstr "Growth Timeline"
+
+#~ msgid "深度学习专项学习"
+#~ msgstr "Deep Learning Specialization"
+
+#~ msgid ""
+#~ "系统性地学习 Andrew Ng 深度学习五门课程，涵盖神经网络基础、超参数调优、结"
+#~ "构化机器学习、CNN、RNN 与注意力机制等核心领域。完成所有课程的笔记整理与代"
+#~ "码实践，构建个人 AI 知识体系。"
+#~ msgstr ""
+#~ "Systematically studied Andrew Ng's Deep Learning Specialization, covering "
+#~ "neural networks, hyperparameter tuning, structured ML, CNN, RNN, and "
+#~ "attention mechanisms. Completed all course notes and coding exercises, "
+#~ "building a personal AI knowledge system."
+
+#~ msgid "Web 开发与全栈探索"
+#~ msgstr "Web Development & Full-Stack"
+
+#~ msgid ""
+#~ "深入学习 Django 框架，从后端 API 设计到前端模板渲染，掌握了完整的 Web 开发"
+#~ "流程。搭建个人博客系统，将学习过程中的思考与笔记沉淀为结构化的知识输出。"
+#~ msgstr ""
+#~ "Deep-dived into Django framework, from backend API design to frontend "
+#~ "template rendering, mastering the full web development workflow. Built a "
+#~ "personal blog system to transform learning into structured knowledge "
+#~ "output."
+
+#~ msgid "Python 与数据科学入门"
+#~ msgstr "Python & Data Science"
+
+#~ msgid ""
+#~ "从 Python 基础语法开始，逐步深入到 NumPy、Pandas、Matplotlib 等数据科学生"
+#~ "态工具。建立扎实的编程基础，为后续的 AI 学习奠定了坚实的技术根基。"
+#~ msgstr ""
+#~ "Started with Python basics, then progressed to NumPy, Pandas, Matplotlib "
+#~ "and other data science tools. Built a solid programming foundation for "
+#~ "future AI learning."
+
+#~ msgid "更早之前"
+#~ msgstr "Earlier Days"
+
+#~ msgid "对技术的原始好奇"
+#~ msgstr "Original Curiosity for Technology"
+
+#~ msgid ""
+#~ "对计算机科学的兴趣始于对\"机器如何思考\"这一问题的好奇。从第一行 Hello "
+#~ "World 到如今能够训练神经网络模型，每一步都是对未知世界的探索。"
+#~ msgstr ""
+#~ "My interest in computer science began with wondering 'how machines "
+#~ "think.' From the first Hello World to training neural networks, every "
+#~ "step has been an exploration of the unknown."
+
+#~ msgid "关于坚持"
+#~ msgstr "On Persistence"
+
+#~ msgid ""
+#~ "\"学习 AI 不是一场短跑，而是一场没有终点的马拉松。重要的是每天都比昨天多理"
+#~ "解一点点。\""
+#~ msgstr ""
+#~ "\"Learning AI is not a sprint, but a marathon without a finish line. What "
+#~ "matters is understanding a little more than yesterday.\""
+
+#~ msgid ""
+#~ "坚持做深度学习笔记整理这件事，已经成为了我日常生活的一部分。起初只是为了记"
+#~ "录课程中的关键概念，但随着笔记越积越多，我发现这个过程本身比学习课程更有价"
+#~ "值。写笔记不是简单的摘抄，而是强迫自己用最清晰的语言重新组织知识，在反复的"
+#~ "推敲和修改中，很多曾经模糊的概念突然变得清晰起来。"
+#~ msgstr ""
+#~ "Keeping deep learning notes has become part of my daily routine. "
+#~ "Initially just for recording course concepts, I found the process itself "
+#~ "more valuable than the courses. Note-taking isn't copying - it forces me "
+#~ "to reorganize knowledge in the clearest language, and through repeated "
+#~ "refinement, many fuzzy concepts suddenly become clear."
+
+#~ msgid ""
+#~ "在这个过程中，我深刻体会到：真正的学习不是\"听过\"或\"看过\"，而是能够用自"
+#~ "己的语言重新表达，并且能够将不同领域的知识连接起来。深度学习的美妙之处在"
+#~ "于，它不是一个孤立的学科——它连接着数学、统计学、计算机科学和认知科学，每一"
+#~ "次学习都像是在拼图中加入新的一块。"
+#~ msgstr ""
+#~ "Through this process, I deeply realized: real learning isn't 'hearing' or "
+#~ "'seeing' - it's being able to re-express in your own words and connect "
+#~ "knowledge across domains. Deep learning's beauty lies in connecting "
+#~ "mathematics, statistics, computer science, and cognitive science - each "
+#~ "piece of learning adds a new tile to the mosaic."
+
+#~ msgid ""
+#~ "最让我感到满足的时刻，不是完成某门课程，也不是跑通了某个模型，而是在某个深"
+#~ "夜写笔记时，忽然发现自己在几个月前记下的疑问，如今已经有了自己的答案。这种"
+#~ "\"过去和现在的自己对话\"的感觉，是自学路上最珍贵的体验。"
+#~ msgstr ""
+#~ "The most satisfying moments aren't finishing courses or running models, "
+#~ "but suddenly finding answers to questions I wrote months ago during late-"
+#~ "night note sessions. This 'dialogue between past and present self' is the "
+#~ "most precious experience on the self-learning journey."
+
+#~ msgid ""
+#~ "喜欢在 ArXiv 上浏览最新的 AI 论文，尤其关注 CV 和 NLP 领域的前沿进展。虽然"
+#~ "很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
+#~ msgstr ""
+#~ "I enjoy browsing the latest AI papers on ArXiv, especially CV and NLP "
+#~ "advances. Though many papers are challenging, understanding each new idea "
+#~ "is thrilling."
+
+#~ msgid ""
+#~ "关注 GitHub 上优秀的开源项目，学习优秀工程师的代码风格和架构设计。希望有一"
+#~ "天自己的项目也能被别人 Star。"
+#~ msgstr ""
+#~ "I follow great open-source projects on GitHub, learning from excellent "
+#~ "engineers' code style and architecture. Hope my projects will be starred "
+#~ "someday."
+
+#~ msgid ""
+#~ "相信清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简"
+#~ "洁、准确的语言传达复杂的思想。"
+#~ msgstr ""
+#~ "I believe clear writing is the reflection of clear thinking. Whether "
+#~ "technical notes or personal insights, I strive to convey complex ideas "
+#~ "with concise, precise language."
+
+#~ msgid "持续学习"
+#~ msgstr "Continuous Learning"
+
+#~ msgid ""
+#~ "技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只"
+#~ "埋头写代码，更要理解人与技术的关系。"
+#~ msgstr ""
+#~ "Beyond technology, I follow product design, cognitive science, and "
+#~ "personal productivity. A good engineer shouldn't just write code, but "
+#~ "understand the relationship between people and technology."
+
+#~ msgid "姓名"
+#~ msgstr "Name"
+
+#~ msgid ""
+#~ "完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心"
+#~ "技术。"
+#~ msgstr ""
+#~ "Completed Andrew Ng's Deep Learning Specialization, mastering neural "
+#~ "networks, CNN, RNN, and attention mechanisms."
+
+#~ msgid ""
+#~ "热爱深度学习与人工智能技术，具备扎实的数学基础和编程能力。善于将复杂的 AI "
+#~ "概念转化为清晰易懂的文档和笔记。注重代码质量和工程实践，持续学习前沿技术。"
+#~ msgstr ""
+#~ "Passionate about deep learning and AI, with solid mathematical "
+#~ "foundations and programming skills. Skilled at translating complex AI "
+#~ "concepts into clear documentation and notes. Focused on code quality and "
+#~ "engineering practices, continuously learning cutting-edge technologies."
+
+#~ msgid "项目"
+#~ msgstr "Projects"
+
+#~ msgid "深度学习专项课程笔记"
+#~ msgstr "Deep Learning Specialization Notes"
+
+#~ msgid ""
+#~ "Andrew Ng 深度学习五门课程（神经网络与深度学习、改善深度神经网络、结构化机"
+#~ "器学习项目、卷积神经网络、序列模型）的完整中文学习笔记，涵盖所有关键概念、"
+#~ "数学推导和代码实现要点。"
+#~ msgstr ""
+#~ "Complete study notes for Andrew Ng's Deep Learning Specialization (5 "
+#~ "courses), covering all key concepts, mathematical derivations, and "
+#~ "implementation details."
+
+#~ msgid "技术栈"
+#~ msgstr "Tech Stack"
+
+#~ msgid "关于我"
+#~ msgstr "About Me"
+
+#~ msgid "博客注册"
+#~ msgstr "Blog Registration"
+
+#~ msgid "创建你的账号"
+#~ msgstr "Create Your Account"
+
+#~ msgid "当前：%(value)s"
+#~ msgstr "Current: %(value)s"
+
+#~ msgid "博客登录"
+#~ msgstr "Blog Login"
+
+#~ msgid "欢迎回来"
+#~ msgstr "Welcome Back"
+
+#~ msgid "忘记密码？"
+#~ msgstr "Forgot Password?"
+
+#~ msgid "注册账号"
+#~ msgstr "Register Account"
+
+#~ msgid "登 录"
+#~ msgstr "Log In"
+
+#~ msgid "找回密码"
+#~ msgstr "Reset Password"
+
+#~ msgid "输入注册邮箱，我们将发送重置链接"
+#~ msgstr "Enter your registered email to receive a reset link"
+
+#~ msgid "发送重置链接"
+#~ msgstr "Send Reset Link"
+
+#~ msgid "退出登录"
+#~ msgstr "Logout"
+
+#~ msgid "写文章"
+#~ msgstr "Write Article"
+
+#~ msgid "评论管理"
+#~ msgstr "Comment Management"
+
+#~ msgid ""
+#~ "2015 年从大连海事大学船舶电气工程专业毕业后，赴日留学并在东京海洋大学完成"
+#~ "了硕士与博士课程。十年的学术训练不仅奠定了扎实的工程基础，也培养了跨文化环"
+#~ "境下独立研究的能力。研究兴趣涉及海洋科技、自动化控制与人工智能的交叉领域。"
+#~ msgstr ""
+#~ "After graduating from Dalian Maritime University in 2015, I went to Japan "
+#~ "and completed my Master's and PhD at Tokyo University of Marine Science "
+#~ "and Technology. A decade of academic training laid a solid engineering "
+#~ "foundation and cultivated the ability to conduct independent research. My "
+#~ "research interests span marine technology, automation control, and AI."
+
+#~ msgid "GitHub"
+#~ msgstr "GitHub"
+
+#~ msgid "RAG · 大语言模型"
+#~ msgstr "RAG · Large Language Models"
+
+#~ msgid ""
+#~ "一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持"
+#~ "从 Bilibili、YouTube、Apple Podcasts、小宇宙、Web 页面、AI 对话等多种来源"
+#~ "批量导入内容到 Google NotebookLM。采用 Side Panel UI 设计，自动识别当前站"
+#~ "点并匹配导入工具，支持多账号切换、目标笔记本选择、PDF 聚合、AI 对话分享卡"
+#~ "片等高级功能。100% 客户端处理，不上传任何用户数据。"
+#~ msgstr ""
+#~ "A Chrome extension (Manifest V3) built with WXT + React + TypeScript that "
+#~ "batch-imports content from Bilibili, YouTube, Apple Podcasts, Xiaoyuzhou "
+#~ "FM, web pages, and AI chats into Google NotebookLM. Features Side Panel "
+#~ "UI, multi-account switching, target notebook selection, PDF aggregation, "
+#~ "AI share cards, and more. 100% client-side — no data uploaded."
+
+#~ msgid "业务范围"
+#~ msgstr "Scope of Work"
+
+#~ msgid "个人贡献"
+#~ msgstr "My Contribution"
+
+#~ msgid "主导新技術（YOLO·ROS）导入，推动产品智能化升级"
+#~ msgstr ""
+#~ "Led the introduction of new technologies (YOLO·ROS) to drive product "
+#~ "intelligence upgrades"
+
+#~ msgid "从零实现 RAG 完整流水线：文档分割 → 向量化 → 检索 → LLM 生成"
+#~ msgstr ""
+#~ "Implemented complete RAG pipeline from scratch: chunking → vectorization "
+#~ "→ retrieval → LLM generation"
+
+#~ msgid ""
+#~ "博士课程修了后，加入古河机械金属株式会社（古河ロックドリル），在开发设计部"
+#~ "从事产品搭载软件的全栈开发。从 PLC 底层控制到 AI 图像识别，覆盖了工业自动"
+#~ "化系统的完整技术栈。"
+#~ msgstr ""
+#~ "After completing my PhD, I joined Furukawa Rock Drill in the R&D "
+#~ "Department, doing full-stack development of onboard software. From PLC-"
+#~ "level control to AI image recognition, covering the complete technology "
+#~ "stack of industrial automation systems."
+
+#~ msgid "参与 Keyence 公司技术实习，了解工厂自动化与检测设备的前沿技术。"
+#~ msgstr ""
+#~ "Participated in a technical internship at Keyence, learning about factory "
+#~ "automation and cutting-edge inspection equipment."
+
+#~ msgid "参与电气 / 油压回路设计、CREO 3D 建模，实现软硬件协同开发"
+#~ msgstr ""
+#~ "Participated in electrical/hydraulic circuit design and CREO 3D modeling "
+#~ "for software-hardware co-development"
+
+#~ msgid "参与车载音响系统的开发实习，了解嵌入式音频处理与车载电子系统架构。"
+#~ msgstr ""
+#~ "Participated in an automotive audio system development internship, "
+#~ "learning about embedded audio processing and vehicle electronics."
+
+#~ msgid "基于 OpenCV 实现透视变换矫正，支持任意拍摄角度的票据规整"
+#~ msgstr ""
+#~ "Implemented perspective correction with OpenCV for arbitrary shooting "
+#~ "angles"
+
+#~ msgid ""
+#~ "基于 RAG（检索增强生成）架构的本地文档 QA 系统。上传 .md / .txt / .pdf 格"
+#~ "式的本地手册或文档，系统自动进行文本分割、向量化存储，并通过 ZhipuAI 嵌入"
+#~ "模型 + DeepSeek API 实现自然语言问答。采用 NumPy + JSON 自建轻量向量数据"
+#~ "库，无需外部向量数据库依赖。Streamlit Web UI 提供聊天式交互、回答风格选"
+#~ "择、Top-K 检索可视化等功能。"
+#~ msgstr ""
+#~ "A RAG-based local document QA system. Upload .md/.txt/.pdf manuals, and "
+#~ "the system automatically performs text chunking, vectorization, and "
+#~ "enables natural language Q&A via ZhipuAI embeddings + DeepSeek API. Uses "
+#~ "a self-built lightweight vector database with NumPy + JSON — no external "
+#~ "vector DB dependency. Streamlit Web UI with chat interface, answer style "
+#~ "selection, and Top-K retrieval visualization."
+
+#~ msgid "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时"
+#~ msgstr ""
+#~ "Implemented incremental indexing — only processes changed files, "
+#~ "significantly reducing startup time"
+
+#~ msgid "工业控制 / 硬件"
+#~ msgstr "Industrial Control / Hardware"
+
+#~ msgid ""
+#~ "开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 "
+#~ "95%）"
+#~ msgstr ""
+#~ "Developed a Python automation tool that reduced hardware ID setup time "
+#~ "from 20 min to 1 min (95% reduction)"
+
+#~ msgid "开发设计部 · 机械设备控制 / AI 功能开发 · 正社員"
+#~ msgstr "R&D Dept. · Machinery Control / AI Development · Full-time"
+
+#~ msgid "教育"
+#~ msgstr "Education"
+
+#~ msgid "教育背景"
+#~ msgstr "Education Background"
+
+#~ msgid "整合多模型推理管线，端到端耗时优化至 3 秒以内"
+#~ msgstr ""
+#~ "Integrated multi-model inference pipeline with end-to-end latency under 3 "
+#~ "seconds"
+
+#~ msgid "核心特性"
+#~ msgstr "Core Features"
+
+#~ msgid "求学之路"
+#~ msgstr "Academic Journey"
+
+#~ msgid ""
+#~ "海洋技术研究科 应用环境系统学专攻 —— 博士课程修了。研究方向涉及 AI 与自动"
+#~ "化控制技术的交叉应用。"
+#~ msgstr ""
+#~ "Doctoral Program in Applied Environmental Systems. Research focused on "
+#~ "cross-application of AI and automation control."
+
+#~ msgid ""
+#~ "海洋技术研究科 海运物流学专攻 —— 修士课程修了。聚焦自动化控制与信息系统研"
+#~ "究。"
+#~ msgstr ""
+#~ "Master's Program in Maritime Logistics. Focused on automation control and "
+#~ "information systems."
+
+#~ msgid "突出成果"
+#~ msgstr "Key Achievements"
+
+#~ msgid "职业轨迹"
+#~ msgstr "Career Path"
+
+#~ msgid ""
+#~ "自研轻量级 VectorStore（基于 NumPy 计算余弦相似度 + JSON 持久化），无外部 "
+#~ "DB 依赖"
+#~ msgstr ""
+#~ "Built a lightweight VectorStore using NumPy cosine similarity + JSON "
+#~ "persistence, zero external DB dependency"
+
+#~ msgid ""
+#~ "船舶电气工程学科 船舶电子电气工程专攻 —— 学士课程修了。系统学习了电气工"
+#~ "程、自动控制与嵌入式系统等核心课程。"
+#~ msgstr ""
+#~ "Bachelor's in Marine Electronic and Electrical Engineering. "
+#~ "Systematically studied electrical engineering, automation control, and "
+#~ "embedded systems."
+
+#~ msgid "训练 YOLOv8m 对 4 类关键字段（日期、店名、电话、金额）进行检测"
+#~ msgstr ""
+#~ "Trained YOLOv8m to detect 4 key field types (date, store name, phone, "
+#~ "amount)"
+
+#~ msgid "设计 4 种回答风格（概要/学习指南/博客/自定义）+ 检索结果可视化"
+#~ msgstr ""
+#~ "Designed 4 answer styles (summary/guide/blog/custom) + retrieval result "
+#~ "visualization"
+
+#~ msgid "DevOps / 工具"
+#~ msgstr "DevOps / Tools"
+
+#~ msgid ""
+#~ "从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome 扩展开发，具备跨越多"
+#~ "层技术栈的实践能力。在机械设备制造商的核心研发部门负责产品搭载软件的全栈开"
+#~ "发，同时主导新技术的导入与推广。善于识别业务流程中的痛点并运用技术手段解决"
+#~ "——曾开发 Python 自动化工具将作业时间缩短 95%。持续保持对前沿技术的关注与学"
+#~ "习，相信真正的技术价值在于解决实际问题。"
+#~ msgstr ""
+#~ "From PLC-level control to AI image recognition to full-stack web and "
+#~ "Chrome extension development, I have practical experience spanning "
+#~ "multiple technology layers. In the core R&D department of a machinery "
+#~ "manufacturer, I am responsible for full-stack development of onboard "
+#~ "software while leading new technology adoption. I excel at identifying "
+#~ "process pain points — I once developed an automation tool that reduced "
+#~ "task time by 95%. I believe true technical value lies in solving real-"
+#~ "world problems."
+
+#~ msgid "前端及全栈"
+#~ msgstr "Frontend & Full-Stack"
+
+#~ msgid "株式会社 · 车载音响开发（实习）"
+#~ msgstr "Co., Ltd. · Automotive Audio Development (Intern)"
+
+#~ msgid "Education Background"
+#~ msgstr "Education Background"
+
+#~ msgid "About Me"
+#~ msgstr "About Me"
+
+#~ msgid "Internships"
+#~ msgstr "Internships"
+
+#~ msgid "Yamaha Co., Ltd. · Automotive Audio Development"
+#~ msgstr "Yamaha Co., Ltd. · Automotive Audio Development"

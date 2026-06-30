@@ -1,10 +1,583 @@
 {% extends 'blog/base.html' %}
 {% load i18n static %}
 
-{% block title %}{% trans "我的作品" %} - {{ block.super }}{% endblock %}
+{% block title %}{% trans "Projects" %} - {{ block.super }}{% endblock %}
 
 {% block grid_class %}no-sidebar{% endblock %}
 {% block sidebar_area %}{% endblock sidebar_area %}
+
+{% block extra_css %}
+<style>
+/* ─── Tab + Card layout for Portfolio ─── */
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  min-height: 300px;
+}
+
+.portfolio-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(18, 21, 30, 0.91) 0%, rgba(14, 17, 24, 0.96) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.33s ease, box-shadow 0.33s ease, border-color 0.33s ease;
+  display: flex;
+  flex-direction: column;
+}
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-deep);
+}
+.portfolio-card.hidden {
+  display: none;
+}
+
+.portfolio-cover {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+.portfolio-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.portfolio-card:hover .portfolio-cover img {
+  transform: scale(1.06);
+}
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(10, 12, 18, 0.85) 100%);
+}
+.portfolio-tags-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 4px;
+}
+.portfolio-tags-top span {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-soft);
+  backdrop-filter: blur(4px);
+}
+
+.portfolio-body {
+  padding: 14px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.portfolio-body h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  color: var(--text);
+}
+.portfolio-body p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.portfolio-footer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.portfolio-footer .year {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+.portfolio-footer .links {
+  display: flex;
+  gap: 8px;
+}
+.portfolio-footer .links a {
+  font-size: 0.68rem;
+  color: var(--text-soft);
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.portfolio-footer .links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Tab Bar */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  margin: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar {
+  display: none;
+}
+.tab-btn {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.tab-btn:hover {
+  color: var(--text-soft);
+}
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--text);
+  font-weight: 600;
+}
+
+/* Tab animation */
+.portfolio-card.entering {
+  animation: fadeInUp 0.35s ease forwards;
+}
+
+/* ─── Skills summary card (in grid) ─── */
+.portfolio-skill-card {
+  grid-column: 1 / -1;
+  border-radius: var(--radius-xl);
+  padding: 28px 28px 24px;
+  background:
+    linear-gradient(135deg, rgba(16, 19, 28, 0.6) 0%, rgba(12, 15, 24, 0.5) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+}
+.portfolio-skill-card:hover {
+  transform: none;
+  box-shadow: var(--shadow);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.portfolio-skill-section {
+  flex: 1 1 140px;
+  min-width: 120px;
+}
+.portfolio-skill-section-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+.portfolio-skill-section-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.portfolio-skill-tag {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skill FAB */
+.skill-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 50;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(16, 19, 28, 0.85);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.skill-fab:hover {
+  background: rgba(24, 28, 36, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* Skill panel */
+.skill-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  z-index: 49;
+  width: 360px;
+  max-height: 60vh;
+  background: rgba(14, 17, 24, 0.96);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 20px 20px 16px;
+  overflow-y: auto;
+  transform: scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+}
+.skill-panel.active {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: all;
+}
+.skill-panel h3 {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 12px;
+}
+.skill-panel .block {
+  margin-bottom: 14px;
+}
+.skill-panel .block:last-child {
+  margin-bottom: 0;
+}
+.skill-panel .label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+}
+.skill-panel .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.skill-panel .tags span {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.66rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+.modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+.modal {
+  position: relative;
+  width: min(92vw, 1160px);
+  max-height: 90vh;
+  background: rgba(14, 17, 24, 0.98);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transform: scale(0.92);
+  transition: transform 0.28s ease;
+  display: flex;
+  flex-direction: column;
+}
+.modal-overlay.active .modal {
+  transform: scale(1);
+}
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+}
+.modal-nav:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.modal-nav.prev {
+  left: 12px;
+}
+.modal-nav.next {
+  right: 12px;
+}
+.modal-counter {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  z-index: 10;
+}
+.modal-body {
+  overflow-y: auto;
+  padding: 32px 32px 32px;
+  flex: 1;
+}
+.modal-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.modal-img {
+  overflow-y: auto;
+  max-height: 68vh;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+  padding-right: 4px;
+}
+.modal-img::-webkit-scrollbar {
+  width: 4px;
+}
+.modal-img::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+.modal-img img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+/* Image loading skeleton */
+.modal-img .img-wrapper {
+  position: relative;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(16, 19, 28, 0.6);
+}
+.modal-img .img-wrapper .skeleton {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(110deg,
+    rgba(30, 33, 44, 0.5) 0%,
+    rgba(40, 44, 56, 0.7) 50%,
+    rgba(30, 33, 44, 0.5) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+.modal-img .img-wrapper img {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.modal-img .img-wrapper img.loaded {
+  opacity: 1;
+}
+.modal-img .img-wrapper img.loaded + .skeleton {
+  display: none;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.modal-info .title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.modal-info .meta {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.modal-info .desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.modal-info .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.modal-info .tags span {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+.modal-info .list {
+  margin-bottom: 14px;
+}
+.modal-info .list li {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-left: 16px;
+}
+.modal-info .btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.modal-info .btns a {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  display: inline-block;
+  transition: all 0.2s;
+}
+.modal-info .btns a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 900px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modal-layout {
+    grid-template-columns: 1fr;
+  }
+  .modal-img {
+    max-height: 40vh;
+  }
+  .skill-panel {
+    width: calc(100vw - 32px);
+    right: 16px;
+  }
+}
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .page-intro {
+    padding: 0 4px;
+  }
+  .modal {
+    padding: 0;
+    width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .modal-body {
+    padding: 16px;
+  }
+  .skill-fab {
+    bottom: 20px;
+    right: 20px;
+  }
+  .skill-panel {
+    bottom: 84px;
+  }
+}
+</style>
+{% endblock %}
 
 {% block content %}
 <section class="page-intro">
@@ -13,404 +586,424 @@
     <p class="intro-desc">{% trans "深度学习与人工智能相关的项目、笔记和探索。" %}</p>
 </section>
 
-<section class="post-list">
+<!-- Tab Bar -->
+<div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" data-cat="all">{% trans "全部" %}</button>
+    <button class="tab-btn" data-cat="ext">{% trans "Chrome 扩展" %}</button>
+    <button class="tab-btn" data-cat="cv">{% trans "CV / OCR" %}</button>
+    <button class="tab-btn" data-cat="rag">{% trans "RAG / LLM" %}</button>
+    <button class="tab-btn" data-cat="industrial">{% trans "工业控制" %}</button>
+</div>
 
-    <!-- ============================================= -->
-    <!-- 技术栈 / Tech Stack                            -->
-    <!-- ============================================= -->
-    <article class="post-card resume-card">
-        <div class="post-content-wrapper">
-            <div class="post-meta">
-                <span class="post-category-badge" style="background: rgba(16,185,129,0.08); color: #059669;">{% trans "技术栈" %}</span>
+<!-- Project Grid -->
+<div class="portfolio-grid" id="portfolioGrid">
+    <!-- 1. NoteFlow -->
+    <div class="portfolio-card" data-cat="ext" onclick="openModal(0)">
+        <div class="portfolio-cover" style="background:linear-gradient(135deg,rgba(16,19,26,0.97),rgba(10,12,18,0.99))">
+            <div class="portfolio-tags-top">
+                <span>Chrome Ext</span>
+                <span>React 18</span>
+                <span>WXT</span>
             </div>
-            <h2 class="post-title">
-                <span>{% trans "专业技能" %}</span>
-            </h2>
-
-            <div style="margin-top: 20px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:10px;">{% trans "编程语言" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">Python · 3年</span>
-                    <span class="resume-tag">C / C++ · 3年</span>
-                    <span class="resume-tag">TypeScript · 1年</span>
-                    <span class="resume-tag">ST（结构化文本）· 1年</span>
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+                <div style="width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:1.6rem">
+                    <img src="{% static 'blog/images/portfolio/noteflow-icon.png' %}" alt="NoteFlow" style="width:36px;height:36px;border-radius:8px;">
                 </div>
+                <p style="font-family:var(--font-display);font-size:.9rem;color:var(--text-soft)">NoteFlow</p>
             </div>
-
-            <div style="margin-top: 18px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:10px;">{% trans "AI / 机器学习" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">PyTorch</span>
-                    <span class="resume-tag">YOLOv8m / YOLOv5</span>
-                    <span class="resume-tag">ResNet34</span>
-                    <span class="resume-tag">PaddleOCR PP-OCRv5</span>
-                    <span class="resume-tag">RAG架构</span>
-                    <span class="resume-tag">DeepSeek API</span>
-                    <span class="resume-tag">ZhipuAI API</span>
-                    <span class="resume-tag">OpenCV</span>
-                </div>
-            </div>
-
-            <div style="margin-top: 18px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:10px;">{% trans "前端开发" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">React 18</span>
-                    <span class="resume-tag">TypeScript</span>
-                    <span class="resume-tag">Tailwind CSS</span>
-                    <span class="resume-tag">WXT（Chrome Ext FW）</span>
-                    <span class="resume-tag">Streamlit</span>
-                </div>
-            </div>
-
-            <div style="margin-top: 18px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:10px;">{% trans "后端 / DevOps" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">ROS</span>
-                    <span class="resume-tag">Django</span>
-                    <span class="resume-tag">Supabase</span>
-                    <span class="resume-tag">Docker</span>
-                    <span class="resume-tag">AWS</span>
-                    <span class="resume-tag">Git</span>
-                </div>
-            </div>
-
-            <div style="margin-top: 18px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:10px;">{% trans "工业控制 / 硬件" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">PLC（シーケンス制御·モーション制御）</span>
-                    <span class="resume-tag">CAN通信</span>
-                    <span class="resume-tag">EtherCAT</span>
-                    <span class="resume-tag">PID制御</span>
-                    <span class="resume-tag">電気回路設計</span>
-                    <span class="resume-tag">油圧回路設計</span>
-                    <span class="resume-tag">CREO（3Dモデリング）</span>
-                </div>
-            </div>
-
-            <div style="margin-top: 18px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:10px;">{% trans "开发工具" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">VS Code / Cursor</span>
-                    <span class="resume-tag">Vite</span>
-                    <span class="resume-tag">pnpm</span>
-                    <span class="resume-tag">Vitest</span>
-                    <span class="resume-tag">Mintlify（文档）</span>
+            <div class="portfolio-overlay"></div>
+        </div>
+        <div class="portfolio-body">
+            <h3>NoteFlow &mdash; {% trans "批量导入 NotebookLM" %}</h3>
+            <p>{% trans "WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3），支持 Bilibili/YouTube/播客批量导入。" %}</p>
+            <div class="portfolio-footer">
+                <span class="year">2026</span>
+                <div class="links">
+                    <a href="https://github.com/EthanBAI-dev/NoteFlow_NoteBookLM-BiliBili-Tools" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://chromewebstore.google.com/detail/noteflow" target="_blank" rel="noopener">Chrome Web Store &nearr;</a>
                 </div>
             </div>
         </div>
-    </article>
+    </div>
 
-    <!-- ============================================= -->
-    <!-- Project 1: NoteFlow (Bilibili-NotebookLM Tools) -->
-    <!-- ============================================= -->
-    <article class="post-card resume-card">
-        <div class="post-cover-wrapper">
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(16,19,26,0.95),rgba(10,12,18,0.98));padding:20px;">
-                <div style="text-align:center;">
-                    <img src="https://raw.githubusercontent.com/EthanBAI-dev/NoteFlow_NoteBookLM-BiliBili-Tools/main/public/icons/icon-128.png"
-                         alt="NoteFlow Logo"
-                         style="width:80px;height:80px;margin-bottom:10px;border-radius:16px;">
-                    <p style="font-family:var(--font-display);font-size:1.2rem;color:var(--text);letter-spacing:-0.03em;">NoteFlow</p>
+    <!-- 2. Receipt Digitizer -->
+    <div class="portfolio-card" data-cat="cv" onclick="openModal(1)">
+        <div class="portfolio-cover" style="background:linear-gradient(135deg,rgba(20,16,26,0.97),rgba(12,10,18,0.99))">
+            <div class="portfolio-tags-top">
+                <span>YOLOv8m</span>
+                <span>PaddleOCR</span>
+                <span>OpenCV</span>
+            </div>
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                </svg>
+                <p style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted)">Receipt Auto Digitizer</p>
+            </div>
+            <div class="portfolio-overlay"></div>
+        </div>
+        <div class="portfolio-body">
+            <h3>Receipt Auto Digitizer</h3>
+            <p>{% trans "四阶段 CV 流水线：YOLOv8m → 透视校正 → PaddleOCR，自动输出结构化 CSV。" %}</p>
+            <div class="portfolio-footer">
+                <span class="year">2026</span>
+                <div class="links">
+                    <a href="https://github.com/EthanBAI-dev/receipt-auto-digitizer" target="_blank" rel="noopener">GitHub</a>
                 </div>
             </div>
         </div>
-        <div class="post-content-wrapper">
-            <div class="post-meta">
-                <span class="post-category-badge" style="background: rgba(21,94,239,0.06); color: var(--primary);">{% trans "项目" %}</span>
-                <span class="dot">·</span>
-                <span>2025 — {% trans "至今" %}</span>
-                <span class="dot">·</span>
-                <span>{% trans "Chrome 扩展" %}</span>
-            </div>
-            <h2 class="post-title">
-                <span>NoteFlow — {% trans "Bilibili/YouTube/Podcast 批量导入 NotebookLM" %}</span>
-            </h2>
-            <p class="post-excerpt">
-                {% trans "一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 Bilibili、YouTube、Apple Podcasts、小宇宙、Web 页面、AI 对话等多种来源批量导入内容到 Google NotebookLM。采用 Side Panel UI 设计，自动识别当前站点并匹配导入工具，支持多账号切换、目标笔记本选择、PDF 聚合、AI 对话分享卡片等高级功能。100% 客户端处理，不上传任何用户数据。" %}
-            </p>
+    </div>
 
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "核心特性" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">🎬 Bilibili字幕提取</span>
-                    <span class="resume-tag">▶️ YouTube批量导入</span>
-                    <span class="resume-tag">🎙️ 播客下载</span>
-                    <span class="resume-tag">📋 Web页面提取</span>
-                    <span class="resume-tag">🤖 AI对话导入</span>
-                    <span class="resume-tag">📡 RSS订阅</span>
-                    <span class="resume-tag">🛟 失败救援</span>
-                </div>
+    <!-- 3. RAG QA -->
+    <div class="portfolio-card" data-cat="rag" onclick="openModal(2)">
+        <div class="portfolio-cover" style="background:linear-gradient(135deg,rgba(18,22,30,0.97),rgba(10,12,18,0.99))">
+            <div class="portfolio-tags-top">
+                <span>RAG</span>
+                <span>DeepSeek</span>
+                <span>Streamlit</span>
             </div>
-
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "技术栈" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">WXT Framework</span>
-                    <span class="resume-tag">React 18</span>
-                    <span class="resume-tag">TypeScript</span>
-                    <span class="resume-tag">Tailwind CSS</span>
-                    <span class="resume-tag">Vite</span>
-                    <span class="resume-tag">Supabase</span>
-                    <span class="resume-tag">Google Drive API</span>
-                    <span class="resume-tag">NotebookLM API</span>
-                    <span class="resume-tag">Bilibili Web API</span>
-                </div>
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <p style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted)">RAG QA System</p>
             </div>
-
-            <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
-                <a href="https://github.com/EthanBAI-dev/NoteFlow_NoteBookLM-BiliBili-Tools" target="_blank" rel="noopener"
-                   class="resume-tag" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-color:rgba(255,255,255,0.15);">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    GitHub
-                </a>
-                <a href="https://chromewebstore.google.com/detail/noteflow" target="_blank" rel="noopener"
-                   class="resume-tag" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-color:rgba(255,255,255,0.15);">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M7.998 0C3.58 0 0 3.58 0 8a8 8 0 006.15 7.78c.4.08.55-.18.55-.39v-2.73c-2.52.55-3.06-1.08-3.06-1.08-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.8 1.37 2.1.98 2.62.75.08-.58.31-.98.57-1.21-2-.22-4.1-1-4.1-4.45 0-.98.35-1.79.92-2.42-.09-.22-.4-1.14.09-2.38 0 0 .75-.24 2.45.91A8.52 8.52 0 018 3.31c.75.04 1.5.11 2.2.33 1.7-1.15 2.45-.9 2.45-.9.5 1.24.18 2.15.1 2.37.57.63.92 1.44.92 2.42 0 3.45-2.1 4.23-4.1 4.45.32.28.55.84.55 1.7v2.53c0 .22.15.47.55.39A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    Chrome Web Store
-                </a>
-                <a href="https://noteflow.mintlify.app" target="_blank" rel="noopener"
-                   class="resume-tag" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-color:rgba(255,255,255,0.15);">
-                    📖 {% trans "文档" %}
-                </a>
-            </div>
+            <div class="portfolio-overlay"></div>
         </div>
-    </article>
-
-    <!-- ============================================= -->
-    <!-- Project 2: Receipt Auto Digitizer              -->
-    <!-- ============================================= -->
-    <article class="post-card resume-card">
-        <div class="post-cover-wrapper">
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(20,16,26,0.95),rgba(12,10,18,0.98));padding:20px;">
-                <div style="text-align:center;color:var(--text-soft);">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 10px;opacity:0.6;">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-                    </svg>
-                    <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);">Receipt Auto Digitizer</p>
+        <div class="portfolio-body">
+            <h3>RAG QA System</h3>
+            <p>{% trans "轻量 VectorStore + DeepSeek + ZhipuAI 实现本地文档智能问答。Streamlit Web UI。" %}</p>
+            <div class="portfolio-footer">
+                <span class="year">2026</span>
+                <div class="links">
+                    <a href="https://github.com/EthanBAI-dev/RAG_QA_System" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://ethanbai-dev-rag-qa-system-app-onouyl.streamlit.app/" target="_blank" rel="noopener">{% trans "在线体验" %}</a>
                 </div>
             </div>
         </div>
-        <div class="post-content-wrapper">
-            <div class="post-meta">
-                <span class="post-category-badge" style="background: rgba(21,94,239,0.06); color: var(--primary);">{% trans "项目" %}</span>
-                <span class="dot">·</span>
-                <span>2024 — {% trans "至今" %}</span>
-                <span class="dot">·</span>
-                <span>{% trans "计算机视觉 · OCR" %}</span>
-            </div>
-            <h2 class="post-title">
-                <span>Receipt Auto Digitizer — {% trans "端到端多票据自动识别系统" %}</span>
-            </h2>
-            <p class="post-excerpt">
-                {% trans "输入包含多张票据的合成照片，经过 YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域检测 → PaddleOCR 文字识别的四阶段流水线，自动输出结构化 CSV 数据。解决了日常生活中多张票据同时拍摄后手动录入效率低下的痛点。" %}
-            </p>
+    </div>
 
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "技术栈" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">YOLOv8m（物体检测）</span>
-                    <span class="resume-tag">ResNet34（方向分类）</span>
-                    <span class="resume-tag">YOLOv5/YOLOv9（文字区域）</span>
-                    <span class="resume-tag">PaddleOCR PP-OCRv5</span>
-                    <span class="resume-tag">OpenCV（图像处理）</span>
-                    <span class="resume-tag">PyTorch</span>
-                </div>
+    <!-- 4. Furukawa -->
+    <div class="portfolio-card" data-cat="industrial" onclick="openModal(3)">
+        <div class="portfolio-cover" style="background:linear-gradient(135deg,rgba(22,20,26,0.97),rgba(14,12,18,0.99))">
+            <div class="portfolio-tags-top">
+                <span>PLC</span>
+                <span>ROS</span>
+                <span>YOLO</span>
             </div>
-
-            <!-- Receipt OCR pipeline demo -->
-            <div class="project-gallery" style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.03);">
-                    <img src="https://raw.githubusercontent.com/EthanBAI-dev/receipt-auto-digitizer/main/receipt%20detection.gif"
-                         alt="OCR Pipeline Demo"
-                         style="width:100%;display:block;border-radius:8px;"
-                         loading="lazy">
-                    <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:6px 8px;margin:0;">
-                        {% trans "OCR 推理流水线 — 多票据检测 → 透视校正 → 文字识别" %}
-                    </p>
-                </div>
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.5">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                </svg>
+                <p style="font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted)">{% trans "工业控制" %}</p>
             </div>
-
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "个人贡献" %}</h3>
-                <ul style="font-size:0.88rem;color:var(--text-secondary);line-height:1.9;padding-left:18px;margin:0;">
-                    <li>{% trans "独立完成整条流水线的架构设计与代码实现" %}</li>
-                    <li>{% trans "基于 OpenCV 实现透视变换矫正，支持任意拍摄角度的票据规整" %}</li>
-                    <li>{% trans "训练 YOLOv8m 对 4 类关键字段（日期、店名、电话、金额）进行检测" %}</li>
-                    <li>{% trans "整合多模型推理管线，端到端耗时优化至 3 秒以内" %}</li>
-                </ul>
-            </div>
-
-            <div style="margin-top:16px;">
-                <a href="https://github.com/EthanBAI-dev/receipt-auto-digitizer" target="_blank" rel="noopener"
-                   class="resume-tag" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-color:rgba(255,255,255,0.15);">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    GitHub
-                </a>
+            <div class="portfolio-overlay"></div>
+        </div>
+        <div class="portfolio-body">
+            <h3>{% trans "机械设备控制 · AI 开发" %}</h3>
+            <p>{% trans "PLC → ROS → YOLO 完整控制层级开发。主导新技術导入并开发自动化工具。" %}</p>
+            <div class="portfolio-footer">
+                <span class="year">2025 &mdash; {% trans "至今" %}</span>
+                <div class="links"></div>
             </div>
         </div>
-    </article>
+    </div>
 
-    <!-- ============================================= -->
-    <!-- Project 3: RAG QA System                       -->
-    <!-- ============================================= -->
-    <article class="post-card resume-card">
-        <div class="post-cover-wrapper">
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(18,22,30,0.95),rgba(10,12,18,0.98));padding:20px;">
-                <div style="text-align:center;color:var(--text-soft);">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 10px;opacity:0.6;">
-                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-                    </svg>
-                    <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);">RAG QA System</p>
-                </div>
+    <!-- Skills Summary Card (spans full width) -->
+    <div class="portfolio-skill-card">
+        <div class="portfolio-skill-section">
+            <div class="portfolio-skill-section-label">{% trans "编程语言" %}</div>
+            <div class="portfolio-skill-section-tags">
+                <span class="portfolio-skill-tag">Python · 3yr</span>
+                <span class="portfolio-skill-tag">C/C++ · 3yr</span>
+                <span class="portfolio-skill-tag">TypeScript · 1yr</span>
             </div>
         </div>
-        <div class="post-content-wrapper">
-            <div class="post-meta">
-                <span class="post-category-badge" style="background: rgba(21,94,239,0.06); color: var(--primary);">{% trans "项目" %}</span>
-                <span class="dot">·</span>
-                <span>2024 — {% trans "至今" %}</span>
-                <span class="dot">·</span>
-                <span>{% trans "RAG · 大语言模型" %}</span>
-            </div>
-            <h2 class="post-title">
-                <span>RAG QA System — {% trans "本地文档智能问答系统" %}</span>
-            </h2>
-            <p class="post-excerpt">
-                {% trans "基于 RAG（检索增强生成）架构的本地文档 QA 系统。上传 .md / .txt / .pdf 格式的本地手册或文档，系统自动进行文本分割、向量化存储，并通过 ZhipuAI 嵌入模型 + DeepSeek API 实现自然语言问答。采用 NumPy + JSON 自建轻量向量数据库，无需外部向量数据库依赖。Streamlit Web UI 提供聊天式交互、回答风格选择、Top-K 检索可视化等功能。" %}
-            </p>
-
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "技术栈" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">DeepSeek API</span>
-                    <span class="resume-tag">ZhipuAI Embedding</span>
-                    <span class="resume-tag">NumPy + JSON VectorStore</span>
-                    <span class="resume-tag">tiktoken（文本分割）</span>
-                    <span class="resume-tag">Streamlit</span>
-                    <span class="resume-tag">Python</span>
-                </div>
-            </div>
-
-            <!-- RAG QA System demo screenshots -->
-            <div class="project-gallery" style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.03);">
-                    <img src="https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/result1.gif"
-                         alt="RAG QA Demo"
-                         style="width:100%;display:block;border-radius:8px;"
-                         loading="lazy">
-                    <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:6px 8px;margin:0;">
-                        {% trans "Streamlit Web UI — 聊天式交互操作演示" %}
-                    </p>
-                </div>
-                <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.03);">
-                    <img src="https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/result2.png"
-                         alt="RAG QA Result"
-                         style="width:100%;display:block;border-radius:8px;"
-                         loading="lazy">
-                    <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:6px 8px;margin:0;">
-                        {% trans "Top-K 检索结果可视化与来源高亮" %}
-                    </p>
-                </div>
-                <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.03);">
-                    <img src="https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/result3.png"
-                         alt="RAG QA Result 3"
-                         style="width:100%;display:block;border-radius:8px;"
-                         loading="lazy">
-                    <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:6px 8px;margin:0;">
-                        {% trans "知识库管理 — Drag & Drop 文件添加" %}
-                    </p>
-                </div>
-                <div style="border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.03);">
-                    <img src="https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/RAG_workflow.png"
-                         alt="RAG Workflow Diagram"
-                         style="width:100%;display:block;border-radius:8px;"
-                         loading="lazy">
-                    <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:6px 8px;margin:0;">
-                        {% trans "RAG 工作流 — 检索 → 增强 → 生成" %}
-                    </p>
-                </div>
-            </div>
-
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "个人贡献" %}</h3>
-                <ul style="font-size:0.88rem;color:var(--text-secondary);line-height:1.9;padding-left:18px;margin:0;">
-                    <li>{% trans "从零实现 RAG 完整流水线：文档分割 → 向量化 → 检索 → LLM 生成" %}</li>
-                    <li>{% trans "自研轻量级 VectorStore（基于 NumPy 计算余弦相似度 + JSON 持久化），无外部 DB 依赖" %}</li>
-                    <li>{% trans "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时" %}</li>
-                    <li>{% trans "设计 4 种回答风格（概要/学习指南/博客/自定义）+ 检索结果可视化" %}</li>
-                </ul>
-            </div>
-
-            <div style="margin-top:16px;">
-                <a href="https://github.com/EthanBAI-dev/RAG_QA_System" target="_blank" rel="noopener"
-                   class="resume-tag" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-color:rgba(255,255,255,0.15);">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    GitHub
-                </a>
-                <a href="https://ethanbai-dev-rag-qa-system-app-onouyl.streamlit.app/" target="_blank" rel="noopener"
-                   class="resume-tag" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-color:rgba(255,255,255,0.15);">
-                    🚀 {% trans "在线体验" %}
-                </a>
+        <div class="portfolio-skill-section">
+            <div class="portfolio-skill-section-label">AI / ML</div>
+            <div class="portfolio-skill-section-tags">
+                <span class="portfolio-skill-tag">PyTorch</span>
+                <span class="portfolio-skill-tag">YOLOv8/5</span>
+                <span class="portfolio-skill-tag">PaddleOCR</span>
             </div>
         </div>
-    </article>
-
-    <!-- ============================================= -->
-    <!-- Project 4: Furukawa Work                       -->
-    <!-- ============================================= -->
-    <article class="post-card resume-card">
-        <div class="post-cover-wrapper">
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(22,20,26,0.95),rgba(14,12,18,0.98));padding:20px;">
-                <div style="text-align:center;color:var(--text-soft);">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 10px;opacity:0.6;">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-                    </svg>
-                    <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted);">{% trans "工业控制系统" %}</p>
-                </div>
+        <div class="portfolio-skill-section">
+            <div class="portfolio-skill-section-label">{% trans "前端" %}</div>
+            <div class="portfolio-skill-section-tags">
+                <span class="portfolio-skill-tag">React 18</span>
+                <span class="portfolio-skill-tag">TypeScript</span>
+                <span class="portfolio-skill-tag">Tailwind</span>
+                <span class="portfolio-skill-tag">WXT</span>
             </div>
         </div>
-        <div class="post-content-wrapper">
-            <div class="post-meta">
-                <span class="post-category-badge" style="background: rgba(21,94,239,0.06); color: var(--primary);">{% trans "项目" %}</span>
-                <span class="dot">·</span>
-                <span>2025.04 — {% trans "至今" %}</span>
-                <span class="dot">·</span>
-                <span>{% trans "古河机械金属株式会社 · 正社員" %}</span>
-            </div>
-            <h2 class="post-title">
-                <span>{% trans "机械设备控制 · AI 功能开发" %}</span>
-            </h2>
-            <p class="post-excerpt">
-                {% trans "在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO 图像识别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，从软硬件两端推动产品升级。" %}
-            </p>
-
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "业务范围" %}</h3>
-                <div class="resume-tags">
-                    <span class="resume-tag">PLC制御（シーケンス·モーション）</span>
-                    <span class="resume-tag">ROS自動化フロー</span>
-                    <span class="resume-tag">YOLO画像認識</span>
-                    <span class="resume-tag">Pythonツール開発</span>
-                    <span class="resume-tag">CAN通信制御アルゴリズム</span>
-                    <span class="resume-tag">PID制御</span>
-                    <span class="resume-tag">電気回路·油圧回路設計</span>
-                    <span class="resume-tag">CREO 3Dモデリング</span>
-                </div>
-            </div>
-
-            <div style="margin-top:14px;">
-                <h3 style="font-size:0.82rem; color: var(--text-muted); font-family: var(--font-mono); margin-bottom:8px;">{% trans "突出成果" %}</h3>
-                <ul style="font-size:0.88rem;color:var(--text-secondary);line-height:1.9;padding-left:18px;margin:0;">
-                    <li>{% trans "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力" %}</li>
-                    <li>{% trans "主导新技術（YOLO·ROS）导入，推动产品智能化升级" %}</li>
-                    <li>{% trans "开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%）" %}</li>
-                    <li>{% trans "参与电气 / 油压回路设计、CREO 3D 建模，实现软硬件协同开发" %}</li>
-                </ul>
+        <div class="portfolio-skill-section">
+            <div class="portfolio-skill-section-label">DevOps</div>
+            <div class="portfolio-skill-section-tags">
+                <span class="portfolio-skill-tag">Docker</span>
+                <span class="portfolio-skill-tag">AWS</span>
+                <span class="portfolio-skill-tag">Django</span>
+                <span class="portfolio-skill-tag">Git</span>
             </div>
         </div>
-    </article>
+        <div class="portfolio-skill-section">
+            <div class="portfolio-skill-section-label">{% trans "工业控制" %}</div>
+            <div class="portfolio-skill-section-tags">
+                <span class="portfolio-skill-tag">PLC</span>
+                <span class="portfolio-skill-tag">ROS</span>
+                <span class="portfolio-skill-tag">CAN</span>
+                <span class="portfolio-skill-tag">EtherCAT</span>
+            </div>
+        </div>
+        <div class="portfolio-skill-section">
+            <div class="portfolio-skill-section-label">{% trans "工具" %}</div>
+            <div class="portfolio-skill-section-tags">
+                <span class="portfolio-skill-tag">VS Code</span>
+                <span class="portfolio-skill-tag">Vite</span>
+                <span class="portfolio-skill-tag">Vitest</span>
+                <span class="portfolio-skill-tag">Mintlify</span>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Skill FAB -->
+<button class="skill-fab" id="skillFab">⚡</button>
 
+<!-- Skill Panel -->
+<div class="skill-panel" id="skillPanel">
+    <h3>{% trans "专业技能" %}</h3>
+    <div class="block">
+        <div class="label">{% trans "编程语言" %}</div>
+        <div class="tags">
+            <span>Python &middot; 3yr</span>
+            <span>C/C++ &middot; 3yr</span>
+            <span>TypeScript &middot; 1yr</span>
+            <span>ST &middot; 1yr</span>
+        </div>
+    </div>
+    <div class="block">
+        <div class="label">{% trans "AI / 机器学习" %}</div>
+        <div class="tags">
+            <span>PyTorch</span><span>YOLOv8/5</span><span>ResNet34</span>
+            <span>PaddleOCR</span><span>RAG</span><span>DeepSeek</span><span>ZhipuAI</span>
+        </div>
+    </div>
+    <div class="block">
+        <div class="label">{% trans "前端" %}</div>
+        <div class="tags">
+            <span>React 18</span><span>TypeScript</span><span>Tailwind</span>
+            <span>WXT</span><span>Streamlit</span>
+        </div>
+    </div>
+    <div class="block">
+        <div class="label">{% trans "后端/DevOps" %}</div>
+        <div class="tags">
+            <span>Django</span><span>Docker</span><span>AWS</span><span>Git</span>
+        </div>
+    </div>
+    <div class="block">
+        <div class="label">{% trans "工业控制" %}</div>
+        <div class="tags">
+            <span>PLC</span><span>ROS</span><span>CAN</span><span>EtherCAT</span><span>PID</span>
+        </div>
+    </div>
+    <div class="block">
+        <div class="label">{% trans "工具" %}</div>
+        <div class="tags">
+            <span>Vite</span><span>Vitest</span><span>Mintlify</span>
+        </div>
+    </div>
+</div>
 
-</section>
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <span class="modal-counter" id="modalCounter"></span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button class="modal-nav prev" onclick="navModal(-1)" id="prevBtn">&lsaquo;</button>
+        <button class="modal-nav next" onclick="navModal(1)" id="nextBtn">&rsaquo;</button>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ─── Project data ───
+    var projects = [
+        {
+            title: 'NoteFlow &mdash; {% trans "批量导入 NotebookLM" %}',
+            meta: '2026 &middot; Chrome {% trans "扩展" %} &middot; {% trans "已上架 Chrome Web Store" %}',
+            desc: '{% trans "一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 Bilibili、YouTube、Apple Podcasts、小宇宙等多种来源批量导入内容到 Google NotebookLM。" %}',
+            tags: ['WXT', 'React 18', 'TypeScript', 'Tailwind', 'Vite', 'Supabase'],
+            images: ['https://raw.githubusercontent.com/EthanBAI-dev/NoteFlow_NoteBookLM-BiliBili-Tools/main/public/icons/icon-128.png'],
+            list: [
+                '{% trans "Bilibili 字幕批量提取" %}',
+                '{% trans "YouTube 播放列表导入" %}',
+                '{% trans "播客自动下载" %}',
+                '{% trans "Web 页面提取" %}',
+                '{% trans "AI 对话分享卡片" %}',
+                '{% trans "RSS 订阅" %}',
+            ],
+            links: [
+                {text: 'GitHub &nearr;', url: 'https://github.com/EthanBAI-dev/NoteFlow_NoteBookLM-BiliBili-Tools'},
+                {text: 'Chrome Web Store &nearr;', url: 'https://chromewebstore.google.com/detail/noteflow'},
+                {text: '{% trans "文档" %} &nearr;', url: 'https://noteflow.mintlify.app'},
+            ]
+        },
+        {
+            title: 'Receipt Auto Digitizer &mdash; {% trans "多票据自动识别" %}',
+            meta: '2026 &middot; {% trans "计算机视觉" %} &middot; OCR',
+            desc: '{% trans "YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域检测 → PaddleOCR 文字识别，自动输出结构化 CSV。" %}',
+            tags: ['YOLOv8m', 'ResNet34', 'PaddleOCR', 'OpenCV', 'PyTorch'],
+            images: ['https://raw.githubusercontent.com/EthanBAI-dev/receipt-auto-digitizer/main/receipt%20detection.gif'],
+            list: [
+                '{% trans "独立完成整条流水线架构设计" %}',
+                '{% trans "基于 OpenCV 透视变换矫正" %}',
+                '{% trans "训练 YOLOv8m 关键字段检测" %}',
+                '{% trans "端到端耗时 3 秒以内" %}',
+            ],
+            links: [
+                {text: 'GitHub &nearr;', url: 'https://github.com/EthanBAI-dev/receipt-auto-digitizer'},
+            ]
+        },
+        {
+            title: 'RAG QA System &mdash; {% trans "本地文档智能问答" %}',
+            meta: '2026 &middot; RAG &middot; LLM',
+            desc: '{% trans "基于 RAG 架构的本地文档 QA 系统。上传文档后自动分割、向量化，通过 ZhipuAI 嵌入 + DeepSeek API 实现自然语言问答。自研 NumPy+JSON 轻量 VectorStore。" %}',
+            tags: ['DeepSeek', 'ZhipuAI', 'NumPy', 'Streamlit', 'Python'],
+            images: [
+                'https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/result1.gif',
+                'https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/result2.png',
+                'https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/RAG_workflow.png',
+                'https://raw.githubusercontent.com/EthanBAI-dev/RAG_QA_System/main/images/Rag_strucutre.png',
+            ],
+            list: [
+                '{% trans "从零实现 RAG 完整流水线" %}',
+                '{% trans "自研轻量 VectorStore" %}',
+                '{% trans "增量索引构建" %}',
+                '{% trans "4 种回答风格 + 检索可视化" %}',
+            ],
+            links: [
+                {text: 'GitHub &nearr;', url: 'https://github.com/EthanBAI-dev/RAG_QA_System'},
+                {text: '{% trans "在线体验" %} &nearr;', url: 'https://ethanbai-dev-rag-qa-system-app-onouyl.streamlit.app/'},
+            ]
+        },
+        {
+            title: '{% trans "机械设备控制 · AI 功能开发" %}',
+            meta: '2025.04 &mdash; {% trans "至今" %} &middot; {% trans "古河机械金属株式会社" %}',
+            desc: '{% trans "核心研发部门从事产品搭载软件的全栈开发。PLC 基本控制、ROS 自动化流程构建、YOLO 图像识别算法实现等多个控制层级。" %}',
+            tags: ['PLC', 'ROS', 'YOLO', 'Python', 'CAN', 'PID', 'CREO'],
+            images: [],
+            list: [
+                '{% trans "覆盖 PLC→ROS→AI 完整控制层级" %}',
+                '{% trans "主导 YOLO/ROS 技术导入" %}',
+                '{% trans "开发自动化工具缩短 95% 作业时间" %}',
+                '{% trans "参与电气/油压回路设计" %}',
+            ],
+            links: []
+        }
+    ];
+
+    var current = 0;
+    var tabBtns = document.querySelectorAll('.tab-btn');
+    var cards = document.querySelectorAll('.portfolio-card');
+
+    // ─── Tab filtering ───
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var cat = btn.getAttribute('data-cat');
+            cards.forEach(function(card) {
+                if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+                    card.classList.remove('hidden');
+                    card.classList.remove('entering');
+                    void card.offsetWidth;
+                    card.classList.add('entering');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // ─── Modal ───
+    window.openModal = function(i) {
+        current = i;
+        renderModal();
+        document.getElementById('modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+    window.closeModal = function() {
+        document.getElementById('modal').classList.remove('active');
+        document.body.style.overflow = '';
+    };
+    window.navModal = function(d) {
+        current = (current + d + projects.length) % projects.length;
+        renderModal();
+    };
+
+    function renderModal() {
+        var p = projects[current];
+        document.getElementById('modalCounter').textContent = (current + 1) + ' / ' + projects.length;
+        document.getElementById('prevBtn').style.display = projects.length > 1 ? 'flex' : 'none';
+        document.getElementById('nextBtn').style.display = projects.length > 1 ? 'flex' : 'none';
+
+        var linksHtml = p.links.map(function(l) {
+            return '<a href="' + l.url + '" target="_blank" rel="noopener">' + l.text + '</a>';
+        }).join('');
+
+        // Build scrollable image column with loading skeleton
+        var imgHtml = p.images && p.images.length
+            ? p.images.map(function(img) {
+                return '<div class="img-wrapper">'
+                    + '<img src="' + img + '" alt="" loading="lazy" onload="this.classList.add(\'loaded\')" onerror="this.parentElement.querySelector(\'.skeleton\').textContent=\'Failed to load\'">'
+                    + '<div class="skeleton">Loading&hellip;</div>'
+                    + '</div>';
+              }).join('')
+            : '<div style="width:100%;aspect-ratio:16/10;border-radius:12px;background:linear-gradient(135deg,rgba(16,19,26,0.95),rgba(10,12,18,0.98));display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.88rem">📸 Demo</div>';
+
+        document.getElementById('modalBody').innerHTML =
+            '<div class="modal-layout">' +
+                '<div class="modal-img">' + imgHtml + '</div>' +
+                '<div class="modal-info">' +
+                    '<h2 class="title">' + p.title + '</h2>' +
+                    '<p class="meta">' + p.meta + '</p>' +
+                    '<p class="desc">' + p.desc + '</p>' +
+                    '<div class="tags">' + p.tags.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+                    '<div class="list"><ul>' + p.list.map(function(l) { return '<li>' + l + '</li>'; }).join('') + '</ul></div>' +
+                    (linksHtml ? '<div class="btns">' + linksHtml + '</div>' : '') +
+                '</div>' +
+            '</div>';
+    }
+
+    // ─── Modal close on overlay click ───
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === e.currentTarget) window.closeModal();
+    });
+
+    // ─── Keyboard nav ───
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') window.closeModal();
+        if (e.key === 'ArrowLeft' && document.getElementById('modal').classList.contains('active')) window.navModal(-1);
+        if (e.key === 'ArrowRight' && document.getElementById('modal').classList.contains('active')) window.navModal(1);
+    });
+
+    // ─── Skill FAB ───
+    var fab = document.getElementById('skillFab');
+    var panel = document.getElementById('skillPanel');
+    fab.addEventListener('click', function() {
+        panel.classList.toggle('active');
+    });
+    document.addEventListener('click', function(e) {
+        if (!fab.contains(e.target) && !panel.contains(e.target)) {
+            panel.classList.remove('active');
+        }
+    });
+})();
+</script>
 {% endblock %}
