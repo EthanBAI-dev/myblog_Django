@@ -1,7 +1,8 @@
 {% extends 'blog/base.html' %}
+{% load i18n %}
 
 {% block title %}
-  {% if current_category %}{{ current_category.name }} - {% endif %}博客 - {{ block.super }}
+  {% if current_category %}{{ current_category.name }} - {% endif %}{% trans "博客" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
@@ -9,7 +10,7 @@
 <section class="page-intro">
     <p class="intro-kicker">CATEGORY</p>
     <h1 class="intro-title">{{ current_category.name }}</h1>
-    <p class="intro-desc">浏览「{{ current_category.name }}」分类下的所有文章</p>
+    <p class="intro-desc">{% blocktranslate with name=current_category.name %}浏览「{{ name }}」分类下的所有文章{% endblocktranslate %}</p>
 </section>
 {% else %}
 <section class="page-intro">
@@ -36,7 +37,7 @@
                     {% endif %}
                     <span>{{ post.created_at|date:"Y-m-d" }}</span>
                     <span class="dot">·</span>
-                    <span>预计阅读 {{ post.reading_time }} 分钟</span>
+                    <span>{% blocktranslate with time=post.reading_time %}预计阅读 {{ time }} 分钟{% endblocktranslate %}</span>
                     <span class="dot">·</span>
                     <span>{{ post.views }} 次阅读</span>
                 </div>
@@ -54,14 +55,14 @@
                 </p>
 
                 <a class="post-link" href="{% url 'blog:post_detail' post.slug %}">
-                    阅读全文 <span>→</span>
+                    {% trans "阅读全文" %} <span>→</span>
                 </a>
             </div>
         </article>
     {% empty %}
         <div class="empty-state">
-            <h3>还没有文章</h3>
-            <p>目前这里还没有内容，可以去后台发布第一篇文章。</p>
+            <h3>{% trans "还没有文章" %}</h3>
+            <p>{% trans "目前这里还没有内容，可以去后台发布第一篇文章。" %}</p>
         </div>
     {% endfor %}
 </section>
@@ -74,7 +75,7 @@
                 <a href="?page={{ page_obj.previous_page_number }}">← 上一页</a>
             </li>
         {% else %}
-            <li class="prev disabled" aria-disabled="true">← 上一页</li>
+            <li class="prev disabled" aria-disabled="true">{% trans "← 上一页" %}</li>
         {% endif %}
 
         {% for num in paginator.page_range %}
@@ -90,7 +91,7 @@
                 <a href="?page={{ page_obj.next_page_number }}">下一页 →</a>
             </li>
         {% else %}
-            <li class="next disabled" aria-disabled="true">下一页 →</li>
+            <li class="next disabled" aria-disabled="true">{% trans "下一页 →" %}</li>
         {% endif %}
     </ul>
 </nav>

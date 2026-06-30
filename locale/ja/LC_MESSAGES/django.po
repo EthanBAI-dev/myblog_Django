@@ -1,94 +1,102 @@
-# Chinese translations for myblog.
+#
 msgid ""
 msgstr ""
-"Language: zh-hans\n"
+"Project-Id-Version: myblog_Django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-30 13:00+0900\n"
+"PO-Revision-Date: 2026-06-30 13:00+0900\n"
+"Last-Translator: \n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Ethan BAI's Blog"
-msgstr "Ethan BAI 的博客"
+msgstr "Ethan BAI's Blog"
 
 msgid "搜索..."
-msgstr "搜索..."
+msgstr "検索..."
 
 msgid "Home"
-msgstr "首页"
+msgstr "ホーム"
 
 msgid "Logbook"
-msgstr "日志"
+msgstr "航海日誌"
 
 msgid "All Entries →"
-msgstr "所有文章 →"
+msgstr "全エントリー →"
 
 msgid "Categories"
-msgstr "分类"
+msgstr "カテゴリー"
 
 msgid "Tags"
-msgstr "标签"
+msgstr "タグ"
 
 msgid "Projects"
-msgstr "项目"
+msgstr "プロジェクト"
 
 msgid "About"
-msgstr "关于"
+msgstr "概要"
 
 msgid "CV"
-msgstr "简历"
+msgstr "履歴書"
 
 msgid "WARP TRANSIT · ETHAN BAI ·"
 msgstr "WARP TRANSIT · ETHAN BAI ·"
 
 msgid "「探索 · 创造 · 分享」"
-msgstr "「探索 · 创造 · 分享」"
+msgstr "「探求 · 創造 · 共有」"
 
 msgid "全栈工程师 & AI 技术探索者 · 持续学习中"
-msgstr "全栈工程师 & AI 技术探索者 · 持续学习中"
+msgstr "フルスタックエンジニア & AI 探求者 · 学び続ける"
 
 msgid "关于"
-msgstr "关于"
+msgstr "概要"
 
 msgid "一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。"
-msgstr "一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。"
+msgstr ""
+"AIとディープラーニングを探求し続けるテクノロジー愛好家。抽象的な概念を実行可能なコードと再利用可能な思考フレームワークに分解するのが好きです。"
 
 msgid "当下"
-msgstr "当下"
+msgstr "現在の焦点"
 
 msgid "系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。"
-msgstr "系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。"
+msgstr "ディープラーニングのコースと論文を体系的に学び、ノートを整理し、知識グラフを構築し、ブログで実験、思考、反復のプロセスを記録します。"
 
 msgid "技能"
-msgstr "技能"
+msgstr "スキル"
 
 msgid "热爱与秩序"
-msgstr "热爱与秩序"
+msgstr "情熱と秩序"
 
 msgid "相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。"
-msgstr "相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。"
+msgstr "複雑な能力は長期的で安定した複利的な蓄積から生まれると信じています。明確な構造、厳密な表現、そして実際に検証可能な知識を好みます。"
 
 msgid "近期写作"
-msgstr "近期写作"
+msgstr "最近の執筆"
 
 msgid "还没有文章，敬请期待。"
-msgstr "还没有文章，敬请期待。"
+msgstr "まだ記事はありません。お楽しみに。"
 
 msgid "All posts →"
-msgstr "所有文章 →"
+msgstr "全記事 →"
 
 msgid "最新文章"
-msgstr "最新文章"
+msgstr "最新記事"
 
 msgid "查看更多"
-msgstr "查看更多"
+msgstr "もっと見る"
 
 msgid "热门文章"
-msgstr "热门文章"
+msgstr "人気記事"
 
 msgid "阅读"
-msgstr "阅读"
+msgstr "読了"
 
 msgid "文章归档"
-msgstr "文章归档"
+msgstr "記事アーカイブ"
 
 msgid "年"
 msgstr "年"
@@ -97,85 +105,85 @@ msgid "月"
 msgstr "月"
 
 msgid "篇"
-msgstr "篇"
+msgstr "件"
 
 msgid "收起"
-msgstr "收起"
+msgstr "折りたたむ"
 
 msgid "分享深度学习与 AI 相关的学习笔记和技术思考。"
-msgstr "分享深度学习与 AI 相关的学习笔记和技术思考。"
+msgstr "ディープラーニングとAIに関する学習ノートや技術的考察を共有します。"
 
 msgid "博主头像"
-msgstr "博主头像"
+msgstr "ブロガーアバター"
 
 msgid "文章目录"
-msgstr "文章目录"
+msgstr "目次"
 
 msgid "← 上一篇"
-msgstr "← 上一篇"
+msgstr "← 前の記事"
 
 msgid "已经是最前一篇了"
-msgstr "已经是最前一篇了"
+msgstr "これが最初の記事です"
 
 msgid "下一篇 →"
-msgstr "下一篇 →"
+msgstr "次の記事 →"
 
 msgid "已经是最后一篇了"
-msgstr "已经是最后一篇了"
+msgstr "これが最後の記事です"
 
 msgid "评论"
-msgstr "评论"
+msgstr "コメント"
 
 msgid "提交评论"
-msgstr "提交评论"
+msgstr "コメントを送信"
 
 msgid "全部评论"
-msgstr "全部评论"
+msgstr "すべてのコメント"
 
 msgid "匿名游客"
-msgstr "匿名游客"
+msgstr "匿名ユーザー"
 
 msgid "还没有评论，欢迎留下第一条。"
-msgstr "还没有评论，欢迎留下第一条。"
+msgstr "まだコメントはありません。最初のコメントをお願いします。"
 
 msgid "次阅读"
-msgstr "次阅读"
+msgstr "回読了"
 
 msgid "预计阅读 %(time)s 分钟"
-msgstr "预计阅读 %(time)s 分钟"
+msgstr "推定読了時間 %(time)s 分"
 
 msgid "博客"
 msgstr "博客"
 
 msgid "写代码，写思考，也写一些真正有价值的记录。"
-msgstr "写代码，写思考，也写一些真正有价值的记录。"
+msgstr "コードを書き、思考を書き、本当に価値のある記録を残します。"
 
 msgid "这里是关于技术、项目、方法论与持续学习的个人笔记。"
-msgstr "这里是关于技术、项目、方法论与持续学习的个人笔记。"
+msgstr "技術、プロジェクト、方法論、継続的学習に関する個人ノートです。"
 
 msgid "阅读全文"
-msgstr "阅读全文"
+msgstr "全文を読む"
 
 msgid "还没有文章"
-msgstr "还没有文章"
+msgstr "まだ記事がありません"
 
 msgid "目前这里还没有内容，可以去后台发布第一篇文章。"
-msgstr "目前这里还没有内容，可以去后台发布第一篇文章。"
+msgstr "まだコンテンツがありません。管理画面から最初の記事を投稿してください。"
 
 msgid "浏览「%(name)s」分类下的所有文章"
-msgstr "浏览「%(name)s」分类下的所有文章"
+msgstr "Browse all articles under「%(name)s」"
 
 msgid "每一段经历，都是代码的一部分。"
-msgstr "每一段经历，都是代码的一部分。"
+msgstr "すべての経験が、コードの一部となる。"
 
 msgid "从最初的好奇到如今的专注，这是一段关于成长、坚持与热爱的旅程。"
-msgstr "从最初的好奇到如今的专注，这是一段关于成长、坚持与热爱的旅程。"
+msgstr "最初の好奇心から現在の集中へ——これは成長、堅持、そして情熱の旅です。"
 
 msgid "成长轨迹"
-msgstr "成长轨迹"
+msgstr "成長の軌跡"
 
 msgid "深度学习专项学习"
-msgstr "深度学习专项学习"
+msgstr "ディープラーニング専門学習"
 
 msgid ""
 "系统性地学习 Andrew Ng 深度学习五门课程，涵盖神经网络基础、超参数调优、结构化机器学习、CNN、RNN "
@@ -185,7 +193,7 @@ msgstr ""
 "与注意力机制等核心领域。完成所有课程的笔记整理与代码实践，构建个人 AI 知识体系。"
 
 msgid "Web 开发与全栈探索"
-msgstr "Web 开发与全栈探索"
+msgstr "Web開発とフルスタック探求"
 
 msgid ""
 "深入学习 Django 框架，从后端 API 设计到前端模板渲染，掌握了完整的 Web "
@@ -195,7 +203,7 @@ msgstr ""
 "开发流程。搭建个人博客系统，将学习过程中的思考与笔记沉淀为结构化的知识输出。"
 
 msgid "Python 与数据科学入门"
-msgstr "Python 与数据科学入门"
+msgstr "Pythonとデータサイエンス入門"
 
 msgid ""
 "从 Python 基础语法开始，逐步深入到 NumPy、Pandas、Matplotlib 等数据科学生态工具。建立扎实的编程基础，为后续的 AI "
@@ -205,10 +213,10 @@ msgstr ""
 "学习奠定了坚实的技术根基。"
 
 msgid "更早之前"
-msgstr "更早之前"
+msgstr "さらに以前"
 
 msgid "对技术的原始好奇"
-msgstr "对技术的原始好奇"
+msgstr "技術への原初的好奇心"
 
 msgid ""
 "对计算机科学的兴趣始于对\"机器如何思考\"这一问题的好奇。从第一行 Hello World 到如今能够训练神经网络模型，每一步都是对未知世界的探索。"
@@ -216,10 +224,10 @@ msgstr ""
 "对计算机科学的兴趣始于对\"机器如何思考\"这一问题的好奇。从第一行 Hello World 到如今能够训练神经网络模型，每一步都是对未知世界的探索。"
 
 msgid "关于坚持"
-msgstr "关于坚持"
+msgstr "粘り強さについて"
 
 msgid "\"学习 AI 不是一场短跑，而是一场没有终点的马拉松。重要的是每天都比昨天多理解一点点。\""
-msgstr "\"学习 AI 不是一场短跑，而是一场没有终点的马拉松。重要的是每天都比昨天多理解一点点。\""
+msgstr "「AI学習は短距離走ではなく、終わりのないマラソンです。重要なのは毎日、昨日より少しだけ多く理解することです。」"
 
 msgid ""
 "坚持做深度学习笔记整理这件事，已经成为了我日常生活的一部分。起初只是为了记录课程中的关键概念，但随着笔记越积越多，我发现这个过程本身比学习课程更有价值。写笔记不是简单的摘抄，而是强迫自己用最清晰的语言重新组织知识，在反复的推敲和修改中，很多曾经模糊的概念突然变得清晰起来。"
@@ -237,10 +245,10 @@ msgstr ""
 "最让我感到满足的时刻，不是完成某门课程，也不是跑通了某个模型，而是在某个深夜写笔记时，忽然发现自己在几个月前记下的疑问，如今已经有了自己的答案。这种\"过去和现在的自己对话\"的感觉，是自学路上最珍贵的体验。"
 
 msgid "不止代码"
-msgstr "不止代码"
+msgstr "コードだけじゃない"
 
 msgid "阅读技术论文"
-msgstr "阅读技术论文"
+msgstr "技術論文を読む"
 
 msgid ""
 "喜欢在 ArXiv 上浏览最新的 AI 论文，尤其关注 CV 和 NLP 领域的前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
@@ -248,40 +256,40 @@ msgstr ""
 "喜欢在 ArXiv 上浏览最新的 AI 论文，尤其关注 CV 和 NLP 领域的前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
 
 msgid "开源社区"
-msgstr "开源社区"
+msgstr "オープンソースコミュニティ"
 
 msgid "关注 GitHub 上优秀的开源项目，学习优秀工程师的代码风格和架构设计。希望有一天自己的项目也能被别人 Star。"
 msgstr "关注 GitHub 上优秀的开源项目，学习优秀工程师的代码风格和架构设计。希望有一天自己的项目也能被别人 Star。"
 
 msgid "写作与表达"
-msgstr "写作与表达"
+msgstr "文章作成と表現"
 
 msgid "相信清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。"
 msgstr "相信清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。"
 
 msgid "持续学习"
-msgstr "持续学习"
+msgstr "継続的学習"
 
 msgid "技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只埋头写代码，更要理解人与技术的关系。"
 msgstr "技术之外，也在关注产品设计、认知科学和个人效率提升方法。好的工程师不应该只埋头写代码，更要理解人与技术的关系。"
 
 msgid "简历"
-msgstr "简历"
+msgstr "履歴書"
 
 msgid "个人简历"
-msgstr "个人简历"
+msgstr "履歴書"
 
 msgid "深度学习工程师 · AI 技术爱好者"
-msgstr "深度学习工程师 · AI 技术爱好者"
+msgstr "ディープラーニングエンジニア · AI 技術愛好家"
 
 msgid "姓名"
 msgstr "姓名"
 
 msgid "教育经历"
-msgstr "教育经历"
+msgstr "学歴"
 
 msgid "完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心技术。"
-msgstr "完成 Andrew Ng 深度学习五门课程，掌握神经网络、CNN、RNN、注意力机制等核心技术。"
+msgstr "Andrew Ngのディープラーニング5コースを修了し、ニューラルネットワーク、CNN、RNN、アテンション機構などのコア技術を習得。"
 
 msgid ""
 "热爱深度学习与人工智能技术，具备扎实的数学基础和编程能力。善于将复杂的 AI 概念转化为清晰易懂的文档和笔记。注重代码质量和工程实践，持续学习前沿技术。"
@@ -289,16 +297,16 @@ msgstr ""
 "热爱深度学习与人工智能技术，具备扎实的数学基础和编程能力。善于将复杂的 AI 概念转化为清晰易懂的文档和笔记。注重代码质量和工程实践，持续学习前沿技术。"
 
 msgid "我的作品"
-msgstr "我的作品"
+msgstr "私の作品"
 
 msgid "深度学习与人工智能相关的项目、笔记和探索。"
-msgstr "深度学习与人工智能相关的项目、笔记和探索。"
+msgstr "ディープラーニングと人工知能に関するプロジェクト、ノート、探求。"
 
 msgid "项目"
-msgstr "项目"
+msgstr "プロジェクト"
 
 msgid "深度学习专项课程笔记"
-msgstr "深度学习专项课程笔记"
+msgstr "ディープラーニング専門コースノート"
 
 msgid ""
 "Andrew Ng "
@@ -308,197 +316,196 @@ msgstr ""
 "深度学习五门课程（神经网络与深度学习、改善深度神经网络、结构化机器学习项目、卷积神经网络、序列模型）的完整中文学习笔记，涵盖所有关键概念、数学推导和代码实现要点。"
 
 msgid "技术栈"
-msgstr "技术栈"
+msgstr "技術スタック"
 
 msgid "关于我"
-msgstr "关于我"
+msgstr "自己紹介"
 
 msgid "搜索结果"
-msgstr "搜索结果"
+msgstr "検索結果"
 
 msgid "关于「<strong>%(q)s</strong>」的搜索结果，共 %(count)s 篇"
-msgstr "关于「<strong>%(q)s</strong>」的搜索结果，共 %(count)s 篇"
+msgstr "「<strong>%(q)s</strong>」の検索結果、全 %(count)s 件"
 
 msgid "请输入搜索关键词"
-msgstr "请输入搜索关键词"
+msgstr "検索キーワードを入力してください"
 
 msgid "未找到相关文章"
-msgstr "未找到相关文章"
+msgstr "関連記事が見つかりませんでした"
 
 msgid "尝试更换关键词，或浏览全部文章。"
-msgstr "尝试更换关键词，或浏览全部文章。"
+msgstr "キーワードを変更するか、すべての記事を閲覧してください。"
 
 msgid "搜索：%(q)s"
-msgstr "搜索：%(q)s"
+msgstr "検索：%(q)s"
 
 msgid "注册"
-msgstr "注册"
+msgstr "登録"
 
 msgid "博客注册"
-msgstr "博客注册"
+msgstr "ブログ登録"
 
 msgid "创建你的账号"
-msgstr "创建你的账号"
+msgstr "アカウントを作成"
 
 msgid "已有账号？"
-msgstr "已有账号？"
+msgstr "すでにアカウントをお持ちですか？"
 
 msgid "立即登录"
-msgstr "立即登录"
+msgstr "今すぐログイン"
 
 msgid "注册成功"
-msgstr "注册成功"
+msgstr "登録完了"
 
 msgid "注册成功！"
-msgstr "注册成功！"
+msgstr "登録完了！"
 
 msgid "激活邮件已发送至你的邮箱，请查收"
-msgstr "激活邮件已发送至你的邮箱，请查收"
+msgstr "アクティベーションメールを送信しました。ご確認ください。"
 
 msgid "下一步操作"
-msgstr "下一步操作"
+msgstr "次の操作"
 
 msgid "1. 前往邮箱查收激活邮件（主题：博客注册激活链接）"
-msgstr "1. 前往邮箱查收激活邮件（主题：博客注册激活链接）"
+msgstr "1. メールボックスでアクティベーションメールをご確認ください（件名：ブログ登録アクティベーションリンク）"
 
 msgid "2. 点击邮件中的链接完成账号激活"
-msgstr "2. 点击邮件中的链接完成账号激活"
+msgstr "2. メール内のリンクをクリックしてアカウントをアクティベート"
 
 msgid "取消"
-msgstr "取消"
+msgstr "キャンセル"
 
 msgid "保存修改"
-msgstr "保存修改"
+msgstr "変更を保存"
 
 msgid "当前：%(value)s"
-msgstr "当前：%(value)s"
+msgstr "現在：%(value)s"
 
 msgid "请输入%(label)s"
-msgstr "请输入%(label)s"
+msgstr "%(label)sを入力してください"
 
 msgid "博客登录"
-msgstr "博客登录"
+msgstr "ブログログイン"
 
 msgid "欢迎回来"
-msgstr "欢迎回来"
+msgstr "おかえりなさい"
 
 msgid "忘记密码？"
-msgstr "忘记密码？"
+msgstr "パスワードをお忘れですか？"
 
 msgid "注册账号"
-msgstr "注册账号"
+msgstr "アカウント登録"
 
 msgid "登 录"
-msgstr "登 录"
+msgstr "ログイン"
 
 msgid "回到首页"
-msgstr "回到首页"
+msgstr "ホームに戻る"
 
 msgid "提示：请检查邮箱的收件箱和垃圾邮件文件夹，或"
-msgstr "提示：请检查邮箱的收件箱和垃圾邮件文件夹，或"
+msgstr "ヒント：メールの受信トレイとスパムフォルダをご確認いただくか、"
 
 msgid "通过忘记密码重新激活"
-msgstr "通过忘记密码重新激活"
+msgstr "パスワード忘れから再アクティベート"
 
 msgid "忘记密码"
-msgstr "忘记密码"
+msgstr "パスワードをお忘れの方"
 
 msgid "找回密码"
-msgstr "找回密码"
+msgstr "パスワード再設定"
 
 msgid "输入注册邮箱，我们将发送重置链接"
-msgstr "输入注册邮箱，我们将发送重置链接"
+msgstr "登録メールアドレスを入力してください。リセットリンクを送信します。"
 
 msgid "发送重置链接"
-msgstr "发送重置链接"
+msgstr "リセットリンクを送信"
 
 msgid "返回登录"
-msgstr "返回登录"
+msgstr "ログインに戻る"
 
 msgid "重置密码"
-msgstr "重置密码"
+msgstr "パスワードをリセット"
 
 msgid "请输入你的新密码"
-msgstr "请输入你的新密码"
+msgstr "新しいパスワードを入力してください"
 
 msgid "确 认 修 改"
-msgstr "确 认 修 改"
+msgstr "変更を確認"
 
 msgid "个人中心"
-msgstr "个人中心"
+msgstr "ダッシュボード"
 
 msgid "退出登录"
-msgstr "退出登录"
+msgstr "ログアウト"
 
 msgid "内容管理"
-msgstr "内容管理"
+msgstr "コンテンツ管理"
 
 msgid "写文章"
-msgstr "写文章"
+msgstr "記事を書く"
 
 msgid "草稿箱"
-msgstr "草稿箱"
+msgstr "下書き"
 
 msgid "站长管理"
-msgstr "站长管理"
+msgstr "管理画面"
 
 msgid "评论管理"
-msgstr "评论管理"
+msgstr "コメント管理"
 
 msgid "账号信息"
-msgstr "账号信息"
+msgstr "アカウント情報"
 
 msgid "修改信息"
-msgstr "修改信息"
+msgstr "情報編集"
 
 msgid "暂未设置个性签名"
-msgstr "暂未设置个性签名"
+msgstr "署名は未設定です"
 
 msgid "暂未填写个人简介"
-msgstr "暂未填写个人简介"
+msgstr "プロフィールは未記入です"
 
 msgid "编辑资料"
-msgstr "编辑资料"
+msgstr "プロフィール編集"
 
 msgid "登录"
-msgstr "登录"
+msgstr "ログイン"
 
 msgid "头像"
-msgstr "头像"
+msgstr "アバター"
 
 msgid "暂未设置"
-msgstr "暂未设置"
+msgstr "未設定"
 
 msgid "未设置"
-msgstr "未设置"
+msgstr "未設定"
 
 msgid "男"
-msgstr "男"
+msgstr "男性"
 
 msgid "女"
-msgstr "女"
+msgstr "女性"
 
 msgid ""
 "2015 "
 "年从大连海事大学船舶电气工程专业毕业后，赴日留学并在东京海洋大学完成了硕士与博士课程。十年的学术训练不仅奠定了扎实的工程基础，也培养了跨文化环境下独立研究的能力。研究兴趣涉及海洋科技、自动化控制与人工智能的交叉领域。"
 msgstr ""
-"2015 "
-"年从大连海事大学船舶电气工程专业毕业后，赴日留学并在东京海洋大学完成了硕士与博士课程。十年的学术训练不仅奠定了扎实的工程基础，也培养了跨文化环境下独立研究的能力。研究兴趣涉及海洋科技、自动化控制与人工智能的交叉领域。"
+"2015年に大連海事大学の船舶電気工学科を卒業後、来日し東京海洋大学で修士・博士課程を修了しました。10年にわたる学術訓練は、しっかりとした工学の基礎を築き、異文化環境での独立した研究能力を育みました。研究分野は海洋技術、自動化制御、人工知能の交差領域にわたります。"
 
 msgid "AI / 机器学习"
-msgstr "AI / 机器学习"
+msgstr "AI / 機械学習"
 
 msgid "Bilibili/YouTube/Podcast 批量导入 NotebookLM"
-msgstr "Bilibili/YouTube/Podcast 批量导入 NotebookLM"
+msgstr "Bilibili/YouTube/Podcast の一括インポート NotebookLM"
 
 msgid "Chrome 扩展"
-msgstr "Chrome 扩展"
+msgstr "Chrome 拡張機能"
 
 msgid "GitHub"
 msgstr "GitHub"
 
 msgid "RAG · 大语言模型"
-msgstr "RAG · 大语言模型"
+msgstr "RAG · 大規模言語モデル"
 
 msgid ""
 "一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 "
@@ -506,86 +513,85 @@ msgid ""
 "NotebookLM。采用 Side Panel UI 设计，自动识别当前站点并匹配导入工具，支持多账号切换、目标笔记本选择、PDF 聚合、AI "
 "对话分享卡片等高级功能。100% 客户端处理，不上传任何用户数据。"
 msgstr ""
-"一款基于 WXT + React + TypeScript 构建的 Chrome 扩展（Manifest V3），支持从 "
-"Bilibili、YouTube、Apple Podcasts、小宇宙、Web 页面、AI 对话等多种来源批量导入内容到 Google "
-"NotebookLM。采用 Side Panel UI 设计，自动识别当前站点并匹配导入工具，支持多账号切换、目标笔记本选择、PDF 聚合、AI "
-"对话分享卡片等高级功能。100% 客户端处理，不上传任何用户数据。"
+"WXT + React + TypeScript で構築された Chrome 拡張機能（Manifest "
+"V3）。Bilibili、YouTube、Apple Podcasts、小宇宙、Webページ、AI会話など複数のソースから Google "
+"NotebookLM にコンテンツを一括インポート。Side Panel UI "
+"を採用し、現在のサイトを自動認識してインポートツールをマッチング。マルチアカウント切り替え、ターゲットノートブック選択、PDF集約、AI会話共有カードなどの高度な機能をサポート。100%"
+" クライアント側処理で、ユーザーデータを一切アップロードしません。"
 
 msgid "专业技能"
-msgstr "专业技能"
+msgstr "専門スキル"
 
 msgid "业务范围"
-msgstr "业务范围"
+msgstr "業務範囲"
 
 msgid "个人贡献"
-msgstr "个人贡献"
+msgstr "個人の貢献"
 
 msgid "主导新技術（YOLO·ROS）导入，推动产品智能化升级"
-msgstr "主导新技術（YOLO·ROS）导入，推动产品智能化升级"
+msgstr "新技術（YOLO·ROS）の導入を主導し、製品のスマート化を推進"
 
 msgid ""
 "从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome "
 "扩展开发，我具备跨越多层技术栈的实践能力。在机械设备制造商的核心研发部门，我负责产品搭载软件的全栈开发，同时主导新技术（YOLO·ROS）的导入与推广——从技术选型、可行性验证到落地部署，全程推动产品智能化升级。"
 msgstr ""
-"从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome "
-"扩展开发，我具备跨越多层技术栈的实践能力。在机械设备制造商的核心研发部门，我负责产品搭载软件的全栈开发，同时主导新技术（YOLO·ROS）的导入与推广——从技术选型、可行性验证到落地部署，全程推动产品智能化升级。"
+"PLCの低レベル制御からAI画像認識、フルスタックWebやChrome拡張開発まで、複数の技術スタックにわたる実践力を備えています。機械設備メーカーの核心研究開発部門で製品搭載ソフトウェアのフルスタック開発を担当すると同時に、新技術（YOLO·ROS）の導入と推進を主導——技術選定、実現可能性検証から実装展開まで、製品のスマート化を全程で推進しています。"
 
 msgid "从零实现 RAG 完整流水线：文档分割 → 向量化 → 检索 → LLM 生成"
-msgstr "从零实现 RAG 完整流水线：文档分割 → 向量化 → 检索 → LLM 生成"
+msgstr "ゼロからRAG完全パイプラインを実装：文書分割 → ベクトル化 → 検索 → LLM生成"
 
 msgid "关注 GitHub 优秀开源项目，学习代码风格与架构设计。将自己的项目也开源在 GitHub 上，希望为社区贡献价值。"
-msgstr "关注 GitHub 优秀开源项目，学习代码风格与架构设计。将自己的项目也开源在 GitHub 上，希望为社区贡献价值。"
+msgstr ""
+"GitHubの優れたオープンソースプロジェクトをフォローし、コードスタイルとアーキテクチャ設計を学んでいます。自身のプロジェクトもGitHubで公開し、コミュニティに価値を貢献したいと考えています。"
 
 msgid "关注产品设计、认知科学和个人效率提升方法。不同领域的知识交叉往往能带来意想不到的启发。"
-msgstr "关注产品设计、认知科学和个人效率提升方法。不同领域的知识交叉往往能带来意想不到的启发。"
+msgstr "プロダクトデザイン、認知科学、個人の効率向上方法に関心を持っています。異なる分野の知識の交差は、しばしば予想外の気づきをもたらします。"
 
 msgid "兴趣与关注"
-msgstr "兴趣与关注"
+msgstr "興味と関心"
 
 msgid "前端开发"
-msgstr "前端开发"
+msgstr "フロントエンド開発"
 
 msgid ""
 "博士课程修了后，加入古河机械金属株式会社（古河ロックドリル），在开发设计部从事产品搭载软件的全栈开发。从 PLC 底层控制到 AI "
 "图像识别，覆盖了工业自动化系统的完整技术栈。"
 msgstr ""
-"博士课程修了后，加入古河机械金属株式会社（古河ロックドリル），在开发设计部从事产品搭载软件的全栈开发。从 PLC 底层控制到 AI "
-"图像识别，覆盖了工业自动化系统的完整技术栈。"
+"博士課程修了後、古河機械金属株式会社（古河ロックドリル）に入社し、開発設計部で製品搭載ソフトウェアのフルスタック開発に従事。PLCの低レベル制御からAI画像認識まで、産業オートメーションシステムの完全な技術スタックをカバーしています。"
 
 msgid "参与 Keyence 公司技术实习，了解工厂自动化与检测设备的前沿技术。"
-msgstr "参与 Keyence 公司技术实习，了解工厂自动化与检测设备的前沿技术。"
+msgstr "キーエンスの技術インターンシップに参加し、工場オートメーションと検査装置の最先端技術を学びました。"
 
 msgid "参与电气 / 油压回路设计、CREO 3D 建模，实现软硬件协同开发"
-msgstr "参与电气 / 油压回路设计、CREO 3D 建模，实现软硬件协同开发"
+msgstr "電気/油圧回路設計、CREO 3Dモデリングに参加し、ソフトウェアとハードウェアの協調開発を実現"
 
 msgid "参与车载音响系统的开发实习，了解嵌入式音频处理与车载电子系统架构。"
-msgstr "参与车载音响系统的开发实习，了解嵌入式音频处理与车载电子系统架构。"
+msgstr "車載オーディオシステムの開発インターンシップに参加し、組み込みオーディオ処理と車載電子システムアーキテクチャを学びました。"
 
 msgid "古河机械金属株式会社 · 正社員"
-msgstr "古河机械金属株式会社 · 正社員"
+msgstr "古河機械金属株式会社 · 正社員"
 
 msgid "后端 / DevOps"
-msgstr "后端 / DevOps"
+msgstr "バックエンド / DevOps"
 
 msgid ""
 "在业余时间，我通过个人项目持续拓宽技术边界——从计算机视觉流水线到 RAG 智能问答系统，再到已上架 Chrome Web Store "
 "的浏览器扩展。这些项目既是学习驱动，也是对「技术如何改善日常生活」的持续探索。"
 msgstr ""
-"在业余时间，我通过个人项目持续拓宽技术边界——从计算机视觉流水线到 RAG 智能问答系统，再到已上架 Chrome Web Store "
-"的浏览器扩展。这些项目既是学习驱动，也是对「技术如何改善日常生活」的持续探索。"
+"余暇には、個人プロジェクトを通じて技術の幅を広げ続けています——コンピュータビジョンパイプラインからRAGスマートQAシステム、Chrome Web "
+"Storeに公開されたブラウザ拡張まで。これらのプロジェクトは学習意欲に駆動されると同時に、「テクノロジーがどのように日常生活を改善するか」への継続的な探求でもあります。"
 
 msgid ""
 "在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO"
 " 图像识别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，从软硬件两端推动产品升级。"
 msgstr ""
-"在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO"
-" 图像识别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，从软硬件两端推动产品升级。"
+"某大手機械メーカーの核心研究開発部門で、製品搭載ソフトウェアのフルスタック開発に従事。PLC基本制御（シーケンス制御、モーション制御）、ROS自動化フロー構築、YOLO画像認識アルゴリズム実装など、複数の制御階層をカバー。同時に電気回路/油圧回路設計、CREO機械設計にも参加し、ソフトウェアとハードウェアの両面から製品のアップグレードを推進。"
 
 msgid "在线体验"
-msgstr "在线体验"
+msgstr "オンライン体験"
 
 msgid "基于 OpenCV 实现透视变换矫正，支持任意拍摄角度的票据规整"
-msgstr "基于 OpenCV 实现透视变换矫正，支持任意拍摄角度的票据规整"
+msgstr "OpenCV ベースの透視変換補正を実装し、任意の撮影角度からの領収書整列をサポート"
 
 msgid ""
 "基于 RAG（检索增强生成）架构的本地文档 QA 系统。上传 .md / .txt / .pdf "
@@ -593,135 +599,138 @@ msgid ""
 "NumPy + JSON 自建轻量向量数据库，无需外部向量数据库依赖。Streamlit Web UI 提供聊天式交互、回答风格选择、Top-K "
 "检索可视化等功能。"
 msgstr ""
-"基于 RAG（检索增强生成）架构的本地文档 QA 系统。上传 .md / .txt / .pdf "
-"格式的本地手册或文档，系统自动进行文本分割、向量化存储，并通过 ZhipuAI 嵌入模型 + DeepSeek API 实现自然语言问答。采用 "
-"NumPy + JSON 自建轻量向量数据库，无需外部向量数据库依赖。Streamlit Web UI 提供聊天式交互、回答风格选择、Top-K "
-"检索可视化等功能。"
+"RAG（検索拡張生成）アーキテクチャに基づくローカルドキュメントQAシステム。.md / .txt / .pdf "
+"形式のローカルマニュアルやドキュメントをアップロードすると、システムが自動的にテキスト分割、ベクトル化保存を行い、ZhipuAI 埋め込みモデル + "
+"DeepSeek API を通じて自然言語でのQAを実現。NumPy + JSON "
+"による軽量ベクトルデータベースを自前で構築し、外部ベクトルDBに依存しません。Streamlit Web UI "
+"はチャット形式の対話、回答スタイル選択、Top-K 検索可視化などの機能を提供します。"
 
 msgid "基本信息"
 msgstr "基本信息"
 
 msgid "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时"
-msgstr "实现增量索引构建，新增文件仅处理变更部分，大幅降低启动耗时"
+msgstr "インクリメンタルインデックス構築を実装し、新規ファイルの変更部分のみを処理して起動時間を大幅短縮"
 
 msgid "工业控制 / 硬件"
-msgstr "工业控制 / 硬件"
+msgstr "産業制御 / ハードウェア"
 
 msgid "工业控制系统"
-msgstr "工业控制系统"
+msgstr "産業制御システム"
 
 msgid "常浏览 ArXiv 上的 AI 论文，关注计算机视觉与 NLP 前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
-msgstr "常浏览 ArXiv 上的 AI 论文，关注计算机视觉与 NLP 前沿进展。虽然很多论文读起来吃力，但每理解一个新 idea 都让人兴奋。"
+msgstr ""
+"ArXivのAI論文をよく閲覧し、コンピュータビジョンとNLPの最先端の進展を追っています。多くの論文は読むのに苦労しますが、新しいアイデアを理解するたびに興奮します。"
 
 msgid "开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%）"
-msgstr "开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%）"
+msgstr "Python自動化ツールを開発し、ハードウェアID設定作業時間を20分から1分に短縮（95%削減）"
 
 msgid "开发工具"
-msgstr "开发工具"
+msgstr "開発ツール"
 
 msgid "开发设计部 · 机械设备控制 / AI 功能开发 · 正社員"
-msgstr "开发设计部 · 机械设备控制 / AI 功能开发 · 正社員"
+msgstr "開発設計部 · 機械設備制御 / AI機能開発 · 正社員"
 
 msgid ""
 "我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 "
 "95%），大幅提升团队工作效率。这个经历让我深刻理解：好的工具不在于技术复杂度，而在于能否精准命中业务痛点。"
 msgstr ""
-"我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 "
-"95%），大幅提升团队工作效率。这个经历让我深刻理解：好的工具不在于技术复杂度，而在于能否精准命中业务痛点。"
+"業務プロセスにおける課題を特定し、技術的手段で解決することを得意としています。Python自動化ツールを開発し、ハードウェアID設定作業時間を20分から1分に短縮（95%削減）、チームの作業効率を大幅に向上させました。この経験から、良いツールとは技術の複雑さではなく、業務の課題を正確に捉えられるかどうかが重要だと深く理解しています。"
 
 msgid "技术之外，持续关注 AI 前沿论文、开源社区与产品设计。相信好的工程师不仅要能写代码，更要理解技术与人之间的关系。"
-msgstr "技术之外，持续关注 AI 前沿论文、开源社区与产品设计。相信好的工程师不仅要能写代码，更要理解技术与人之间的关系。"
+msgstr ""
+"技術以外にも、AIの最先端論文、オープンソースコミュニティ、プロダクトデザインに関心を持ち続けています。良いエンジニアはコードを書けるだけでなく、技術と人との関係を理解する必要があると信じています。"
 
 msgid "技术信念"
-msgstr "技术信念"
+msgstr "技術信条"
 
 msgid "教育"
-msgstr "教育"
+msgstr "学歴"
 
 msgid "教育背景"
-msgstr "教育背景"
+msgstr "学歴背景"
 
 msgid "整合多模型推理管线，端到端耗时优化至 3 秒以内"
-msgstr "整合多模型推理管线，端到端耗时优化至 3 秒以内"
+msgstr "複数モデルの推論パイプラインを統合し、エンドツーエンドの処理時間を3秒以内に最適化"
 
 msgid "文档"
-msgstr "文档"
+msgstr "ドキュメント"
 
 msgid "本地文档智能问答系统"
-msgstr "本地文档智能问答系统"
+msgstr "ローカルドキュメントインテリジェントQAシステム"
 
 msgid "机械设备控制 · AI 功能开发"
-msgstr "机械设备控制 · AI 功能开发"
+msgstr "機械設備制御 · AI機能開発"
 
 msgid "核心特性"
-msgstr "核心特性"
+msgstr "コア機能"
 
 msgid "求学之路"
-msgstr "求学之路"
+msgstr "学びの道"
 
 msgid "海洋技术研究科 应用环境系统学专攻 —— 博士课程修了。研究方向涉及 AI 与自动化控制技术的交叉应用。"
-msgstr "海洋技术研究科 应用环境系统学专攻 —— 博士课程修了。研究方向涉及 AI 与自动化控制技术的交叉应用。"
+msgstr "海洋技術研究科 応用環境システム学専攻 —— 博士課程修了。研究方向はAIと自動化制御技術のクロスアプリケーションに及びます。"
 
 msgid "海洋技术研究科 海运物流学专攻 —— 修士课程修了。聚焦自动化控制与信息系统研究。"
-msgstr "海洋技术研究科 海运物流学专攻 —— 修士课程修了。聚焦自动化控制与信息系统研究。"
+msgstr "海洋技術研究科 海運物流学専攻 —— 修士課程修了。自動化制御と情報システム研究に焦点を当てる。"
 
 msgid "清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。"
-msgstr "清晰的写作是清晰思考的外在表现。无论是技术笔记还是个人感悟，都力求用简洁、准确的语言传达复杂的思想。"
+msgstr "明確な文章は明確な思考の外面的な表れです。技術ノートも個人的な感悟も、簡潔で正確な言語で複雑な考えを伝えるよう心がけています。"
 
 msgid "独立完成整条流水线的架构设计与代码实现"
-msgstr "独立完成整条流水线的架构设计与代码实现"
+msgstr "パイプライン全体のアーキテクチャ設計とコード実装を独立して完了"
 
 msgid "突出成果"
-msgstr "突出成果"
+msgstr "顕著な成果"
 
 msgid "端到端多票据自动识别系统"
-msgstr "端到端多票据自动识别系统"
+msgstr "エンドツーエンド複数領収書自動認識システム"
 
 msgid "编程语言"
-msgstr "编程语言"
+msgstr "プログラミング言語"
 
 msgid "职业轨迹"
-msgstr "职业轨迹"
+msgstr "キャリアの軌跡"
 
 msgid "自研轻量级 VectorStore（基于 NumPy 计算余弦相似度 + JSON 持久化），无外部 DB 依赖"
-msgstr "自研轻量级 VectorStore（基于 NumPy 计算余弦相似度 + JSON 持久化），无外部 DB 依赖"
+msgstr "軽量 VectorStore を自社開発（NumPy でコサイン類似度計算 + JSON 永続化）、外部DBに依存しない"
 
 msgid "至今"
-msgstr "至今"
+msgstr "現在"
 
 msgid "船舶电气工程学科 船舶电子电气工程专攻 —— 学士课程修了。系统学习了电气工程、自动控制与嵌入式系统等核心课程。"
-msgstr "船舶电气工程学科 船舶电子电气工程专攻 —— 学士课程修了。系统学习了电气工程、自动控制与嵌入式系统等核心课程。"
+msgstr "船舶電気工学科 船舶電子電気工学専攻 —— 学士課程修了。電気工学、自動制御、組み込みシステムなどの核心科目を体系的に学習。"
 
 msgid "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力"
-msgstr "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力"
+msgstr "PLC → ROS → AI画像認識の完全な制御階層開発能力をカバー"
 
 msgid "计算机视觉 · OCR"
-msgstr "计算机视觉 · OCR"
+msgstr "コンピュータビジョン · OCR"
 
 msgid "训练 YOLOv8m 对 4 类关键字段（日期、店名、电话、金额）进行检测"
-msgstr "训练 YOLOv8m 对 4 类关键字段（日期、店名、电话、金额）进行检测"
+msgstr "YOLOv8m を訓練し、4種類のキーフィールド（日付、店名、電話番号、金額）を検出"
 
 msgid "设计 4 种回答风格（概要/学习指南/博客/自定义）+ 检索结果可视化"
-msgstr "设计 4 种回答风格（概要/学习指南/博客/自定义）+ 检索结果可视化"
+msgstr "4種類の回答スタイル（概要/学習ガイド/ブログ/カスタム）+ 検索結果の可視化を設計"
 
 msgid "跨领域学习"
-msgstr "跨领域学习"
+msgstr "分野横断的な学習"
 
 msgid ""
 "输入包含多张票据的合成照片，经过 YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 "
 "文字区域检测 → PaddleOCR 文字识别的四阶段流水线，自动输出结构化 CSV 数据。解决了日常生活中多张票据同时拍摄后手动录入效率低下的痛点。"
 msgstr ""
-"输入包含多张票据的合成照片，经过 YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 "
-"文字区域检测 → PaddleOCR 文字识别的四阶段流水线，自动输出结构化 CSV 数据。解决了日常生活中多张票据同时拍摄后手动录入效率低下的痛点。"
+"複数の領収書を含む合成写真を入力として、YOLOv8m 物体検出 → 透視変換補正 → ResNet34 方向分類 → YOLOv5/YOLOv9 "
+"文字領域検出 → PaddleOCR 文字認識の4段階パイプラインを経て、構造化された CSV "
+"データを自動出力。日常で複数の領収書を同時に撮影した後の手動入力の非効率性を解決します。"
 
 msgid "「真正的技术价值不在于掌握多少工具，而在于能否用合适的技术解决实际问题。」"
-msgstr "「真正的技术价值不在于掌握多少工具，而在于能否用合适的技术解决实际问题。」"
+msgstr "「真の技術的価値は、どれだけ多くのツールを使いこなせるかではなく、適切な技術で実際の問題を解決できるかどうかにある。」"
 
 msgid "Chrome扩展"
-msgstr "Chrome扩展"
+msgstr "Chrome拡張機能"
 
 msgid "DevOps / 工具"
-msgstr "DevOps / 工具"
+msgstr "DevOps / ツール"
 
 msgid ""
 "从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome "
@@ -733,7 +742,7 @@ msgstr ""
 " Python 自动化工具将作业时间缩短 95%。持续保持对前沿技术的关注与学习，相信真正的技术价值在于解决实际问题。"
 
 msgid "前端及全栈"
-msgstr "前端及全栈"
+msgstr "フロントエンド＆フルスタック"
 
 msgid "四阶段 CV 流水线：YOLOv8m + ResNet34 + PaddleOCR，实现多票据自动识别与结构化 CSV 输出。"
 msgstr "四阶段 CV 流水线：YOLOv8m + ResNet34 + PaddleOCR，实现多票据自动识别与结构化 CSV 输出。"
@@ -746,52 +755,54 @@ msgstr ""
 "NotebookLM。已上架 Chrome Web Store。"
 
 msgid "株式会社 · 车载音响开发（实习）"
-msgstr "株式会社 · 车载音响开发（实习）"
+msgstr "株式会社 · 車載オーディオ開発（インターン）"
 
 msgid "自研轻量 VectorStore（NumPy + JSON），整合 DeepSeek + ZhipuAI，实现本地文档智能问答。"
-msgstr "自研轻量 VectorStore（NumPy + JSON），整合 DeepSeek + ZhipuAI，实现本地文档智能问答。"
+msgstr ""
+"軽量VectorStore（NumPy + JSON）を自社開発。DeepSeek + "
+"ZhipuAIを統合し、ローカルドキュメントのインテリジェントQAを実現。"
 
 msgid "项目经历"
-msgstr "项目经历"
+msgstr "プロジェクト経験"
 
 msgid "Education Background"
-msgstr "教育背景"
+msgstr "学歴背景"
 
 msgid "Tokyo Univ. of Marine Science and Technology · PhD"
-msgstr "东京海洋大学 · 博士"
+msgstr "東京海洋大学 · 博士"
 
 msgid "Doctoral Program in Applied Environmental Systems, Graduated"
-msgstr "海洋技术研究科 应用环境系统学专攻 —— 博士课程修了"
+msgstr "応用環境システム学専攻 博士課程 修了"
 
 msgid "Tokyo Univ. of Marine Science and Technology · Master"
-msgstr "东京海洋大学 · 修士"
+msgstr "東京海洋大学 · 修士"
 
 msgid "Master's Program in Maritime Logistics, Graduated"
-msgstr "海洋技术研究科 海运物流学专攻 —— 修士课程修了"
+msgstr "海運物流学専攻 修士課程 修了"
 
 msgid "Dalian Maritime University · Bachelor"
-msgstr "大连海事大学 · 学士"
+msgstr "大連海事大学 · 学士"
 
 msgid "Bachelor's in Marine Electronic and Electrical Engineering, Graduated"
-msgstr "船舶电气工程学科 船舶电子电气工程专攻 —— 学士课程修了"
+msgstr "船舶電子電気工学専攻 学士課程 修了"
 
 msgid "Certifications & Languages"
-msgstr "证书 & 语言"
+msgstr "資格 & 言語"
 
 msgid "Tamakage Skills Certificate"
-msgstr "玉挂技能"
+msgstr "玉掛技能"
 
 msgid "Standard Class 1 Driver's License"
-msgstr "普通自动车第一種運転免許"
+msgstr "普通自動車第一種運転免許"
 
 msgid "About Me"
-msgstr "关于我"
+msgstr "自己紹介"
 
 msgid "Basic Info"
-msgstr "基本信息"
+msgstr "基本情報"
 
 msgid "Name"
-msgstr "姓名"
+msgstr "名前"
 
 msgid "Wenbin BAI (Ethan BAI)"
 msgstr "白 文斌（Ethan BAI）"
@@ -800,34 +811,34 @@ msgid "Location"
 msgstr "所在地"
 
 msgid "Gunma, Japan"
-msgstr "日本 · 群马县"
+msgstr "日本 · 群馬県"
 
 msgid "Email"
-msgstr "邮箱"
+msgstr "メール"
 
 msgid "Employment"
-msgstr "职历"
+msgstr "職歴"
 
 msgid "Present"
-msgstr "至今"
+msgstr "現在"
 
 msgid "Furukawa Rock Drill Co., Ltd."
-msgstr "古河机械金属株式会社（古河ロックドリル）"
+msgstr "古河機械金属株式会社（古河ロックドリル）"
 
 msgid "R&D Dept. · Machinery Control / AI Development · Full-time"
-msgstr "开发设计部 · 机械设备控制/AI 功能开发 · 正社員"
+msgstr "開発設計部 · 機械設備制御/AI機能開発 · 正社員"
 
 msgid "Internships"
-msgstr "实习经历"
+msgstr "インターンシップ"
 
 msgid "Yamaha Co., Ltd. · Automotive Audio Development"
-msgstr "Yamaha 株式会社 · 车载音响开发"
+msgstr "Yamaha 株式会社 · 車載オーディオ開発"
 
 msgid "Keyence Co., Ltd. · Technical Internship"
-msgstr "Keyence 株式会社 · 见学实习"
+msgstr "Keyence 株式会社 · 見学インターンシップ"
 
 msgid "Self Evaluation"
-msgstr "自我评价"
+msgstr "自己評価"
 
 msgid ""
 "From PLC-level control to AI image recognition, to full-stack web and Chrome"
@@ -841,9 +852,7 @@ msgid ""
 "continuously follow cutting-edge technologies and believe the true value of "
 "technology lies in solving real-world problems."
 msgstr ""
-"从 PLC 底层控制到 AI 图像识别，再到全栈 Web 和 Chrome "
-"扩展开发，具备跨越多层技术栈的实践能力。在机械设备制造商的核心研发部门负责产品搭载软件的全栈开发，同时主导新技术的导入与推广。善于识别业务流程中的痛点并运用技术手段解决——曾开发自动化工具将作业时间缩短"
-" 95%。持续保持对前沿技术的关注与学习，相信真正的技术价值在于解决实际问题。"
+"PLCの低レベル制御からAI画像認識、フルスタックWebやChrome拡張開発まで、複数の技術スタックにわたる実践力を備えています。機械設備メーカーの核心研究開発部門で製品搭載ソフトウェアのフルスタック開発を担当すると同時に、新技術の導入と推進を主導。業務プロセスにおける課題を特定し、技術的手段で解決することを得意としています——自動化ツールを開発し、ハードウェアID設定時間を20分から1分に短縮（95%削減）。最先端技術を追い続け、真の技術的価値は実際の問題を解決することにあると信じています。"
 
 msgid "Education"
-msgstr "教育"
+msgstr "学歴"

@@ -99,15 +99,20 @@
           <a href="{% url 'blog:resume' %}" {% if request.resolver_match.url_name == 'resume' %}class="active"{% endif %}>{% trans "CV" %}</a>
 
           {% get_current_language as current_lang %}
-          <form action="{% url 'set_language' %}" method="post" class="lang-switcher" style="display:inline">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.path }}">
-            {% if current_lang == 'zh-hans' %}
-              <button type="submit" name="language" value="en" class="lang-btn">EN</button>
-            {% else %}
-              <button type="submit" name="language" value="zh-hans" class="lang-btn">中文</button>
-            {% endif %}
-          </form>
+          <div class="lang-switcher">
+            <button type="button" data-lang="zh-hans" class="lang-btn {% if current_lang == 'zh-hans' %}is-active{% endif %}">中文</button>
+            <button type="button" data-lang="en" class="lang-btn {% if current_lang == 'en' %}is-active{% endif %}">EN</button>
+            <button type="button" data-lang="ja" class="lang-btn {% if current_lang == 'ja' %}is-active{% endif %}">日</button>
+          </div>
+          <script>
+          document.querySelector('.lang-switcher').addEventListener('click', function(e){
+            var btn = e.target.closest('[data-lang]');
+            if (!btn) return;
+            var lang = btn.getAttribute('data-lang');
+            var path = location.pathname.replace(/^\/(zh-hans|en|ja)(\/|$)/, '/');
+            location.href = (lang === 'zh-hans' ? '' : '/' + lang) + path + location.search + location.hash;
+          });
+          </script>
         </nav>
       </div>
     </header>

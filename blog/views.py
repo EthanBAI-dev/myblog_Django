@@ -22,7 +22,8 @@ class PostListView(ListView):
 
     def get_queryset(self):
         category_slug = self.kwargs.get('category_slug')
-        qs = Post.objects.all().order_by("-created_at").filter(status="published")
+        lang = self.request.LANGUAGE_CODE
+        qs = Post.objects.filter(status="published", language=lang).order_by("-created_at")
         if category_slug:
             qs = qs.filter(category__slug=category_slug)
         return qs
@@ -45,8 +46,10 @@ def post_detail(request, slug):
     Post.objects.filter(pk=post.pk).update(views=F('views') + 1)
     post.refresh_from_db()
 
-    # 上一页 / 下一页（按发布时间排序的已发布文章）
-    published_posts = Post.objects.filter(status='published').order_by('-created_at')
+    lang = request.LANGUAGE_CODE
+
+    # 上一页 / 下一页（按发布时间排序，同语言已发布文章）
+    published_posts = Post.objects.filter(status='published', language=lang).order_by('-created_at')
     post_list = list(published_posts.values_list('slug', flat=True))
     try:
         current_index = post_list.index(post.slug)
@@ -95,9 +98,11 @@ class SearchListView(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q', '').strip()
+        lang = self.request.LANGUAGE_CODE
         if q:
             return Post.objects.filter(
-                status='published'
+                status='published',
+                language=lang
             ).filter(
                 Q(title__icontains=q) | Q(content__icontains=q)
             ).order_by('-created_at')

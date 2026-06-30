@@ -1,11 +1,11 @@
-{% load static %}
+{% load static i18n %}
 <aside class="sidebar-widgets">
 
     <!-- 个人信息模块 -->
     <div class="widget widget-profile">
         <img class="profile-avatar"
              src="{% if blog_owner and blog_owner.image %}{{ MEDIA_URL }}{{ blog_owner.image }}{% else %}{% static 'users/images/default_avatar.png' %}{% endif %}"
-             alt="博主头像">
+             alt="{% trans '博主头像' %}">
         <div class="profile-info">
             <h3 class="profile-name">
                 {% if blog_owner and blog_owner.nike_name %}
@@ -22,7 +22,7 @@
                 {% elif blog_owner and blog_owner.gexing %}
                     {{ blog_owner.gexing|truncatechars:60 }}
                 {% else %}
-                    分享深度学习与 AI 相关的学习笔记和技术思考。
+                    {% trans "分享深度学习与 AI 相关的学习笔记和技术思考。" %}
                 {% endif %}
             </p>
         </div>
@@ -31,7 +31,7 @@
     <!-- 最新文章 -->
     {% if sidebar_recent_posts %}
     <div class="widget widget-expandable">
-        <h4 class="widget-title">最新文章</h4>
+        <h4 class="widget-title">{% trans "最新文章" %}</h4>
         <ul class="widget-list" data-visible="3">
             {% for p in sidebar_recent_posts %}
             <li{% if forloop.counter > 3 %} class="hidden-item"{% endif %}>
@@ -43,7 +43,7 @@
             {% endfor %}
             {% if sidebar_recent_posts|length > 3 %}
             <li class="more-toggle">
-                <button class="btn-more" onclick="toggleList(this)">查看更多 <span class="more-count">({{ sidebar_recent_posts|length|add:"-3" }})</span></button>
+                <button class="btn-more" onclick="toggleList(this)">{% trans "查看更多" %} <span class="more-count">({{ sidebar_recent_posts|length|add:"-3" }})</span></button>
             </li>
             {% endif %}
         </ul>
@@ -53,19 +53,19 @@
     <!-- 热门文章 -->
     {% if sidebar_hot_posts %}
     <div class="widget widget-expandable">
-        <h4 class="widget-title">热门文章</h4>
+        <h4 class="widget-title">{% trans "热门文章" %}</h4>
         <ul class="widget-list" data-visible="3">
             {% for p in sidebar_hot_posts %}
             <li{% if forloop.counter > 3 %} class="hidden-item"{% endif %}>
                 <a href="{% url 'blog:post_detail' p.slug %}">
                     <span class="widget-link-text">{{ p.title }}</span>
-                    <span class="widget-link-extra">{{ p.views }} 阅读</span>
+                    <span class="widget-link-extra">{{ p.views }} {% trans "阅读" %}</span>
                 </a>
             </li>
             {% endfor %}
             {% if sidebar_hot_posts|length > 3 %}
             <li class="more-toggle">
-                <button class="btn-more" onclick="toggleList(this)">查看更多 <span class="more-count">({{ sidebar_hot_posts|length|add:"-3" }})</span></button>
+                <button class="btn-more" onclick="toggleList(this)">{% trans "查看更多" %} <span class="more-count">({{ sidebar_hot_posts|length|add:"-3" }})</span></button>
             </li>
             {% endif %}
         </ul>
@@ -75,19 +75,19 @@
     <!-- 文章归档 -->
     {% if sidebar_archives %}
     <div class="widget widget-expandable">
-        <h4 class="widget-title">文章归档</h4>
+        <h4 class="widget-title">{% trans "文章归档" %}</h4>
         <ul class="widget-list" data-visible="3">
             {% for archive in sidebar_archives %}
             <li{% if forloop.counter > 3 %} class="hidden-item"{% endif %}>
                 <a href="{% url 'blog:post_list' %}?year={{ archive.month.year }}&month={{ archive.month.month }}">
-                    <span class="widget-link-text">{{ archive.month|date:"Y 年 m 月" }}</span>
-                    <span class="widget-link-extra">{{ archive.count }} 篇</span>
+                    <span class="widget-link-text">{{ archive.month|date:"Y" }} {% trans "年" %} {{ archive.month|date:"m" }} {% trans "月" %}</span>
+                    <span class="widget-link-extra">{{ archive.count }} {% trans "篇" %}</span>
                 </a>
             </li>
             {% endfor %}
             {% if sidebar_archives|length > 3 %}
             <li class="more-toggle">
-                <button class="btn-more" onclick="toggleList(this)">查看更多 <span class="more-count">({{ sidebar_archives|length|add:"-3" }})</span></button>
+                <button class="btn-more" onclick="toggleList(this)">{% trans "查看更多" %} <span class="more-count">({{ sidebar_archives|length|add:"-3" }})</span></button>
             </li>
             {% endif %}
         </ul>
@@ -107,7 +107,7 @@
             // 收起
             list.classList.remove('expanded');
             items.forEach(function (el) { el.classList.add('collapsing'); });
-            btn.innerHTML = '查看更多 <span class="more-count">(' + remaining + ')</span>';
+            btn.innerHTML = '{% trans "查看更多" %} <span class="more-count">(' + remaining + ')</span>';
             setTimeout(function () {
                 items.forEach(function (el) { el.classList.remove('collapsing'); });
             }, 300);
@@ -115,7 +115,7 @@
             // 展开
             list.classList.add('expanded');
             items.forEach(function (el) { el.classList.add('expanding'); });
-            btn.innerHTML = '收起';
+            btn.innerHTML = '{% trans "收起" %}';
             setTimeout(function () {
                 items.forEach(function (el) { el.classList.remove('expanding'); });
             }, 300);

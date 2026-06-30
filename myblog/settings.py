@@ -121,6 +121,7 @@ LANGUAGE_CODE = 'zh-hans'
 LANGUAGES = [
     ('zh-hans', '中文'),
     ('en', 'English'),
+    ('ja', '日本語'),
 ]
 
 LOCALE_PATHS = [

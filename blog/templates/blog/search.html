@@ -1,16 +1,17 @@
 {% extends 'blog/base.html' %}
+{% load i18n %}
 
-{% block title %}搜索：{{ query }} - {{ block.super }}{% endblock %}
+{% block title %}{% blocktranslate with q=query %}搜索：{{ q }}{% endblocktranslate %} - {{ block.super }}{% endblock %}
 
 {% block content %}
 <section class="page-intro">
     <p class="intro-kicker">SEARCH</p>
-    <h1 class="intro-title">搜索结果</h1>
+    <h1 class="intro-title">{% trans "搜索结果" %}</h1>
     <p class="intro-desc">
         {% if query %}
-        关于「<strong>{{ query }}</strong>」的搜索结果，共 {{ paginator.count }} 篇
+        {% blocktranslate with q=query count=paginator.count %}关于「<strong>{{ q }}</strong>」的搜索结果，共 {{ count }} 篇{% endblocktranslate %}
         {% else %}
-        请输入搜索关键词
+        {% trans "请输入搜索关键词" %}
         {% endif %}
     </p>
 </section>
@@ -32,7 +33,7 @@
                     {% endif %}
                     <span>{{ post.created_at|date:"Y-m-d" }}</span>
                     <span class="dot">·</span>
-                    <span>预计阅读 {{ post.reading_time }} 分钟</span>
+                    <span>{% blocktranslate with time=post.reading_time %}预计阅读 {{ time }} 分钟{% endblocktranslate %}</span>
                 </div>
 
                 <h2 class="post-title">
@@ -48,14 +49,14 @@
                 </p>
 
                 <a class="post-link" href="{% url 'blog:post_detail' post.slug %}">
-                    阅读全文 <span>→</span>
+                    {% trans "阅读全文" %} <span>→</span>
                 </a>
             </div>
         </article>
     {% empty %}
         <div class="empty-state">
-            <h3>未找到相关文章</h3>
-            <p>尝试更换关键词，或浏览全部文章。</p>
+            <h3>{% trans "未找到相关文章" %}</h3>
+            <p>{% trans "尝试更换关键词，或浏览全部文章。" %}</p>
         </div>
     {% endfor %}
 </section>
@@ -65,10 +66,10 @@
     <ul>
         {% if page_obj.has_previous %}
             <li class="prev">
-                <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">← 上一页</a>
+                <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">{% trans "← 上一页" %}</a>
             </li>
         {% else %}
-            <li class="prev disabled" aria-disabled="true">← 上一页</li>
+            <li class="prev disabled" aria-disabled="true">{% trans "← 上一页" %}</li>
         {% endif %}
 
         {% for num in paginator.page_range %}
@@ -81,10 +82,10 @@
 
         {% if page_obj.has_next %}
             <li class="next">
-                <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">下一页 →</a>
+                <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">{% trans "下一页 →" %}</a>
             </li>
         {% else %}
-            <li class="next disabled" aria-disabled="true">下一页 →</li>
+            <li class="next disabled" aria-disabled="true">{% trans "下一页 →" %}</li>
         {% endif %}
     </ul>
 </nav>

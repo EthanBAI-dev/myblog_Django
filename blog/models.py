@@ -97,6 +97,18 @@ class Post(models.Model):
         verbose_name='标签'
     )
 
+    language = models.CharField(
+        '语言',
+        max_length=10,
+        choices=[
+            ('zh-hans', '中文'),
+            ('en', 'English'),
+            ('ja', '日本語'),
+        ],
+        default='zh-hans',
+        help_text='文章内容使用的语言'
+    )
+
     created_at = models.DateTimeField('发布时间', auto_now_add=True)
     status = models.CharField(
         '状态',

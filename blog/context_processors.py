@@ -7,7 +7,8 @@ from blog.models import Post
 
 def sidebar_context(request):
     """全局侧边栏数据：博主信息、最新文章、热门文章、归档"""
-    published = Post.objects.filter(status='published')
+    lang = request.LANGUAGE_CODE
+    published = Post.objects.filter(status='published', language=lang)
 
     # 最新文章（最近 5 篇）
     recent_posts = published.order_by('-created_at')[:5]

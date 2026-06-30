@@ -1,12 +1,15 @@
 {% extends 'users/base_profile.html' %}
+{% load i18n %}
 
 {% block title %}
 <li class="text-blue-500 border-b-2 border-blue-500 pb-2 text-sm font-medium">
-    <a>编辑资料</a>
+    <a>{% trans "编辑资料" %}</a>
 </li>
 {% endblock title %}
 
 {% block admin_sidebar %}{% endblock admin_sidebar %}
+
+{% block subtitle %}{% trans "编辑资料" %}{% endblock %}
 
 {% block content %}
 <form action="{% url 'users:editor_users' %}" method="post" enctype="multipart/form-data" class="space-y-5">
@@ -40,7 +43,7 @@
                    id="{{ field.id_for_label }}"
                    class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                    {% if field.field.required %}required{% endif %}
-                   placeholder="请输入{{ field.label }}">
+                   placeholder="{% blocktranslate with label=field.label %}请输入{{ label }}{% endblocktranslate %}">
         {% endif %}
         {% if field.errors %}
         <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
@@ -53,10 +56,10 @@
 
     <div class="flex justify-end pt-4">
         <a href="{% url 'users:user_profile' %}" class="px-4 py-2 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 mr-3 transition">
-            取消
+            {% trans "取消" %}
         </a>
         <button type="submit" class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium transition">
-            保存修改
+            {% trans "保存修改" %}
         </button>
     </div>
 </form>

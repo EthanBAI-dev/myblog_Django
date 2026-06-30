@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 
-{% block title %}登录 - 博客{% endblock title %}
+{% block title %}{% trans "登录" %} - {% trans "博客" %}{% endblock title %}
 
 {% block content %}
 <div class="bg-white rounded-lg shadow-md p-8">
@@ -15,8 +16,8 @@
         </div>
         {% if '尚未激活' in error_msg %}
         <p class="text-xs text-yellow-600 mt-2 ml-7">
-            提示：请检查邮箱的收件箱和垃圾邮件文件夹，或
-            <a href="{% url 'users:forget_pwd' %}" class="text-blue-600 underline">通过忘记密码重新激活</a>
+            {% trans "提示：请检查邮箱的收件箱和垃圾邮件文件夹，或" %}
+            <a href="{% url 'users:forget_pwd' %}" class="text-blue-600 underline">{% trans "通过忘记密码重新激活" %}</a>
         </p>
         {% endif %}
     </div>
@@ -52,7 +53,7 @@
 
     <div class="text-center mt-6">
         <a href="/" class="text-sm text-gray-400 hover:text-gray-600 transition">
-            &larr; 回到首页
+            &larr; {% trans "回到首页" %}
         </a>
     </div>
 </div>

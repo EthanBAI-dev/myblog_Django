@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}Ethan BAI — Quiet Cosmos{% endblock %}
 
@@ -29,14 +29,14 @@
       {% if homepage and homepage.slogan %}
         {{ homepage.slogan }}
       {% else %}
-        「探索 · 创造 · 分享」
+        {% trans "「探索 · 创造 · 分享」" %}
       {% endif %}
     </p>
     <p class="hero-sub">
       {% if homepage and homepage.hero_sub %}
         {{ homepage.hero_sub }}
       {% else %}
-        全栈工程师 & AI 技术探索者 · 持续学习中
+        {% trans "全栈工程师 & AI 技术探索者 · 持续学习中" %}
       {% endif %}
     </p>
     <div class="hero-actions">
@@ -50,14 +50,14 @@
   <!-- About -->
   <article class="home-card">
     <div class="home-card-index">01 · Identity</div>
-    <h2 class="home-card-title">关于</h2>
+    <h2 class="home-card-title">{% trans "关于" %}</h2>
     <p class="home-card-desc">
       {% if homepage and homepage.about_me %}
         {{ homepage.about_me|safe }}
       {% elif blog_owner and blog_owner.desc %}
         {{ blog_owner.desc|truncatechars:120 }}
       {% else %}
-        一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。
+        {% trans "一个持续探索 AI 与深度学习领域的技术爱好者。喜欢把抽象概念拆解成可运行的代码与可复用的思考框架。" %}
       {% endif %}
     </p>
   </article>
@@ -65,12 +65,12 @@
   <!-- Current Work -->
   <article class="home-card">
     <div class="home-card-index">02 · Current Focus</div>
-    <h2 class="home-card-title">当下</h2>
+    <h2 class="home-card-title">{% trans "当下" %}</h2>
     <p class="home-card-desc">
       {% if homepage and homepage.current_work %}
         {{ homepage.current_work|safe }}
       {% else %}
-        系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。
+        {% trans "系统学习深度学习课程与论文，持续整理笔记，搭建自己的知识图谱，并通过博客记录实验、思考与迭代过程。" %}
       {% endif %}
     </p>
   </article>
@@ -78,7 +78,7 @@
   <!-- Skills -->
   <article class="home-card">
     <div class="home-card-index">03 · Toolkit</div>
-    <h2 class="home-card-title">技能</h2>
+    <h2 class="home-card-title">{% trans "技能" %}</h2>
     <div class="home-card-skills">
       {% if homepage and homepage.get_skills_list %}
         {% for skill in homepage.get_skills_list %}
@@ -102,12 +102,12 @@
   <!-- Principles -->
   <article class="home-card">
     <div class="home-card-index">04 · Principle</div>
-    <h2 class="home-card-title">热爱与秩序</h2>
+    <h2 class="home-card-title">{% trans "热爱与秩序" %}</h2>
     <p class="home-card-desc">
       {% if homepage and homepage.hobbies %}
         {{ homepage.hobbies|safe }}
       {% else %}
-        相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。
+        {% trans "相信复杂能力来自长时间、稳定、可复利的积累。偏爱清晰结构、严谨表达，以及那些真正能被实践验证的知识。" %}
       {% endif %}
     </p>
   </article>
@@ -117,8 +117,8 @@
 {% if sidebar_recent_posts %}
 <div class="home-recent">
   <div class="home-recent-header">
-    <h2 class="home-recent-title">近期写作</h2>
-    <a href="{% url 'blog:post_list' %}" class="home-recent-more">All posts →</a>
+    <h2 class="home-recent-title">{% trans "近期写作" %}</h2>
+    <a href="{% url 'blog:post_list' %}" class="home-recent-more">{% trans "All posts →" %}</a>
   </div>
 
   <section class="home-recent-list">
@@ -134,10 +134,10 @@
 {% else %}
 <section class="home-recent">
   <div class="home-recent-header">
-    <h2 class="home-recent-title">近期写作</h2>
+    <h2 class="home-recent-title">{% trans "近期写作" %}</h2>
   </div>
   <div class="home-recent-empty">
-    <p>还没有文章，敬请期待。</p>
+    <p>{% trans "还没有文章，敬请期待。" %}</p>
   </div>
 </section>
 {% endif %}

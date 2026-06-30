@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load i18n %}
 
 {% block title %}{{ post.title }} - {{ block.super }}{% endblock %}
 
@@ -10,7 +11,7 @@
 {# 文章详情页的侧边栏：在顶部插入文章目录 Widget #}
 {% block sidebar %}
   <div class="widget widget-toc">
-    <h4 class="widget-title">文章目录</h4>
+    <h4 class="widget-title">{% trans "文章目录" %}</h4>
     <div id="toc" class="toc"></div>
   </div>
   {{ block.super }}
@@ -25,7 +26,7 @@
                 <span class="meta-divider">·</span>
                 <span class="meta-item">预计阅读 {{ post.reading_time }} 分钟</span>
                 <span class="meta-divider">·</span>
-                <span class="meta-item">{{ post.views }} 次阅读</span>
+                <span class="meta-item">{{ post.views }} {% trans "次阅读" %}</span>
             </div>
 
             <h1 class="article-title">{{ post.title }}</h1>
@@ -58,25 +59,25 @@
     <div class="post-nav-row">
         {% if prev_post %}
         <a href="{% url 'blog:post_detail' prev_post.slug %}" class="post-nav-item post-nav-prev">
-            <span class="post-nav-label">← 上一篇</span>
+            <span class="post-nav-label">{% trans "← 上一篇" %}</span>
             <span class="post-nav-title">{{ prev_post.title }}</span>
         </a>
         {% else %}
         <span class="post-nav-item post-nav-prev disabled">
-            <span class="post-nav-label">← 上一篇</span>
-            <span class="post-nav-title">已经是最前一篇了</span>
+            <span class="post-nav-label">{% trans "← 上一篇" %}</span>
+            <span class="post-nav-title">{% trans "已经是最前一篇了" %}</span>
         </span>
         {% endif %}
 
         {% if next_post %}
         <a href="{% url 'blog:post_detail' next_post.slug %}" class="post-nav-item post-nav-next">
-            <span class="post-nav-label">下一篇 →</span>
+            <span class="post-nav-label">{% trans "下一篇 →" %}</span>
             <span class="post-nav-title">{{ next_post.title }}</span>
         </a>
         {% else %}
         <span class="post-nav-item post-nav-next disabled">
-            <span class="post-nav-label">下一篇 →</span>
-            <span class="post-nav-title">已经是最后一篇了</span>
+            <span class="post-nav-label">{% trans "下一篇 →" %}</span>
+            <span class="post-nav-title">{% trans "已经是最后一篇了" %}</span>
         </span>
         {% endif %}
     </div>
@@ -84,7 +85,7 @@
 
 <section class="comments-layout">
     <div class="comments-panel">
-        <h2 class="panel-title">评论</h2>
+        <h2 class="panel-title">{% trans "评论" %}</h2>
 
         <form method="post" class="comment-form">
             {% csrf_token %}
@@ -108,7 +109,7 @@
     </div>
 
     <div class="comments-panel">
-        <h3 class="panel-title">全部评论</h3>
+        <h3 class="panel-title">{% trans "全部评论" %}</h3>
 
         {% for comment in post.comments.all %}
             <div class="comment-item">
@@ -122,7 +123,7 @@
                 <div class="comment-body-text">{{ comment.body }}</div>
             </div>
         {% empty %}
-            <p class="empty-comment">还没有评论，欢迎留下第一条。</p>
+            <p class="empty-comment">{% trans "还没有评论，欢迎留下第一条。" %}</p>
         {% endfor %}
     </div>
 </section>

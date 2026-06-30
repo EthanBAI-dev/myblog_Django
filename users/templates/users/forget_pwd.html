@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 
-{% block title %}忘记密码 - 博客{% endblock title %}
+{% block title %}{% trans "忘记密码" %} - {% trans "博客" %}{% endblock title %}
 
 {% block content %}
 <div class="bg-white rounded-lg shadow-md p-8">
@@ -27,7 +28,7 @@
         </button>
 
         <div class="text-sm text-center">
-            <a href="{% url 'users:login' %}" class="text-blue-500 hover:text-blue-700">返回登录</a>
+            <a href="{% url 'users:login' %}" class="text-blue-500 hover:text-blue-700">{% trans "返回登录" %}</a>
         </div>
     </form>
 </div>

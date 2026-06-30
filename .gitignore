@@ -39,7 +39,16 @@ django-blog-master/
 cloud.md
 网站更新.txt
 deploy.sh
-OCI安全列表配置指南.md
+OCI安全配置指南.md
 PythonAnywhere部署指南.md
+
+# Personal files
+*.xlsx
+*.docx
+_check_images.py
+import_articles.py
+update_po*.py
+fix_*.py
+create_*.py
 
 

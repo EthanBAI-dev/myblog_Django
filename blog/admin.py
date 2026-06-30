@@ -18,8 +18,8 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'status', 'created_at', 'views')
-    list_filter = ('status', 'category', 'tags', 'created_at')
+    list_display = ('title', 'category', 'language', 'status', 'created_at', 'views')
+    list_filter = ('status', 'language', 'category', 'tags', 'created_at')
     search_fields = ('title', 'content')
     filter_horizontal = ('tags',)
 

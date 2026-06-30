@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 
-{% block title %}注册 - 博客{% endblock title %}
+{% block title %}{% trans "注册" %} - {% trans "博客" %}{% endblock title %}
 
 {% block content %}
 <div class="bg-white rounded-lg shadow-md p-8">
@@ -23,12 +24,12 @@
         {% endfor %}
 
         <div class="text-sm text-right">
-            <span class="text-gray-500">已有账号？</span>
-            <a href="{% url 'users:login' %}" class="text-blue-500 hover:text-blue-700">立即登录</a>
+            <span class="text-gray-500">{% trans "已有账号？" %}</span>
+            <a href="{% url 'users:login' %}" class="text-blue-500 hover:text-blue-700">{% trans "立即登录" %}</a>
         </div>
 
         <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition">
-            注 册
+            {% trans "注 册" %}
         </button>
     </form>
 </div>

@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %}
+{% load i18n %}
 
-{% block title %}注册成功 - 博客{% endblock title %}
+{% block title %}{% trans "注册成功" %} - {% trans "博客" %}{% endblock title %}
 
 {% block body %}
 <div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -14,8 +15,8 @@
                 </svg>
             </div>
 
-            <h1 class="text-2xl font-bold text-gray-800 mb-2">注册成功！</h1>
-            <p class="text-gray-500 text-sm mb-8">激活邮件已发送至你的邮箱，请查收</p>
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">{% trans "注册成功！" %}</h1>
+            <p class="text-gray-500 text-sm mb-8">{% trans "激活邮件已发送至你的邮箱，请查收" %}</p>
 
             <!-- 引导提示卡片 -->
             <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6 text-left">
@@ -23,23 +24,23 @@
                     <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                     </svg>
-                    下一步操作
+                    {% trans "下一步操作" %}
                 </h3>
                 <ul class="text-xs text-blue-700 space-y-1.5 mt-2">
-                    <li>1. 前往邮箱查收激活邮件（主题：博客注册激活链接）</li>
-                    <li>2. 点击邮件中的链接完成账号激活</li>
-                    <li>3. 如未收到，请检查<span class="font-semibold">垃圾邮件/垃圾桶</span>文件夹</li>
+                    <li>{% trans "1. 前往邮箱查收激活邮件（主题：博客注册激活链接）" %}</li>
+                    <li>{% trans "2. 点击邮件中的链接完成账号激活" %}</li>
+                    <li>{% blocktrans %}3. 如未收到，请检查<span class="font-semibold">垃圾邮件/垃圾桶</span>文件夹{% endblocktrans %}</li>
                 </ul>
             </div>
 
             <!-- 按钮组 -->
             <div class="space-y-3">
                 <a href="{% url 'users:login' %}" class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg transition">
-                    前往登录
+                    {% trans "前往登录" %}
                 </a>
                 <div class="flex gap-3 justify-center text-sm text-gray-400">
-                    <span>未收到邮件？</span>
-                    <a href="{% url 'users:forget_pwd' %}" class="text-blue-500 hover:text-blue-700">通过忘记密码重新激活</a>
+                    <span>{% trans "未收到邮件？" %}</span>
+                    <a href="{% url 'users:forget_pwd' %}" class="text-blue-500 hover:text-blue-700">{% trans "通过忘记密码重新激活" %}</a>
                 </div>
             </div>
         </div>
