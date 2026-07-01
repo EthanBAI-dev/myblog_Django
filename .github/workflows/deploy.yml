@@ -10,7 +10,6 @@ jobs:
     steps:
       - name: 🔄 触发 PythonAnywhere 部署脚本
         run: |
-          # 先通过 console API 执行部署脚本
           curl -s -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
                "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
                -d "executable=/bin/bash&arguments=~/deploy-full.sh"
