@@ -85,6 +85,61 @@ myblog/
 
 ---
 
+## 多语言维护
+
+本项目通过 Django i18n 支持 **中文 / English / 日本語** 三语界面。
+
+### 核心文件
+
+- `locale/zh_Hans/LC_MESSAGES/django.po` — 中文翻译
+- `locale/en/LC_MESSAGES/django.po` — 英文翻译
+- `locale/ja/LC_MESSAGES/django.po` — 日文翻译
+
+### 常用命令
+
+```bash
+# 提取新文字
+python manage.py makemessages -l zh-hans
+python manage.py makemessages -l en
+python manage.py makemessages -l ja
+
+# 编译生效
+python manage.py compilemessages
+```
+
+### 常见陷阱
+
+| 问题 | 解决 |
+|:-----|:-----|
+| 翻译不生效 | 检查是否带 `#, fuzzy` 标记，需删除该行 |
+| `compilemessages` 报错 | 检查 `#, python-format` 条目中 `%%` 数量是否与 `msgstr` 一致 |
+| 数据库字段跳过翻译 | 清空数据库字段值，或改用 JSON 多语言存储 |
+
+详细规则见项目根目录 `.trae/skills/multi-lang-maintenance/SKILL.md`。
+
+---
+
+## 部署
+
+### PythonAnywhere
+
+1. 在 PA 上创建 Web App，从 GitHub 克隆项目
+2. 配置虚拟环境和 WSGI 文件
+3. 运行标准部署命令
+
+详细步骤见 `articles/deploy.md`。
+
+### GitHub Actions 自动部署
+
+推送 `personal-website-redesign` 分支后自动触发：
+
+1. PA 上执行 `~/deploy-full.sh`（拉代码、迁移、编译翻译、收集静态文件）
+2. 重载 Web 服务
+
+确保 GitHub Secrets 已配置 `PA_API_TOKEN` 和 `PA_USERNAME`。
+
+---
+
 ## 本地开发环境搭建
 
 ### 环境要求

@@ -121,6 +121,68 @@ blog/content/
 
 ---
 
+## 陷阱一：`#, fuzzy` 标记
+
+`makemessages` 自动生成的 `#, fuzzy` 标记表示"存疑翻译"，**Django 会跳过该条目**，显示原文而非翻译。
+
+**修复方式：** 编辑 `.po` 文件，直接删掉 `#, fuzzy` 行和旧 `msgstr`，写入正确翻译。
+
+```
+# 原文（会被跳过，不生效）
+#, fuzzy
+msgid "全部"
+msgstr "All Comments"
+
+# 修复后（正常生效）
+msgid "全部"
+msgstr "All"
+```
+
+---
+
+## 陷阱二：python-format 的 `%%` 转义
+
+`msgid` 中如果有 `95%%`（Django 的 `%%` 表示一个 `%` 符号），
+对应 `msgstr` 也必须用 `%%`，不能写成 `95%`，否则 `compilemessages` 报错：
+
+```
+msgid "开发自动化工具缩短 95%% 作业时间"
+msgstr "Built automation tools cutting 95%% of work time"   # ✅ 正确（必须是 %%）
+msgstr "Built automation tools cutting 95% of work time"    # ❌ 错误（格式不匹配）
+```
+
+---
+
+## 陷阱三：数据库字段绕过翻译
+
+如果模板中同时有数据库字段和 `{% trans %}`：
+
+```html
+{% if homepage and homepage.slogan %}
+  {{ homepage.slogan }}          {# ← 数据库有值时走这里，绕过翻译 #}
+{% else %}
+  {% trans "默认文字" %}          {# ← 只有数据库为空时才走翻译 #}
+{% endif %}
+```
+
+**解决方案：** 清空数据库字段让 `{% trans %}` 生效，或将数据库字段改为 JSON 存储多语言值。
+
+---
+
+## 陷阱四：部署时 .mo 文件冲突
+
+`.po` 和 `.mo` 文件在服务器上被手动操作过，`git pull` 会报冲突。
+
+**解决方案：** `git pull` 前先丢弃本地修改：
+
+```bash
+git checkout -- locale/*/LC_MESSAGES/django.mo 2>/dev/null || true
+git clean -fd locale/ 2>/dev/null || true
+git pull origin your-branch
+```
+
+---
+
 ## 快速对照表
 
 | 操作 | 涉及文件数 |
