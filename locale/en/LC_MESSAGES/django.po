@@ -475,7 +475,7 @@ msgstr "Led YOLO/ROS technology adoption"
 #: blog/templates/blog/portfolio.html:904
 #, python-format
 msgid "开发自动化工具缩短 95%% 作业时间"
-msgstr "Built automation tools cutting 95% of work time"
+msgstr "Built automation tools cutting 95%% of work time"
 
 #: blog/templates/blog/portfolio.html:905
 msgid "参与电气/油压回路设计"
