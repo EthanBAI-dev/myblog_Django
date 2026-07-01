@@ -36,7 +36,7 @@
       {% if homepage and homepage.hero_sub %}
         {{ homepage.hero_sub }}
       {% else %}
-        {% trans "理工科博士 · AI 开发者 · 工具爱好者" %}
+        {% trans "全栈工程师 & AI技术探索者 · 持续学习中" %}
       {% endif %}
     </p>
     <div class="hero-actions">
@@ -55,7 +55,7 @@
       {% if homepage and homepage.about_me %}
         {{ homepage.about_me|safe }}
       {% else %}
-        {% trans "理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用时，那种成就感是我持续学习和创作的最大动力。坚信 AI 将重塑一切，积极拥抱这个时代——每天都在用 AI 辅助开发。掌握中、英、日、蒙、德五种语言。" %}
+        {% trans "船舶领域理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用时，那种成就感是我持续学习和创作的最大动力。" %}
       {% endif %}
     </p>
   </article>
@@ -66,19 +66,15 @@
     <h2 class="home-card-title">{% trans "当下" %}</h2>
     <div class="home-card-desc">
       <div class="focus-item">
-        <span class="focus-icon">🦉</span>
-        <span><strong>{% trans "多邻国" %}</strong> — {% trans "连续学习 " %}<span class="focus-highlight">322</span>{% trans " 天" %}</span>
+        <span><strong>{% trans "多邻国" %}</strong> — {% trans "连续学习 " %}<span class="focus-highlight">{{ duolingo_streak }}</span>{% trans " 天" %}</span>
       </div>
       <div class="focus-item">
-        <span class="focus-icon">🌐</span>
-        <span><strong>{% trans "语言" %}</strong> — 中文 · English · 日本語 · ᠮᠣᠩᠭᠣᠯ · Deutsch</span>
+        <span><strong>{% trans "语言" %}</strong> — 中文 · English · 日本語 · ᠮᠣᠩᠭᠣᠯ · Deutsch (学习ing)</span>
       </div>
       <div class="focus-item">
-        <span class="focus-icon">💪</span>
         <span><strong>{% trans "健身" %}</strong> — {% trans "每周 4 次，雷打不动" %}</span>
       </div>
       <div class="focus-item">
-        <span class="focus-icon">🤖</span>
         <span><strong>Vibe Coding</strong> — {% trans "每天都在用 AI 写代码、造工具" %}</span>
       </div>
     </div>

@@ -186,15 +186,14 @@ msgid "「探索 · 创造 · 分享」"
 msgstr "「探索 · 创造 · 分享」"
 
 #: blog/templates/blog/home.html:39
-msgid "理工科博士 · AI 开发者 · 工具爱好者"
-msgstr ""
+msgid "全栈工程师 & AI技术探索者 · 持续学习中"
+msgstr "全栈工程师 & AI技术探索者 · 持续学习中"
 
 #: blog/templates/blog/home.html:58
 msgid ""
-"理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用时，那"
-"种成就感是我持续学习和创作的最大动力。坚信 AI 将重塑一切，积极拥抱这个时代——"
-"每天都在用 AI 辅助开发。掌握中、英、日、蒙、德五种语言。"
-msgstr ""
+"船舶领域理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用"
+"时，那种成就感是我持续学习和创作的最大动力。"
+msgstr "船舶领域理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用时，那种成就感是我持续学习和创作的最大动力。"
 
 #: blog/templates/blog/home.html:66
 msgid "当下"
@@ -231,10 +230,8 @@ msgid "每天都在用 AI 写代码、造工具"
 msgstr "每天都在用 AI 写代码、造工具"
 
 #: blog/templates/blog/home.html:90
-#, fuzzy
-#| msgid "技能"
 msgid "技能栈"
-msgstr "技能"
+msgstr "技能栈"
 
 #: blog/templates/blog/home.html:94 blog/templates/blog/portfolio.html:719
 #: blog/templates/blog/portfolio.html:780
@@ -252,17 +249,13 @@ msgstr "前端开发"
 #: blog/templates/blog/portfolio.html:702
 #: blog/templates/blog/portfolio.html:753
 #: blog/templates/blog/portfolio.html:809
-#, fuzzy
-#| msgid "工业控制系统"
 msgid "工业控制"
-msgstr "工业控制系统"
+msgstr "工业控制"
 
 #: blog/templates/blog/home.html:141 blog/templates/blog/portfolio.html:762
 #: blog/templates/blog/portfolio.html:815
-#, fuzzy
-#| msgid "开发工具"
 msgid "工具"
-msgstr "开发工具"
+msgstr "工具"
 
 #: blog/templates/blog/home.html:158 blog/templates/blog/home.html:175
 msgid "近期写作"
@@ -318,8 +311,8 @@ msgid ""
 "WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3），支持 Bilibili/YouTube/"
 "播客批量导入。"
 msgstr ""
-"基于 WXT + React 18 + TypeScript 的 Chrome 扩展，支持 Bilibili/YouTube/"
-"Podcast 批量导入 NotebookLM。已上架 Chrome Web Store。"
+"WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3），支持 Bilibili/YouTube/"
+"播客批量导入。"
 
 #: blog/templates/blog/portfolio.html:649
 #, fuzzy
@@ -327,9 +320,7 @@ msgstr ""
 #| "四阶段 CV 流水线：YOLOv8m + ResNet34 + PaddleOCR，实现多票据自动识别与结构"
 #| "化 CSV 输出。"
 msgid "四阶段 CV 流水线：YOLOv8m → 透视校正 → PaddleOCR，自动输出结构化 CSV。"
-msgstr ""
-"四阶段 CV 流水线：YOLOv8m + ResNet34 + PaddleOCR，实现多票据自动识别与结构化 "
-"CSV 输出。"
+msgstr "四阶段 CV 流水线：YOLOv8m → 透视校正 → PaddleOCR，自动输出结构化 CSV。"
 
 #: blog/templates/blog/portfolio.html:678
 #, fuzzy
@@ -349,14 +340,12 @@ msgid "在线体验"
 msgstr "在线体验"
 
 #: blog/templates/blog/portfolio.html:707
-#, fuzzy
-#| msgid "机械设备控制 · AI 功能开发"
 msgid "机械设备控制 · AI 开发"
-msgstr "机械设备控制 · AI 功能开发"
+msgstr "机械设备控制 · AI 开发"
 
 #: blog/templates/blog/portfolio.html:708
 msgid "PLC → ROS → YOLO 完整控制层级开发。主导新技術导入并开发自动化工具。"
-msgstr ""
+msgstr "PLC → ROS → YOLO 完整控制层级开发。主导新技術导入并开发自动化工具。"
 
 #: blog/templates/blog/portfolio.html:710
 #: blog/templates/blog/portfolio.html:897
@@ -365,7 +354,7 @@ msgstr "至今"
 
 #: blog/templates/blog/portfolio.html:778
 msgid "专业技能"
-msgstr ""
+msgstr "专业技能"
 
 #: blog/templates/blog/portfolio.html:789
 msgid "AI / 机器学习"
@@ -378,14 +367,12 @@ msgid "后端/DevOps"
 msgstr "后端 / DevOps"
 
 #: blog/templates/blog/portfolio.html:839
-#, fuzzy
-#| msgid "Chrome扩展"
 msgid "扩展"
-msgstr "Chrome扩展"
+msgstr "扩展"
 
 #: blog/templates/blog/portfolio.html:839
 msgid "已上架 Chrome Web Store"
-msgstr ""
+msgstr "已上架 Chrome Web Store"
 
 #: blog/templates/blog/portfolio.html:840
 #, fuzzy
@@ -475,77 +462,54 @@ msgid "端到端耗时 3 秒以内"
 msgstr ""
 
 #: blog/templates/blog/portfolio.html:874
-#, fuzzy
-#| msgid "本地文档智能问答系统"
 msgid "本地文档智能问答"
-msgstr "本地文档智能问答系统"
+msgstr "本地文档智能问答"
 
-#: blog/templates/blog/portfolio.html:876
 msgid ""
 "基于 RAG 架构的本地文档 QA 系统。上传文档后自动分割、向量化，通过 ZhipuAI 嵌"
 "入 + DeepSeek API 实现自然语言问答。自研 NumPy+JSON 轻量 VectorStore。"
 msgstr ""
+"基于 RAG 架构的本地文档 QA 系统。上传文档后自动分割、向量化，通过 ZhipuAI 嵌"
+"入 + DeepSeek API 实现自然语言问答。自研 NumPy+JSON 轻量 VectorStore。"
 
-#: blog/templates/blog/portfolio.html:885
 msgid "从零实现 RAG 完整流水线"
-msgstr ""
+msgstr "从零实现 RAG 完整流水线"
 
-#: blog/templates/blog/portfolio.html:886
 msgid "自研轻量 VectorStore"
-msgstr ""
+msgstr "自研轻量 VectorStore"
 
-#: blog/templates/blog/portfolio.html:887
 msgid "增量索引构建"
-msgstr ""
+msgstr "增量索引构建"
 
-#: blog/templates/blog/portfolio.html:888
 msgid "4 种回答风格 + 检索可视化"
-msgstr ""
+msgstr "4 种回答风格 + 检索可视化"
 
 #: blog/templates/blog/portfolio.html:896
 msgid "机械设备控制 · AI 功能开发"
 msgstr "机械设备控制 · AI 功能开发"
 
 #: blog/templates/blog/portfolio.html:897
-#, fuzzy
-#| msgid "古河机械金属株式会社 · 正社員"
 msgid "古河机械金属株式会社"
-msgstr "古河机械金属株式会社 · 正社員"
+msgstr "古河机械金属株式会社"
 
-#: blog/templates/blog/portfolio.html:898
-#, fuzzy
-#| msgid ""
-#| "在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基"
-#| "本控制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO 图像识"
-#| "别算法实现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，"
-#| "从软硬件两端推动产品升级。"
 msgid ""
 "核心研发部门从事产品搭载软件的全栈开发。PLC 基本控制、ROS 自动化流程构建、"
 "YOLO 图像识别算法实现等多个控制层级。"
 msgstr ""
-"在某大型机械制造商的核心研发部门，从事产品搭载软件的全栈开发。涵盖 PLC 基本控"
-"制（シーケンス制御、モーション制御）、ROS 自动化流程构建、YOLO 图像识别算法实"
-"现等多个控制层级。同时参与电气回路 / 油压回路设计、CREO 机械设计，从软硬件两"
-"端推动产品升级。"
+"核心研发部门从事产品搭载软件的全栈开发。PLC 基本控制、ROS 自动化流程构建、"
+"YOLO 图像识别算法实现等多个控制层级。"
 
-#: blog/templates/blog/portfolio.html:902
-#, fuzzy
-#| msgid "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力"
 msgid "覆盖 PLC→ROS→AI 完整控制层级"
-msgstr "覆盖 PLC → ROS → AI 图像识别的完整控制层级开发能力"
+msgstr "覆盖 PLC→ROS→AI 完整控制层级"
 
-#: blog/templates/blog/portfolio.html:903
 msgid "主导 YOLO/ROS 技术导入"
-msgstr ""
+msgstr "主导 YOLO/ROS 技术导入"
 
-#: blog/templates/blog/portfolio.html:904
-#, python-format
 msgid "开发自动化工具缩短 95%% 作业时间"
-msgstr ""
+msgstr "开发自动化工具缩短 95%% 作业时间"
 
-#: blog/templates/blog/portfolio.html:905
 msgid "参与电气/油压回路设计"
-msgstr ""
+msgstr "参与电气/油压回路设计"
 
 #: blog/templates/blog/post_detail.html:14
 msgid "文章目录"
@@ -635,8 +599,8 @@ msgid "Resume"
 msgstr "简历"
 
 #: blog/templates/blog/resume.html:13
-msgid "Fullstack Engineer · AI Enthusiast"
-msgstr "全栈工程师 · AI 技术爱好者"
+msgid "Fullstack Engineer · AI Engineer"
+msgstr "全栈工程师 · AI Engineer"
 
 #: blog/templates/blog/resume.html:24
 msgid "Basic Info"

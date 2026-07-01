@@ -4,6 +4,13 @@ from django.views.generic import ListView
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from .models import Post, Category, SitePage, HomePage
+from datetime import date
+
+
+def _duolingo_streak() -> int:
+    """Calculate Duolingo streak from a fixed start date."""
+    start = date(2025, 8, 14)  # 322 days by July 1, 2026
+    return (date.today() - start).days + 1
 
 
 def home(request):
@@ -11,6 +18,7 @@ def home(request):
     homepage = HomePage.objects.first()
     return render(request, 'blog/home.html', {
         'homepage': homepage,
+        'duolingo_streak': _duolingo_streak(),
     })
 
 
