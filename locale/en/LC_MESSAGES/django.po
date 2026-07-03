@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 06:55+0800\n"
+"POT-Creation-Date: 2026-07-03 07:16+0800\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,6 +26,10 @@ msgstr ""
 msgid "自我评价"
 msgstr "Self Assessment"
 
+#: blog/templates/blog/about.html:33
+msgid "技术信念"
+msgstr ""
+
 #: blog/templates/blog/about.html:38
 msgid ""
 "「真正的技术价值不在于掌握多少工具，而在于能否用合适的技术解决实际问题。」"
@@ -47,7 +51,12 @@ msgstr ""
 "technologies (YOLO·ROS) — from technology selection to deployment."
 
 #: blog/templates/blog/about.html:45
-#: blog/templates/blog/about.html:45
+#, fuzzy, python-format
+#| msgid ""
+#| "我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬"
+#| "件 ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%%），大幅提升团队工作效"
+#| "率。这个经历让我深刻理解：好的工具不在于技术复杂度，而在于能否精准命中业务"
+#| "痛点。"
 msgid ""
 "我善于识别业务流程中的痛点并运用技术手段解决。曾开发 Python 自动化工具将硬件 "
 "ID 设定作业时间从 20 分钟缩短至 1 分钟（缩减 95%%），大幅提升团队工作效率。这"
@@ -195,8 +204,8 @@ msgstr "Full-stack Engineer & AI Explorer · Always Learning"
 
 #: blog/templates/blog/home.html:58
 msgid ""
-"船舶领域理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使用"
-"时，那种成就感是我持续学习和创作的最大动力。"
+"船舶领域理工科博士毕业，热爱 AI 技术与软件开发。当自己开发的工具被别人真正使"
+"用时，那种成就感是我持续学习和创作的最大动力。"
 msgstr ""
 "PhD in Naval Engineering, passionate about AI and software development. The "
 "greatest motivation for me is knowing that tools I build are actually being "
@@ -206,71 +215,73 @@ msgstr ""
 msgid "当下"
 msgstr "Current Focus"
 
-#: blog/templates/blog/home.html:70
+#: blog/templates/blog/home.html:69
 msgid "多邻国"
 msgstr "Duolingo"
 
-#: blog/templates/blog/home.html:70
+#: blog/templates/blog/home.html:69
 msgid "连续学习 "
 msgstr "Streak: "
 
-#: blog/templates/blog/home.html:70
+#: blog/templates/blog/home.html:69
 msgid " 天"
 msgstr " days"
 
-#: blog/templates/blog/home.html:74
-#, fuzzy
-#| msgid "编程语言"
+#: blog/templates/blog/home.html:72
 msgid "语言"
 msgstr "Languages"
 
-#: blog/templates/blog/home.html:78
+#: blog/templates/blog/home.html:72
+msgid "中文 · English · 日本語 · ᠮᠣᠩᠭᠣᠯ · Deutsch"
+msgstr "Chinese · English · Japanese · Mongolian · German (learning)"
+
+#: blog/templates/blog/home.html:75
 msgid "健身"
 msgstr "Workout"
 
-#: blog/templates/blog/home.html:78
+#: blog/templates/blog/home.html:75
 msgid "每周 4 次，雷打不动"
 msgstr "4 times a week, no excuses"
 
-#: blog/templates/blog/home.html:82
+#: blog/templates/blog/home.html:78
 msgid "每天都在用 AI 写代码、造工具"
 msgstr "Coding with AI every day, building tools"
 
-#: blog/templates/blog/home.html:90
+#: blog/templates/blog/home.html:86
 msgid "技能栈"
 msgstr "Skills"
 
-#: blog/templates/blog/home.html:94 blog/templates/blog/portfolio.html:719
+#: blog/templates/blog/home.html:90 blog/templates/blog/portfolio.html:719
 #: blog/templates/blog/portfolio.html:780
 msgid "编程语言"
 msgstr "Programming Languages"
 
-#: blog/templates/blog/home.html:112 blog/templates/blog/portfolio.html:735
+#: blog/templates/blog/home.html:108 blog/templates/blog/portfolio.html:735
 #: blog/templates/blog/portfolio.html:796
 msgid "前端"
 msgstr "Frontend"
 
-#: blog/templates/blog/home.html:132 blog/templates/blog/portfolio.html:595
+#: blog/templates/blog/home.html:128 blog/templates/blog/portfolio.html:595
 #: blog/templates/blog/portfolio.html:702
 #: blog/templates/blog/portfolio.html:753
 #: blog/templates/blog/portfolio.html:809
 msgid "工业控制"
 msgstr "Industrial Control"
 
-#: blog/templates/blog/home.html:141 blog/templates/blog/portfolio.html:762
+#: blog/templates/blog/home.html:137 blog/templates/blog/portfolio.html:762
 #: blog/templates/blog/portfolio.html:815
 msgid "工具"
 msgstr "Tools"
 
-#: blog/templates/blog/home.html:158 blog/templates/blog/home.html:175
+#: blog/templates/blog/home.html:154 blog/templates/blog/home.html:171
 msgid "近期写作"
 msgstr "Recent Writing"
 
-#: blog/templates/blog/home.html:159
+#: blog/templates/blog/home.html:155
 msgid "All posts →"
 msgstr "All posts →"
 
-#: blog/templates/blog/home.html:178
+#: blog/templates/blog/home.html:174
 msgid "还没有文章，敬请期待。"
 msgstr "No articles yet. Stay tuned."
 
@@ -299,28 +310,34 @@ msgid "RAG / LLM"
 msgstr "RAG / LLM"
 
 #: blog/templates/blog/portfolio.html:617
-#: blog/templates/blog/portfolio.html:617
 #: blog/templates/blog/portfolio.html:838
 msgid "批量导入 NotebookLM"
 msgstr "Batch Import to NotebookLM"
 
+#: blog/templates/blog/portfolio.html:618
 msgid ""
 "WXT + React 18 + TypeScript 构建的 Chrome 扩展（MV3），支持 Bilibili/YouTube/"
 "播客批量导入。"
 msgstr ""
-"A Chrome extension (MV3) built with WXT + React 18 + TypeScript. Batch import "
-"from Bilibili, YouTube, and podcasts."
+"A Chrome extension (MV3) built with WXT + React 18 + TypeScript. Batch "
+"import from Bilibili, YouTube, and podcasts."
 
 #: blog/templates/blog/portfolio.html:649
 msgid "四阶段 CV 流水线：YOLOv8m → 透视校正 → PaddleOCR，自动输出结构化 CSV。"
-msgstr "Four-stage CV pipeline: YOLOv8m → perspective correction → PaddleOCR → structured CSV output."
+msgstr ""
+"Four-stage CV pipeline: YOLOv8m → perspective correction → PaddleOCR → "
+"structured CSV output."
 
-#: blog/templates/blog/portfolio.html:678
 #: blog/templates/blog/portfolio.html:678
 msgid ""
 "轻量 VectorStore + DeepSeek + ZhipuAI 实现本地文档智能问答。Streamlit Web "
 "UI。"
-msgstr "Local document QA with a lightweight VectorStore + DeepSeek + ZhipuAI. Streamlit web UI."
+msgstr ""
+"Local document QA with a lightweight VectorStore + DeepSeek + ZhipuAI. "
+"Streamlit web UI."
+
+#: blog/templates/blog/portfolio.html:683
+#: blog/templates/blog/portfolio.html:892
 msgid "在线体验"
 msgstr "Live Demo"
 
@@ -330,7 +347,9 @@ msgstr "Machinery Control · AI Development"
 
 #: blog/templates/blog/portfolio.html:708
 msgid "PLC → ROS → YOLO 完整控制层级开发。主导新技術导入并开发自动化工具。"
-msgstr "Full control stack: PLC → ROS → YOLO. Leading new tech adoption and building automation tools."
+msgstr ""
+"Full control stack: PLC → ROS → YOLO. Leading new tech adoption and building "
+"automation tools."
 
 #: blog/templates/blog/portfolio.html:710
 #: blog/templates/blog/portfolio.html:897
@@ -346,12 +365,13 @@ msgid "AI / 机器学习"
 msgstr "AI / Machine Learning"
 
 #: blog/templates/blog/portfolio.html:803
-#: blog/templates/blog/portfolio.html:803
 msgid "后端/DevOps"
 msgstr "Backend/DevOps"
+
 #: blog/templates/blog/portfolio.html:839
 msgid "扩展"
 msgstr "Extension"
+
 #: blog/templates/blog/portfolio.html:839
 msgid "已上架 Chrome Web Store"
 msgstr "Published on Chrome Web Store"
@@ -362,26 +382,31 @@ msgid ""
 "Bilibili、YouTube、Apple Podcasts、小宇宙等多种来源批量导入内容到 Google "
 "NotebookLM。"
 msgstr ""
-"A Chrome extension (Manifest V3) built with WXT + React + TypeScript. "
-"Batch-import content from Bilibili, YouTube, Apple Podcasts, Xiaoyuzhou, "
-"and more into Google NotebookLM."
+"A Chrome extension (Manifest V3) built with WXT + React + TypeScript. Batch-"
+"import content from Bilibili, YouTube, Apple Podcasts, Xiaoyuzhou, and more "
+"into Google NotebookLM."
 
 #: blog/templates/blog/portfolio.html:844
 msgid "Bilibili 字幕批量提取"
 msgstr "Batch Bilibili subtitle extraction"
 
+#: blog/templates/blog/portfolio.html:845
 msgid "YouTube 播放列表导入"
 msgstr "YouTube playlist import"
 
+#: blog/templates/blog/portfolio.html:846
 msgid "播客自动下载"
 msgstr "Automatic podcast download"
 
+#: blog/templates/blog/portfolio.html:847
 msgid "Web 页面提取"
 msgstr "Web page extraction"
 
+#: blog/templates/blog/portfolio.html:848
 msgid "AI 对话分享卡片"
 msgstr "AI chat share card"
 
+#: blog/templates/blog/portfolio.html:849
 msgid "RSS 订阅"
 msgstr "RSS subscription"
 
@@ -394,11 +419,9 @@ msgid "多票据自动识别"
 msgstr "Multi-Receipt Recognition"
 
 #: blog/templates/blog/portfolio.html:859
-#: blog/templates/blog/portfolio.html:859
 msgid "计算机视觉"
 msgstr "Computer Vision"
 
-#: blog/templates/blog/portfolio.html:860
 #: blog/templates/blog/portfolio.html:860
 msgid ""
 "YOLOv8m 物体检测 → 透视变换矫正 → ResNet34 方向分类 → YOLOv5/YOLOv9 文字区域"
@@ -421,9 +444,11 @@ msgstr ""
 msgid "基于 OpenCV 透视变换矫正"
 msgstr "Perspective correction via OpenCV"
 
+#: blog/templates/blog/portfolio.html:866
 msgid "训练 YOLOv8m 关键字段检测"
 msgstr "Trained YOLOv8m for key field detection"
 
+#: blog/templates/blog/portfolio.html:867
 msgid "端到端耗时 3 秒以内"
 msgstr "End-to-end latency under 3 seconds"
 
@@ -444,12 +469,15 @@ msgstr ""
 msgid "从零实现 RAG 完整流水线"
 msgstr "Built RAG pipeline from scratch"
 
+#: blog/templates/blog/portfolio.html:886
 msgid "自研轻量 VectorStore"
 msgstr "Self-built lightweight VectorStore"
 
+#: blog/templates/blog/portfolio.html:887
 msgid "增量索引构建"
 msgstr "Incremental index building"
 
+#: blog/templates/blog/portfolio.html:888
 msgid "4 种回答风格 + 检索可视化"
 msgstr "4 answer styles + retrieval visualization"
 
@@ -458,9 +486,9 @@ msgid "机械设备控制 · AI 功能开发"
 msgstr "Machinery Control · AI Development"
 
 #: blog/templates/blog/portfolio.html:897
-#: blog/templates/blog/portfolio.html:897
 msgid "古河机械金属株式会社"
 msgstr "Furukawa Rock Drill"
+
 #: blog/templates/blog/portfolio.html:898
 msgid ""
 "核心研发部门从事产品搭载软件的全栈开发。PLC 基本控制、ROS 自动化流程构建、"
@@ -468,6 +496,11 @@ msgid ""
 msgstr ""
 "Full-stack development of onboard software in a core R&D department. Covers "
 "PLC control, ROS automation pipelines, and YOLO image recognition."
+
+#: blog/templates/blog/portfolio.html:902
+msgid "覆盖 PLC→ROS→AI 完整控制层级"
+msgstr ""
+
 #: blog/templates/blog/portfolio.html:903
 msgid "主导 YOLO/ROS 技术导入"
 msgstr "Led YOLO/ROS technology adoption"
