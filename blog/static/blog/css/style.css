@@ -2071,7 +2071,11 @@ a.post-nav-item:hover .post-nav-title {
   }
 
   .header-search {
-    display: none;
+    max-width: 140px;
+    padding: 3px 3px 3px 10px;
+  }
+  .header-search-input {
+    font-size: 0.75rem;
   }
 
   /* ── Responsive nav dropdown ── */
@@ -2086,6 +2090,13 @@ a.post-nav-item:hover .post-nav-title {
     min-width: 0;
     width: auto;
     padding: 16px 18px;
+  }
+}
+
+/* ── Extra narrow: shrink search further ── */
+@media (max-width: 480px) {
+  .header-search {
+    max-width: 100px;
   }
 }
 
