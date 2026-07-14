@@ -1,7 +1,6 @@
 # Quiet Cosmos — Personal Tech Blog
 
-[![中文](https://img.shields.io/badge/README-中文-blue?style=flat-square)](README.zh-CN.md)
-[![日本語](https://img.shields.io/badge/README-日本語-blue?style=flat-square)](README.ja-JP.md)
+[中文](README.zh-CN.md) · [日本語](README.ja-JP.md)
 
 A personal tech blog built with **Django 6**, featuring an interactive Three.js galaxy background and trilingual interface (Chinese, English, Japanese).
 
