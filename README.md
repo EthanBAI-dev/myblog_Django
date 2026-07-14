@@ -1,6 +1,6 @@
 # Quiet Cosmos — 个人技术博客
 
-[中文](README.zh-CN.md) · [English](README.en-US.md) · [日本語](README.ja-JP.md)
+[English](README.en-US.md) · [日本語](README.ja-JP.md)
 
 基于 **Django 6** 的个人技术博客，集成 Three.js 交互式星系背景，支持中/英/日三语界面。
 
