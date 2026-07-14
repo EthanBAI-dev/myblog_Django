@@ -1,7 +1,6 @@
 # Quiet Cosmos — 個人テクノロジーブログ
 
-[![中文](https://img.shields.io/badge/README-中文-blue?style=flat-square)](README.zh-CN.md)
-[![English](https://img.shields.io/badge/README-English-blue?style=flat-square)](README.en-US.md)
+[中文](README.zh-CN.md) · [English](README.en-US.md)
 
 **Django 6** ベースの個人テクノロジーブログ。Three.js によるインタラクティブな銀河背景と、中国語・英語・日本語の 3 言語に対応しています。
 
