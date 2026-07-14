@@ -1,7 +1,8 @@
 # Quiet Cosmos — 个人技术博客
 
-[![English](https://img.shields.io/badge/EN-English-blue?style=flat-square)](README.en-US.md)
-[![日本語](https://img.shields.io/badge/JA-日本語-blue?style=flat-square)](README.ja-JP.md)
+[![中文](https://img.shields.io/badge/README-中文-blue?style=flat-square)](README.zh-CN.md)
+[![English](https://img.shields.io/badge/README-English-blue?style=flat-square)](README.en-US.md)
+[![日本語](https://img.shields.io/badge/README-日本語-blue?style=flat-square)](README.ja-JP.md)
 
 基于 **Django 6** 的个人技术博客，集成 Three.js 交互式星系背景，支持中/英/日三语界面。
 
