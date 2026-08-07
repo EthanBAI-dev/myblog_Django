@@ -9,21 +9,29 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '***REMOVED-SECRET-KEY***'
+# 生产环境必须通过 DJANGO_SECRET_KEY 环境变量设置，下面的值只用于本地开发兜底
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-only-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') != 'False'
+# 默认关闭，本地开发在 .env 里设置 DJANGO_DEBUG=True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*']
+# 生产环境通过 DJANGO_ALLOWED_HOSTS 环境变量设置，逗号分隔，例如: example.com,www.example.com
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h.strip()
+]
 
 
 # Application definition
@@ -160,7 +168,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = 'ceshi@163.com'
-EMAIL_HOST_PASSWORD = '123456'
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD', '')
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 

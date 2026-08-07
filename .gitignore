@@ -51,4 +51,8 @@ update_po*.py
 fix_*.py
 create_*.py
 
+# 含真实/测试账号密码或数据库导出，不提交
+test_accounts.txt
+data.json
+
 
